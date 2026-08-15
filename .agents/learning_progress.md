@@ -124,10 +124,18 @@
 - [ ] Config management (.env, viper/godotenv)
 
 ### 5. Database (PostgreSQL + GORM)
-- [ ] Koneksi ke PostgreSQL
-- [ ] GORM model & migration
+- [x] Koneksi ke PostgreSQL via GORM (`config/database.go`)
+- [x] Pemahaman Mendalam DSN (Data Source Name)
+- [x] Konsep `AutoMigrate` (Code-First Database Schema)
 - [ ] CRUD operations via GORM
 - [ ] golang-migrate
+
+### Konsep Mendalam (Deep Dives)
+- [x] **Pointers (`*` & `&`)**: Paham analogi Loker (`variabel`), Amplop (`*int`), dan Minta Alamat (`&`). Paham membedakan *pass by value* vs *pass by reference* untuk efisiensi memori.
+- [x] **Multiple Return Values**: Paham kenapa fungsi seperti `gorm.Open` mereturn `(*gorm.DB, error)`. Paham pentingnya error checking sebagai fondasi keamanan Go.
+- [x] **Package Scope & Import**: Paham aturan import antar folder (huruf kapital) dan kenapa file di folder yang sama (`package config`) tidak perlu di-import.
+- [x] **Clean Architecture Dependency Rule**: Paham aturan "Satu Arah" (Handler → Service → Repository → Models). Pantang melakukan *Circular Dependency*.
+- [x] **Career Pivot Strategy**: Paham nilai lebih dari latar belakang S1 + HTB Level 10 (Cybersecurity) di ekosistem Go, dan jalur *pivot* yang menjanjikan (SDET, SOC, AppSec/DevSecOps).
 
 ### 6. Authentication
 - [ ] bcrypt password hashing
