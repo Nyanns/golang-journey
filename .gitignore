@@ -1,0 +1,23 @@
+# Environment variables (Wajib di-ignore untuk security)
+**/.env
+**/.env.*
+!**/.env.example
+
+# Go build outputs
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+dist/
+
+# Node / Frontend dependencies
+**/node_modules/
+**/dist/
+**/.vite/
+
+# OS / Editor junk
+.DS_Store
+.vscode/
+.idea/
