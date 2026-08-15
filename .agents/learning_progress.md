@@ -136,6 +136,7 @@
 - [x] **Package Scope & Import**: Paham aturan import antar folder (huruf kapital) dan kenapa file di folder yang sama (`package config`) tidak perlu di-import.
 - [x] **Clean Architecture Dependency Rule**: Paham aturan "Satu Arah" (Handler → Service → Repository → Models). Pantang melakukan *Circular Dependency*.
 - [x] **Career Pivot Strategy**: Paham nilai lebih dari latar belakang S1 + HTB Level 10 (Cybersecurity) di ekosistem Go, dan jalur *pivot* yang menjanjikan (SDET, SOC, AppSec/DevSecOps).
+- [x] **Microservices & Security Architecture**: Paham evolusi arsitektur dari Monolitik (1 Container) ➡️ Microservices per Fitur (Stack/Cluster) ➡️ Serverless/FaaS (Level Dewa). Menguasai pola pikir *Red Teamer*: paham konsep *Blast Radius*, *Lateral Movement*, dan bagaimana memecah container dapat mengisolasi serangan RCE (Mencegah *Total System Compromise*).
 
 ### 6. Authentication
 - [ ] bcrypt password hashing
