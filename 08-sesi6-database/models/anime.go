@@ -10,7 +10,8 @@ type Anime struct {
 	EpisodeWatch int       `json:"episode_watch"` // Progres nonton (misal: eps 12 dari 24)
 	Rating       float64   `json:"rating"`        // Skor penilaian (1.0 - 10.0)
 	Status       string    `json:"status"`        // "watching", "completed", "plan_to_watch", "dropped"
-	Synopsis     string    `json:"synopsis"`      // Sinopsis cerita
+	Synopsis     string    `json:"synopsis"`
+	ImageURL     string    `json:"image_url"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
 }
