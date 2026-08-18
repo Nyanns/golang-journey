@@ -54,14 +54,14 @@ flowchart LR
 
 | Sesi | Folder | Teknologi | Fitur NijiArt |
 | :---: | :--- | :--- | :--- |
-| 7 | `09-sesi7-relations` | DB Relations & Pagination | Model User, Artwork, Tag + relasi |
+| 7 | `09-sesi7-relations` | Git Flow, Makefile, Linter | Setup standar industri & relasi database |
 | 8 | `10-sesi8-auth` | JWT + Bcrypt | Register/Login artist |
 | 9 | `11-sesi9-redis` | Redis Caching | Cache popular artworks & trending tags |
 | 10 | `12-sesi10-testing` | Unit Test & Mocking | Test Service & Handler Layer |
 | 11 | `13-sesi11-websocket` | WebSocket | Real-time notifications (like/follow) |
 | 12 | `14-sesi12-goroutines` | Goroutines & File Upload | Upload ke Cloudinary + background resize |
 | 13 | `15-sesi13-docker` | Docker & Compose | Containerize seluruh stack |
-| 14 | `16-sesi14-swagger-git` | Swagger & Git Workflow | API docs + professional commits |
+| 14 | `16-sesi14-swagger-cicd` | Swagger & CI/CD Pipeline | API docs & GitHub Actions (Auto test) |
 | 15 | `17-sesi15-rabbitmq` | RabbitMQ | Async notification processing |
 | 16 | `18-sesi16-grpc` | gRPC | Internal recommendation service |
 | 17 | — | Polish & Deploy | Frontend (React) + deploy production |

@@ -133,9 +133,13 @@
 - [ ] Wiring di `main.go` (DI chain: DB → Repo → Service → Handler → Router)
 - [ ] Testing CRUD via Postman
 
-### Sesi 7: Database Relations & Migration 🎨 (NijiArt)
+### Sesi 7: Database Relations & Professional Setup 🎨 (NijiArt)
 > Mulai project baru: **NijiArt** — Platform sharing fan art anime (Pixiv-like)
+> Mulai sesi ini, kita pakai standar industri dari HARI PERTAMA!
 - [ ] Setup project baru dengan Clean Architecture
+- [ ] **Git Flow**: Branch `main`, `develop`, dan `feature/*`
+- [ ] **Makefile**: `make run`, `make build`, `make test`
+- [ ] **golangci-lint**: Setup linter untuk jaga kualitas kode
 - [ ] Model: User, Artwork, Tag
 - [ ] GORM Relations (One-to-Many: User → Artworks, Many-to-Many: Artwork ↔ Tags)
 - [ ] Preload & Eager Loading
@@ -193,12 +197,12 @@
 - [ ] Environment variables di Docker
 - Folder: `15-sesi13-docker/`
 
-### Sesi 14: Swagger/OpenAPI & Git Workflow 🎨 (NijiArt)
+### Sesi 14: Swagger API Docs & CI/CD Pipeline 🎨 (NijiArt)
 - [ ] Swagger annotations & generate docs
 - [ ] Serve Swagger UI
-- [ ] Conventional commits (feat:, fix:, chore:)
-- [ ] Branching strategy (main, develop, feature/*)
-- Folder: `16-sesi14-swagger-git/`
+- [ ] **CI/CD**: Setup GitHub Actions workflow
+- [ ] Auto-run `make test` & `golangci-lint` setiap kali Pull Request ke `develop`
+- Folder: `16-sesi14-swagger-cicd/`
 
 ### Sesi 15: Message Queue (RabbitMQ) 🎨 (NijiArt)
 - [ ] Install & jalankan RabbitMQ (via Docker)
