@@ -1,6 +1,6 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-08-13
+## Terakhir Diupdate: 2026-08-18
 
 ## Status: Sesi 6 SEDANG BERJALAN ⏳ (MyAnimeTracker — Anime Tracking & Collection API with PostgreSQL & GORM)
 
@@ -114,46 +114,127 @@
 
 ---
 
-## ⬜ Konsep yang Belum Dipelajari (Roadmap Selanjutnya)
+## ⬜ Konsep yang Belum Dipelajari (Roadmap Selanjutnya — REVISED)
 
-### Sesi 3 (Lanjutan — Gin Framework)
-- [x] Route grouping (`/api/v1/animes/...`)
-- [x] Middleware custom (Logger)
+> **Prinsip: 1 Sesi = 1 Teknologi = 1 Mini Project Praktik**
 
-### 4. Config & Environment
-- [ ] Config management (.env, viper/godotenv)
-
-### 5. Database (PostgreSQL + GORM)
+### Sesi 6: PostgreSQL + GORM — CRUD with DB ⏳ (CURRENT)
 - [x] Koneksi ke PostgreSQL via GORM (`config/database.go`)
 - [x] Pemahaman Mendalam DSN (Data Source Name)
 - [x] Konsep `AutoMigrate` (Code-First Database Schema)
-- [ ] CRUD operations via GORM
-- [ ] golang-migrate
+- [x] Repository Layer (CRUD via GORM)
+  - [x] `r.db.Find(&animes)` — Ambil banyak data
+  - [x] `r.db.First(&anime, id)` — Ambil 1 data spesifik
+  - [x] `r.db.Create(&anime)` — Tambah data baru & Auto-ID
+  - [x] `r.db.Save(&anime)` — Update data
+  - [x] `r.db.Delete(&models.Anime{}, id)` — Hapus data dengan struct kosong
+- [x] Service Layer (Business Logic + Validation sebelum Repo)
+- [ ] Handler Layer (HTTP/Gin → Service)
+- [ ] Wiring di `main.go` (DI chain: DB → Repo → Service → Handler → Router)
+- [ ] Testing CRUD via Postman
 
-### Konsep Mendalam (Deep Dives)
+### Sesi 7: Database Relations & Migration 🎨 (NijiArt)
+> Mulai project baru: **NijiArt** — Platform sharing fan art anime (Pixiv-like)
+- [ ] Setup project baru dengan Clean Architecture
+- [ ] Model: User, Artwork, Tag
+- [ ] GORM Relations (One-to-Many: User → Artworks, Many-to-Many: Artwork ↔ Tags)
+- [ ] Preload & Eager Loading
+- [ ] golang-migrate (up/down migration files)
+- Folder: `09-sesi7-relations/`
+
+### Sesi 8: Authentication (JWT + Bcrypt) 🎨 (NijiArt)
+- [ ] Model: User (username, email, password_hash, bio, avatar_url)
+- [ ] Register (hash password dengan bcrypt)
+- [ ] Login (validasi password → generate JWT Token)
+- [ ] Auth Middleware (cek token di setiap request)
+- [ ] Protected routes (upload artwork) vs Public routes (browse artwork)
+- Folder: `10-sesi8-auth/`
+
+### Sesi 9: Redis (Caching) 🎨 (NijiArt)
+- [ ] Install & jalankan Redis (via Docker)
+- [ ] Cache popular artworks & trending tags
+- [ ] GET: cek cache → miss → ambil dari DB → simpan ke cache
+- [ ] Cache invalidation (hapus cache saat POST/PUT/DELETE)
+- [ ] TTL (Time To Live)
+- Folder: `11-sesi9-redis/`
+
+### Sesi 10: WebSocket (Real-time) 🎨 (NijiArt)
+- [ ] Client connect via WebSocket
+- [ ] Real-time notification: "Ada yang like karya kamu!"
+- [ ] Server broadcast pesan ke semua client
+- [ ] Handling connect/disconnect
+- Folder: `12-sesi10-websocket/`
+
+### Sesi 11: Goroutines & Concurrency 🎨 (NijiArt)
+- [ ] goroutine basics (go func)
+- [ ] Channels untuk komunikasi antar goroutine
+- [ ] WaitGroup & Mutex
+- [ ] Praktik: background image processing (resize thumbnail)
+- Folder: `13-sesi11-goroutines/`
+
+### Sesi 12: Docker & Docker Compose 🎨 (NijiArt)
+- [ ] Dockerfile untuk Go app
+- [ ] docker-compose.yml (Go + PostgreSQL + Redis)
+- [ ] Multi-stage build
+- [ ] Environment variables di Docker
+- Folder: `14-sesi12-docker/`
+
+### Sesi 13: Swagger/OpenAPI & Git Workflow 🎨 (NijiArt)
+- [ ] Swagger annotations & generate docs
+- [ ] Serve Swagger UI
+- [ ] Conventional commits (feat:, fix:, chore:)
+- [ ] Branching strategy (main, develop, feature/*)
+- Folder: `15-sesi13-swagger-git/`
+
+### Sesi 14: Testing (Unit Test + Mocking)
+- [ ] Go testing basics (`_test.go`, `go test`)
+- [ ] Table-driven tests
+- [ ] Mocking dengan testify/mock
+- [ ] Test coverage
+- [ ] Praktik: test Service Layer & Handler Layer NijiArt
+- Folder: `16-sesi14-testing/`
+
+### Sesi 15: Message Queue (RabbitMQ)
+- [ ] Install & jalankan RabbitMQ (via Docker)
+- [ ] Producer & Consumer pattern
+- [ ] Publish event saat ada artwork baru → consumer kirim notifikasi
+- [ ] Dead Letter Queue (handling failed messages)
+- [ ] Praktik: async notification processing untuk NijiArt
+- Folder: `17-sesi15-rabbitmq/`
+
+### Sesi 16: gRPC (Inter-service Communication)
+- [ ] Protocol Buffers (protobuf) — define service & message
+- [ ] Unary RPC (request-response biasa)
+- [ ] Server Streaming RPC
+- [ ] gRPC vs REST — kapan pakai yang mana
+- [ ] Praktik: internal artwork recommendation service via gRPC
+- Folder: `18-sesi16-grpc/`
+
+### 🏆 Sesi 17: FINAL — NijiArt Polish & Deploy
+> NijiArt sudah dibangun cicil-cicil dari Sesi 7-16. Sekarang saatnya menyempurnakan!
+- [ ] Code review & refactor seluruh codebase
+- [ ] Frontend: Vite + React + TailwindCSS (AI bantu buat)
+- [ ] Full integration Backend + Frontend
+- [ ] Deploy: Render (API) + Supabase (DB) + Vercel (Frontend)
+- [ ] Final testing & demo
+
+### 🎯 Tantangan Mandiri (Lain Waktu): GoAntri — Smart Queue Management
+> Project ini untuk membuktikan bahwa Sandi bisa membangun aplikasi LENGKAP dari NOL secara MANDIRI, tanpa bimbingan. Ujian sejati seorang Mid-Level Dev.
+- [ ] Backend Go API (Sandi — 100% sendiri)
+- [ ] Frontend (Sandi — boleh pakai AI untuk assist)
+- [ ] Full deployment
+
+### Konsep Mendalam (Deep Dives) — Sudah Dikuasai
 - [x] **Pointers (`*` & `&`)**: Paham analogi Loker (`variabel`), Amplop (`*int`), dan Minta Alamat (`&`). Paham membedakan *pass by value* vs *pass by reference* untuk efisiensi memori.
 - [x] **Multiple Return Values**: Paham kenapa fungsi seperti `gorm.Open` mereturn `(*gorm.DB, error)`. Paham pentingnya error checking sebagai fondasi keamanan Go.
 - [x] **Package Scope & Import**: Paham aturan import antar folder (huruf kapital) dan kenapa file di folder yang sama (`package config`) tidak perlu di-import.
 - [x] **Clean Architecture Dependency Rule**: Paham aturan "Satu Arah" (Handler → Service → Repository → Models). Pantang melakukan *Circular Dependency*.
 - [x] **Career Pivot Strategy**: Paham nilai lebih dari latar belakang S1 + HTB Level 10 (Cybersecurity) di ekosistem Go, dan jalur *pivot* yang menjanjikan (SDET, SOC, AppSec/DevSecOps).
 - [x] **Microservices & Security Architecture**: Paham evolusi arsitektur dari Monolitik (1 Container) ➡️ Microservices per Fitur (Stack/Cluster) ➡️ Serverless/FaaS (Level Dewa). Menguasai pola pikir *Red Teamer*: paham konsep *Blast Radius*, *Lateral Movement*, dan bagaimana memecah container dapat mengisolasi serangan RCE (Mencegah *Total System Compromise*).
-
-### 6. Authentication
-- [ ] bcrypt password hashing
-- [ ] JWT token (golang-jwt/jwt/v5)
-- [ ] Auth middleware
-
-### 7. Docker & Deployment
-- [ ] Dockerfile untuk Go
-- [ ] docker-compose (Go + PostgreSQL + Redis)
-
-### 8. API Documentation
-- [ ] Swagger/OpenAPI (swaggo/swag)
-
-### 9. Final Project: GoAntri (Smart Queue Management)
-- [ ] Backend Go API (Sandi)
-- [ ] Frontend Vite + React + TailwindCSS (AI)
-- [ ] Full integration & Deployment (Bareng)
+- [x] **GORM & Pointers Mechanics**: Memahami bahwa `&anime` di GORM adalah pemberian "ember kosong" untuk diisi, dan pointer receiver `(r *AnimeRepository)` mencegah fotocopy memori. Serta paham keajaiban *Method Chaining* (misal `.Error`).
+- [x] **Constructor & Dependency Injection**: Paham analogi "Pabrik / Bidan" (`NewAnimeRepository`) yang bertugas mencetak objek nyata dan menyuntikkan "senjata" berupa koneksi database (`db *gorm.DB`).
+- [x] **High-Level Portofolio Mindset**: Mengetahui arsitektur tingkat dewa yang bisa diciptakan dengan Go (Custom Redis, Mini-Docker, Tsunami Load Tester, Custom Blockchain) berbekal dasar Networking dan Concurrency.
+- [x] **REST API Response Pattern**: Paham bahwa PUT/POST sebaiknya me-return data terbaru agar Frontend tidak perlu request GET tambahan. Paham bahwa Backend itu pasif (hanya menjawab request), bukan aktif push data — kecuali pakai WebSocket.
 
 ---
 
@@ -168,9 +249,12 @@
    - Sesi 1: butuh bimbingan per baris
    - Sesi 2: sudah nulis handler sendiri sebelum diinstruksikan
    - Sesi 3: nulis 5 endpoint CRUD + error handling hampir tanpa bantuan
+   - Sesi 6: nulis Service Layer sendiri (CreateAnime duluan sebelum diminta), bertanya kritis soal alur data Frontend-Backend
 7. **Bahasa pengantar** — campur Bahasa Indonesia + istilah teknis English
 8. **Analogi favorit** — warung makan, kantor pos, satpam mall, amplop surat, lemari baju, restoran modern
 9. **Murid yang sangat baik** — cepat, tapi mau paham mendalam. Kombinasi langka.
+10. **Anti AI-slop** — menolak glassmorphism karena terlihat AI-generated. Preferensi desain: clean, light theme, human-crafted.
+11. **Mematikan autocomplete saat belajar** — ingin benar-benar menulis sendiri tanpa bantuan IntelliSense.
 
 ---
 
@@ -203,57 +287,46 @@
 
 ---
 
-## 🚀 FINAL PROJECT: GoAntri — Smart Queue Management System
+## 🎨 MAIN PROJECT: NijiArt — Platform Sharing Fan Art Anime
 
-### Tagline: "Smart Queue, No More Waiting"
+### Tagline: "Your Art, Your World"
 
 ### Konsep Utama
-Aplikasi antrean digital untuk toko/klinik/barbershop.
-- **Pemilik Toko**: Daftar akun → Buat toko → Dapat QR Code/Link unik → Kelola antrean dari dashboard
-- **Pelanggan**: Scan QR / klik link → Isi nama (TANPA AKUN!) → Dapat nomor antrean → Terima notifikasi real-time saat giliran tiba
+Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih baik).
+- **Artist**: Register → Upload karya → Dapat followers → Lihat statistik
+- **Viewer**: Browse artwork → Like/Bookmark → Follow artist → Komentar
 
 ### Pembagian Kerja
-- **Backend (Sandi)**: Go + Gin + GORM + PostgreSQL + Redis + WebSocket + JWT
-- **Frontend (AI)**: Vite + React + TailwindCSS
-- **Deployment (Bareng)**: Render (API) + Supabase (DB) + Vercel (Frontend) — GRATIS tanpa kartu kredit
+- **Backend (Sandi)**: Go + Gin + GORM + PostgreSQL + Redis + WebSocket + JWT + RabbitMQ + gRPC
+- **Frontend (AI)**: Vite + React + TailwindCSS + Framer Motion
+- **Design**: Light theme (Pixiv-inspired redesign), anti AI-slop, performance-first
+- **Deployment**: Render (API) + Supabase (DB) + Vercel (Frontend)
 
-### Fitur yang Akan Dibangun
-| No | Fitur | Untuk Siapa |
-|----|-------|:-----------:|
-| 1 | Register & Login | Pemilik Toko |
-| 2 | Buat Toko + QR Code / Link unik | Pemilik Toko |
-| 3 | Scan QR → Daftar antrean (tanpa akun, isi nama saja) | Pelanggan |
-| 4 | Real-time posisi antrean (WebSocket) | Pelanggan |
-| 5 | Buzzer digital (layar hijau + bunyi saat giliran tiba) | Pelanggan |
-| 6 | Tombol "NEXT" (panggil pelanggan berikutnya) | Pemilik Toko |
-| 7 | Estimasi waktu tunggu | Pelanggan |
-| 8 | Analytics dashboard (jam sibuk, rata-rata pelanggan/hari, rata-rata waktu layanan) | Pemilik Toko |
-| 9 | Swagger API Docs | Developer |
-| 10 | Docker Compose (Go + PostgreSQL + Redis) | DevOps |
+### Dibangun Cicil-cicil dari Sesi 7-17
+| Sesi | Teknologi | Fitur NijiArt yang Ditambahkan |
+|------|-----------|-------------------------------|
+| 7 | DB Relations | Model User, Artwork, Tag + relasi |
+| 8 | Auth | Register/Login artist |
+| 9 | Redis | Cache popular artworks |
+| 10 | WebSocket | Notifikasi real-time (like/follow) |
+| 11 | Goroutines | Background image processing |
+| 12 | Docker | Containerize seluruh stack |
+| 13 | Swagger & Git | API docs + professional git workflow |
+| 14 | Testing | Unit test & mocking |
+| 15 | RabbitMQ | Async notification processing |
+| 16 | gRPC | Internal recommendation service |
+| 17 | Polish & Deploy | Frontend + deploy production |
 
-### Endpoint API (Rancangan Awal)
-| Endpoint | Siapa | Auth? |
-|----------|:-----:|:-----:|
-| POST /api/v1/auth/register | Pemilik | — |
-| POST /api/v1/auth/login | Pemilik | — |
-| POST /api/v1/stores | Pemilik | ✅ JWT |
-| GET /api/v1/stores/:id/queue | Pemilik | ✅ JWT |
-| POST /api/v1/stores/:id/queue/next | Pemilik | ✅ JWT |
-| GET /api/v1/stores/:id/analytics | Pemilik | ✅ JWT |
-| POST /api/v1/q/:code/join | Pelanggan | ❌ |
-| GET /api/v1/q/:code/status/:ticket | Pelanggan | ❌ |
-| WS /api/v1/q/:code/live/:ticket | Pelanggan | ❌ |
+### Level Project: Mid-Level Portfolio
 
-### Teknologi yang Dipelajari dari Project Ini
-1. REST API (Gin)
-2. PostgreSQL + GORM
-3. Database Relations (One-to-Many)
-4. JWT + Bcrypt
-5. Redis (Caching)
-6. WebSocket (Real-time)
-7. Goroutines (Background analytics)
-8. SQL Aggregation (Analytics queries)
-9. Docker Compose
-10. Swagger/OpenAPI
+---
 
-### Level Project: Mid-Level (Strong Junior Portfolio)
+## 🎯 TANTANGAN MANDIRI (Lain Waktu): GoAntri — Smart Queue Management
+
+> Project ini untuk membuktikan bahwa Sandi bisa membangun aplikasi LENGKAP dari NOL secara MANDIRI.
+> Ujian sejati seorang Mid-Level Dev. Disimpan untuk dikerjakan setelah semua sesi selesai.
+
+### Konsep: Aplikasi antrean digital untuk toko/klinik/barbershop.
+- Backend Go API (100% sendiri)
+- Frontend (boleh pakai AI assist)
+- Full deployment
