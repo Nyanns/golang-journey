@@ -139,6 +139,7 @@
 - [ ] Model: User, Artwork, Tag
 - [ ] GORM Relations (One-to-Many: User → Artworks, Many-to-Many: Artwork ↔ Tags)
 - [ ] Preload & Eager Loading
+- [ ] **Pagination** (`?page=1&limit=20`, GORM `.Offset()` & `.Limit()`)
 - [ ] golang-migrate (up/down migration files)
 - Folder: `09-sesi7-relations/`
 
@@ -158,43 +159,48 @@
 - [ ] TTL (Time To Live)
 - Folder: `11-sesi9-redis/`
 
-### Sesi 10: WebSocket (Real-time) 🎨 (NijiArt)
-- [ ] Client connect via WebSocket
-- [ ] Real-time notification: "Ada yang like karya kamu!"
-- [ ] Server broadcast pesan ke semua client
-- [ ] Handling connect/disconnect
-- Folder: `12-sesi10-websocket/`
-
-### Sesi 11: Goroutines & Concurrency 🎨 (NijiArt)
-- [ ] goroutine basics (go func)
-- [ ] Channels untuk komunikasi antar goroutine
-- [ ] WaitGroup & Mutex
-- [ ] Praktik: background image processing (resize thumbnail)
-- Folder: `13-sesi11-goroutines/`
-
-### Sesi 12: Docker & Docker Compose 🎨 (NijiArt)
-- [ ] Dockerfile untuk Go app
-- [ ] docker-compose.yml (Go + PostgreSQL + Redis)
-- [ ] Multi-stage build
-- [ ] Environment variables di Docker
-- Folder: `14-sesi12-docker/`
-
-### Sesi 13: Swagger/OpenAPI & Git Workflow 🎨 (NijiArt)
-- [ ] Swagger annotations & generate docs
-- [ ] Serve Swagger UI
-- [ ] Conventional commits (feat:, fix:, chore:)
-- [ ] Branching strategy (main, develop, feature/*)
-- Folder: `15-sesi13-swagger-git/`
-
-### Sesi 14: Testing (Unit Test + Mocking)
+### Sesi 10: Testing (Unit Test + Mocking) 🎨 (NijiArt)
+> Dipindah ke sini agar kebiasaan menulis test terbentuk lebih awal!
 - [ ] Go testing basics (`_test.go`, `go test`)
 - [ ] Table-driven tests
 - [ ] Mocking dengan testify/mock
 - [ ] Test coverage
 - [ ] Praktik: test Service Layer & Handler Layer NijiArt
-- Folder: `16-sesi14-testing/`
+- Folder: `12-sesi10-testing/`
 
-### Sesi 15: Message Queue (RabbitMQ)
+### Sesi 11: WebSocket (Real-time) 🎨 (NijiArt)
+- [ ] Client connect via WebSocket
+- [ ] Real-time notification: "Ada yang like karya kamu!"
+- [ ] Server broadcast pesan ke semua client
+- [ ] Handling connect/disconnect
+- [ ] Menulis test untuk WebSocket handler
+- Folder: `13-sesi11-websocket/`
+
+### Sesi 12: Goroutines, Concurrency & File Upload 🎨 (NijiArt)
+> Upload gambar ke Cloudinary + background processing
+- [ ] goroutine basics (go func)
+- [ ] Channels untuk komunikasi antar goroutine
+- [ ] WaitGroup & Mutex
+- [ ] **File Upload**: Multipart form upload di Gin
+- [ ] **Cloudinary**: Upload gambar → dapat URL → simpan URL ke DB
+- [ ] Praktik: user upload artwork → goroutine resize thumbnail di background
+- Folder: `14-sesi12-goroutines/`
+
+### Sesi 13: Docker & Docker Compose 🎨 (NijiArt)
+- [ ] Dockerfile untuk Go app
+- [ ] docker-compose.yml (Go + PostgreSQL + Redis)
+- [ ] Multi-stage build
+- [ ] Environment variables di Docker
+- Folder: `15-sesi13-docker/`
+
+### Sesi 14: Swagger/OpenAPI & Git Workflow 🎨 (NijiArt)
+- [ ] Swagger annotations & generate docs
+- [ ] Serve Swagger UI
+- [ ] Conventional commits (feat:, fix:, chore:)
+- [ ] Branching strategy (main, develop, feature/*)
+- Folder: `16-sesi14-swagger-git/`
+
+### Sesi 15: Message Queue (RabbitMQ) 🎨 (NijiArt)
 - [ ] Install & jalankan RabbitMQ (via Docker)
 - [ ] Producer & Consumer pattern
 - [ ] Publish event saat ada artwork baru → consumer kirim notifikasi
@@ -202,7 +208,7 @@
 - [ ] Praktik: async notification processing untuk NijiArt
 - Folder: `17-sesi15-rabbitmq/`
 
-### Sesi 16: gRPC (Inter-service Communication)
+### Sesi 16: gRPC (Inter-service Communication) 🎨 (NijiArt)
 - [ ] Protocol Buffers (protobuf) — define service & message
 - [ ] Unary RPC (request-response biasa)
 - [ ] Server Streaming RPC
@@ -213,9 +219,9 @@
 ### 🏆 Sesi 17: FINAL — NijiArt Polish & Deploy
 > NijiArt sudah dibangun cicil-cicil dari Sesi 7-16. Sekarang saatnya menyempurnakan!
 - [ ] Code review & refactor seluruh codebase
-- [ ] Frontend: Vite + React + TailwindCSS (AI bantu buat)
+- [ ] Frontend: Vite + React + TailwindCSS + Framer Motion (AI bantu buat)
 - [ ] Full integration Backend + Frontend
-- [ ] Deploy: Render (API) + Supabase (DB) + Vercel (Frontend)
+- [ ] Deploy: Render (API) + Supabase (DB) + Cloudinary (Images) + Vercel (Frontend)
 - [ ] Final testing & demo
 
 ### 🎯 Tantangan Mandiri (Lain Waktu): GoAntri — Smart Queue Management
@@ -300,19 +306,19 @@ Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih bai
 - **Backend (Sandi)**: Go + Gin + GORM + PostgreSQL + Redis + WebSocket + JWT + RabbitMQ + gRPC
 - **Frontend (AI)**: Vite + React + TailwindCSS + Framer Motion
 - **Design**: Light theme (Pixiv-inspired redesign), anti AI-slop, performance-first
-- **Deployment**: Render (API) + Supabase (DB) + Vercel (Frontend)
+- **Deployment**: Render (API) + Supabase (DB) + Cloudinary (Images) + Vercel (Frontend)
 
 ### Dibangun Cicil-cicil dari Sesi 7-17
 | Sesi | Teknologi | Fitur NijiArt yang Ditambahkan |
 |------|-----------|-------------------------------|
-| 7 | DB Relations | Model User, Artwork, Tag + relasi |
+| 7 | DB Relations | Model User, Artwork, Tag + relasi + pagination |
 | 8 | Auth | Register/Login artist |
 | 9 | Redis | Cache popular artworks |
-| 10 | WebSocket | Notifikasi real-time (like/follow) |
-| 11 | Goroutines | Background image processing |
-| 12 | Docker | Containerize seluruh stack |
-| 13 | Swagger & Git | API docs + professional git workflow |
-| 14 | Testing | Unit test & mocking |
+| 10 | Testing | Unit test & mocking (kebiasaan pro!) |
+| 11 | WebSocket | Notifikasi real-time (like/follow) |
+| 12 | Goroutines + File Upload | Upload artwork ke Cloudinary + background resize |
+| 13 | Docker | Containerize seluruh stack |
+| 14 | Swagger & Git | API docs + professional git workflow |
 | 15 | RabbitMQ | Async notification processing |
 | 16 | gRPC | Internal recommendation service |
 | 17 | Polish & Deploy | Frontend + deploy production |
