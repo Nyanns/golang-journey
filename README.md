@@ -7,11 +7,13 @@
 [![Gin Framework](https://img.shields.io/badge/Gin-v1.12-008ECF?style=for-the-badge&logo=gin&logoColor=white)](https://gin-gonic.com)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org)
 [![GORM](https://img.shields.io/badge/GORM-v1.31-7952B3?style=for-the-badge&logo=go&logoColor=white)](https://gorm.io)
+[![Redis](https://img.shields.io/badge/Redis-Cache-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
+[![RabbitMQ](https://img.shields.io/badge/RabbitMQ-MQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)](https://www.rabbitmq.com)
 [![Docker](https://img.shields.io/badge/Docker-Engine-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
 [![Conventional Commits](https://img.shields.io/badge/Commits-Conventional-FE5196?style=for-the-badge&logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
 
 <p align="center">
-  <b>Repository perjalanan belajar intensif menuju Senior Go Backend Engineer.</b><br>
+  <b>Repository perjalanan belajar intensif menuju Mid-Level Go Backend Engineer.</b><br>
   Fokus pada <i>Clean Architecture</i>, <i>Database Design</i>, <i>Security Mindset</i>, dan <i>Production-Ready APIs</i>.
 </p>
 
@@ -21,28 +23,53 @@
 
 ## 🗺️ Roadmap & Modul Pembelajaran
 
+> **Prinsip: 1 Sesi = 1 Teknologi = 1 Mini Project Praktik**
+
 ```mermaid
 flowchart LR
-    S1["🌸 Sesi 1\nWaifu API\n(net/http Dasar)"] --> S2["📖 Sesi 2\nManga API\n(Routing & Method)"]
-    S2 --> S3["⚡ Sesi 3\nAnime API\n(Gin Framework)"]
-    S3 --> S4["🏛️ Sesi 4\nClean Architecture\n(Handler-Service-Repo)"]
-    S4 --> S5["🔐 Sesi 5\nConfig Management\n(.env & 12-Factor)"]
-    S5 --> S6["🐘 Sesi 6\nMyAnimeTracker\n(PostgreSQL + GORM)"]
-    S6 --> Final["🔥 FINAL PROJECT\nGoAntri\n(Smart Queue System)"]
+    S1["🌸 Sesi 1\nWaifu API\n(net/http)"] --> S2["📖 Sesi 2\nManga API\n(Routing)"]
+    S2 --> S3["⚡ Sesi 3\nAnime API\n(Gin)"]
+    S3 --> S4["🏛️ Sesi 4\nClean Arch\n(H-S-R)"]
+    S4 --> S5["🔐 Sesi 5\nConfig\n(.env)"]
+    S5 --> S6["🐘 Sesi 6\nMyAnimeTracker\n(PostgreSQL+GORM)"]
+    S6 --> S7["🎨 Sesi 7-17\nNijiArt\n(Full Stack)"]
+    S7 --> FP["🎯 GoAntri\n(Solo Challenge)"]
 ```
 
-| Modul | Project | Fokus & Konsep Utama | Status |
-| :--- | :--- | :--- | :---: |
-| **01** | `03-sesi1-waifu` | `net/http` standard library, handler signature, JSON serialization | ✅ Selesai |
-| **02** | `04-sesi2-manga` | RESTful routing, URL prefix parsing, in-memory slice manipulation | ✅ Selesai |
-| **03** | `05-sesi3-gin` | Gin Engine, route grouping, `c.ShouldBindJSON`, middleware | ✅ Selesai |
-| **04** | `06-sesi4-structure` | Clean Architecture (Handler-Service-Repository), Dependency Injection | ✅ Selesai |
-| **05** | `07-sesi5-config` | 12-Factor App, `.env`, fallback defaults, `joho/godotenv` | ✅ Selesai |
-| **06** | `08-sesi6-database` | **MyAnimeTracker**: PostgreSQL, GORM, AutoMigrate, Relational CRUD | ⏳ In Progress |
-| **07** | *Coming Soon* | JWT Authentication, Bcrypt Password Hashing, Auth Middleware | ⬜ Planned |
-| **08** | *Coming Soon* | Redis Caching, WebSocket Real-time notifications | ⬜ Planned |
-| **09** | *Coming Soon* | Swagger/OpenAPI Documentation (`swaggo/swag`) | ⬜ Planned |
-| **10** | **GoAntri** | **Final Capstone Project**: Smart Queue Management System | 🚀 Planned |
+### Fase 1: Fondasi (MyAnimeTracker)
+
+| Sesi | Folder | Fokus & Konsep Utama | Status |
+| :---: | :--- | :--- | :---: |
+| 1 | `03-sesi1-waifu` | `net/http` standard library, handler signature, JSON serialization | ✅ |
+| 2 | `04-sesi2-manga` | RESTful routing, URL prefix parsing, in-memory slice manipulation | ✅ |
+| 3 | `05-sesi3-gin` | Gin Engine, route grouping, `c.ShouldBindJSON`, middleware | ✅ |
+| 4 | `06-sesi4-structure` | Clean Architecture (Handler-Service-Repository), Dependency Injection | ✅ |
+| 5 | `07-sesi5-config` | 12-Factor App, `.env`, fallback defaults, `joho/godotenv` | ✅ |
+| 6 | `08-sesi6-database` | **MyAnimeTracker**: PostgreSQL, GORM, AutoMigrate, Relational CRUD | ⏳ |
+
+### Fase 2: NijiArt 🎨 — Platform Sharing Fan Art Anime
+
+> Terinspirasi Pixiv, tapi redesign yang lebih baik dan unik.
+> Setiap sesi menambahkan 1 teknologi baru ke NijiArt.
+
+| Sesi | Folder | Teknologi | Fitur NijiArt |
+| :---: | :--- | :--- | :--- |
+| 7 | `09-sesi7-relations` | DB Relations & Migration | Model User, Artwork, Tag + relasi |
+| 8 | `10-sesi8-auth` | JWT + Bcrypt | Register/Login artist |
+| 9 | `11-sesi9-redis` | Redis Caching | Cache popular artworks & trending tags |
+| 10 | `12-sesi10-websocket` | WebSocket | Real-time notifications (like/follow) |
+| 11 | `13-sesi11-goroutines` | Goroutines & Concurrency | Background image processing |
+| 12 | `14-sesi12-docker` | Docker & Compose | Containerize seluruh stack |
+| 13 | `15-sesi13-swagger-git` | Swagger & Git Workflow | API docs + professional commits |
+| 14 | `16-sesi14-testing` | Unit Test & Mocking | Test Service & Handler Layer |
+| 15 | `17-sesi15-rabbitmq` | RabbitMQ | Async notification processing |
+| 16 | `18-sesi16-grpc` | gRPC | Internal recommendation service |
+| 17 | — | Polish & Deploy | Frontend (React) + deploy production |
+
+### 🎯 Tantangan Mandiri: GoAntri — Smart Queue Management
+
+> Project solo untuk membuktikan kemampuan membangun aplikasi lengkap dari nol secara mandiri.
+> Dikerjakan setelah semua sesi selesai — ujian sejati seorang Mid-Level Dev.
 
 ---
 
@@ -98,13 +125,22 @@ flowchart TD
 
 ## 🛠️ Tech Stack & Ekosistem
 
-* **Language**: [Go (Golang) v1.21+](https://go.dev/)
-* **Web Framework**: [Gin-Gonic](https://github.com/gin-gonic/gin)
-* **Database**: [PostgreSQL 16](https://www.postgresql.org/)
-* **ORM**: [GORM](https://gorm.io/)
-* **Environment**: [Godotenv](https://github.com/joho/godotenv)
-* **Containerization**: [Docker & Docker Compose](https://www.docker.com/)
-* **Frontend Companion**: [Vite + React + TailwindCSS](https://vitejs.dev/)
+| Kategori | Teknologi |
+| :--- | :--- |
+| **Language** | [Go (Golang) v1.21+](https://go.dev/) |
+| **Web Framework** | [Gin-Gonic](https://github.com/gin-gonic/gin) |
+| **Database** | [PostgreSQL 16](https://www.postgresql.org/) |
+| **ORM** | [GORM](https://gorm.io/) |
+| **Cache** | [Redis](https://redis.io/) |
+| **Message Queue** | [RabbitMQ](https://www.rabbitmq.com/) |
+| **Real-time** | WebSocket ([gorilla/websocket](https://github.com/gorilla/websocket)) |
+| **Inter-service** | [gRPC](https://grpc.io/) + Protocol Buffers |
+| **Auth** | JWT ([golang-jwt](https://github.com/golang-jwt/jwt)) + Bcrypt |
+| **Environment** | [Godotenv](https://github.com/joho/godotenv) |
+| **Docs** | [Swagger/OpenAPI](https://github.com/swaggo/swag) |
+| **Testing** | Go testing + [Testify](https://github.com/stretchr/testify) |
+| **Containerization** | [Docker & Docker Compose](https://www.docker.com/) |
+| **Frontend** | [Vite](https://vitejs.dev/) + [React](https://react.dev/) + [TailwindCSS](https://tailwindcss.com/) + [Framer Motion](https://www.framer.com/motion/) |
 
 ---
 
@@ -121,5 +157,5 @@ Repository ini menerapkan format commit profesional:
 ---
 
 <div align="center">
-  <sub>Crafted with passion & senior engineering principles.</sub>
+  <sub>Crafted with passion & mid-level engineering principles.</sub>
 </div>
