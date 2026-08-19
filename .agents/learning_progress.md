@@ -129,7 +129,7 @@
   - [x] `r.db.Save(&anime)` — Update data
   - [x] `r.db.Delete(&models.Anime{}, id)` — Hapus data dengan struct kosong
 - [x] Service Layer (Business Logic + Validation sebelum Repo)
-- [ ] Handler Layer (HTTP/Gin → Service)
+- [x] Handler Layer (HTTP/Gin → Service)
 - [ ] Wiring di `main.go` (DI chain: DB → Repo → Service → Handler → Router)
 - [ ] Testing CRUD via Postman
 
