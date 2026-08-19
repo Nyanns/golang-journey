@@ -364,6 +364,26 @@ erDiagram
 
 ---
 
+### 🛡️ Security Checklist (Wajib Diimplementasi)
+
+#### Sudah Ter-cover di Roadmap:
+- [ ] **Authentication**: JWT + Bcrypt password hashing (Sesi 8)
+- [ ] **Authorization**: Protected routes + owner-only actions (Sesi 8)
+- [ ] **Rate Limiting**: Redis-based, per endpoint (Sesi 9)
+- [ ] **Input Validation**: `binding:"required"` + ShouldBindJSON (Sesi 7+)
+- [x] **CORS**: Whitelist origin tertentu (sudah dari Sesi 4)
+- [x] **SQL Injection Prevention**: GORM parameterized queries (otomatis aman)
+- [x] **Environment Secrets**: `.env` + `.gitignore` (sudah dari Sesi 5)
+
+#### Tambahan Security Measures:
+- [ ] **XSS Prevention**: Sanitize semua user input sebelum simpan ke DB (Sesi 7-8)
+- [ ] **File Upload Validation**: Validasi MIME type + file size limit (Sesi 12)
+- [ ] **JWT Short-lived Tokens**: Access token 15 menit + refresh token (Sesi 8)
+- [ ] **Data Exposure Prevention**: `json:"-"` di field sensitif seperti password_hash (Sesi 7)
+- [ ] **IDOR Protection**: Cek ownership di Service layer (Sesi 8)
+- [ ] **Security Headers**: X-Frame-Options, CSP, X-Content-Type-Options (Middleware)
+- [ ] **Account Lockout**: Lock setelah 5x gagal login (Sesi 9)
+
 > [!IMPORTANT]
-> **Sesi 7 dimulai sekarang.** Scope-nya adalah: project setup + models + relations + pagination.
-> Apakah kamu setuju dengan rancangan ini, San? Kalau ada yang mau ditambah/diubah, sekarang waktunya sebelum kita mulai ngoding.
+> **Sesi 7 dimulai.** Scope: project setup + models + relations + pagination.
+> Security measures akan diimplementasi bertahap sesuai sesi masing-masing.
