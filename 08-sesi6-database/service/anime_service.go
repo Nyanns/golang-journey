@@ -5,27 +5,27 @@ import (
 	"sesi6/repository"
 )
 
-type animeService struct {
+type AnimeService struct {
 	repo *repository.AnimeRepository
 }
 
-func NewAnimeService(repo *repository.AnimeRepository) *animeService {
-	return &animeService{repo: repo}
+func NewAnimeService(repo *repository.AnimeRepository) *AnimeService {
+	return &AnimeService{repo: repo}
 }
 
-func (s *animeService) GetAllAnime() []models.Anime {
+func (s *AnimeService) GetAllAnime() []models.Anime {
 	return s.repo.GetAllAnime()
 }
 
-func (s *animeService) CreateAnime(anime models.Anime) (models.Anime, error) {
+func (s *AnimeService) CreateAnime(anime models.Anime) (models.Anime, error) {
 	return s.repo.CreateAnime(anime)
 }
 
-func (s *animeService) GetAnimeByID(id int) (models.Anime, error) {
+func (s *AnimeService) GetAnimeByID(id int) (models.Anime, error) {
 	return s.repo.GetAnimeByID(id)
 }
 
-func (s *animeService) DeleteAnime(id int) error {
+func (s *AnimeService) DeleteAnime(id int) error {
 	_, err := s.repo.GetAnimeByID(id)
 	if err != nil {
 		return err
@@ -33,7 +33,7 @@ func (s *animeService) DeleteAnime(id int) error {
 	return s.repo.DeleteAnime(id)
 }
 
-func (s *animeService) UpdateAnime(id int, updateData models.Anime) (models.Anime, error) {
+func (s *AnimeService) UpdateAnime(id int, updateData models.Anime) (models.Anime, error) {
 	_, err := s.repo.GetAnimeByID(id)
 	if err != nil {
 		return models.Anime{}, err

@@ -155,12 +155,17 @@
 - [ ] Protected routes (upload artwork) vs Public routes (browse artwork)
 - Folder: `10-sesi8-auth/`
 
-### Sesi 9: Redis (Caching) 🎨 (NijiArt)
+### Sesi 9: Redis (Caching + Rate Limiting) 🎨 (NijiArt)
 - [ ] Install & jalankan Redis (via Docker)
 - [ ] Cache popular artworks & trending tags
 - [ ] GET: cek cache → miss → ambil dari DB → simpan ke cache
 - [ ] Cache invalidation (hapus cache saat POST/PUT/DELETE)
 - [ ] TTL (Time To Live)
+- [ ] **Rate Limiting** (Redis-based, per IP/user)
+  - [ ] Anti brute-force login (5 req/min)
+  - [ ] Anti spam upload (10 req/min)
+  - [ ] Anti vote manipulation (30 req/min)
+  - [ ] General API rate limit (100 req/min)
 - Folder: `11-sesi9-redis/`
 
 ### Sesi 10: Testing (Unit Test + Mocking) 🎨 (NijiArt)

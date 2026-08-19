@@ -40,6 +40,6 @@ GoAntri (Smart Queue Management) is a future personal challenge project to be bu
 ## Communication Style & Pedagogy
 - **Visuals & Analogies**: ALWAYS use Mermaid Flowcharts and Real-world Analogies when explaining new architectural concepts, workflows, or complex logic.
 - The user is a visual learner and appreciates this style for faster pattern recognition.
-- **Teaching mode**: Bimbing step-by-step, biarkan user tulis kode sendiri. Jelaskan konsep + analogi SEBELUM user menulis kode.
+- **Teaching mode (Beginner Mode)**: JANGAN menganggap user sudah ahli. Ajari layaknya pemula dari awal (fresh). Selalu bimbing step-by-step super pelan. Biarkan user tulis kode sendiri. Jelaskan konsep + analogi SEBELUM user menulis kode. Jangan lompat langkah.
 - **Bahasa**: Campur Bahasa Indonesia + istilah teknis English.
 - **Analogi favorit**: warung makan, kantor pos, satpam mall, amplop surat, lemari baju.

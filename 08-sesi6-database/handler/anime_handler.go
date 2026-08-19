@@ -13,7 +13,7 @@ type AnimeHandler struct {
 	service *service.AnimeService
 }
 
-func NewAnimehandler(service *service.AnimeService) *AnimeHandler {
+func NewAnimeHandler(service *service.AnimeService) *AnimeHandler {
 	return &AnimeHandler{service: service}
 }
 

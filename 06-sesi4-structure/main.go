@@ -40,6 +40,7 @@ func main() {
 	// 4. Routing Grouping
 	v1 := r.Group("/api/v1")
 	anime := v1.Group("/animes")
+
 	{
 		anime.GET("", hndlr.GetAnimes)
 		anime.POST("", hndlr.CreateAnime)
