@@ -317,15 +317,33 @@ Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih bai
 |------|-----------|-------------------------------|
 | 7 | DB Relations | Model User, Artwork, Tag + relasi + pagination |
 | 8 | Auth | Register/Login artist |
-| 9 | Redis | Cache popular artworks |
+| 9 | Redis | Cache popular artworks + Art Challenge leaderboard |
 | 10 | Testing | Unit test & mocking (kebiasaan pro!) |
-| 11 | WebSocket | Notifikasi real-time (like/follow) |
+| 11 | WebSocket | Notifikasi real-time (like/follow) + Live vote Art Challenge |
 | 12 | Goroutines + File Upload | Upload artwork ke Cloudinary + background resize |
 | 13 | Docker | Containerize seluruh stack |
 | 14 | Swagger & Git | API docs + professional git workflow |
 | 15 | RabbitMQ | Async notification processing |
-| 16 | gRPC | Internal recommendation service |
+| 16 | gRPC | Internal Remix Tree service |
 | 17 | Polish & Deploy | Frontend + deploy production |
+
+### 🌟 Fitur Unik NijiArt (Bukan Sekadar Clone Pixiv!)
+
+#### v1 — Dibangun Bersama di Sesi 7-17:
+1. **🎯 Art Challenge (Kontes Mingguan)**
+   - Admin/komunitas bikin challenge bertema → Artist submit karya → Viewer vote → Leaderboard real-time → Badge pemenang
+   - Teknologi: Redis (leaderboard + vote counter), WebSocket (live votes), Scheduled Jobs (auto start/end)
+   - Nilai: Bikin komunitas hidup dan kompetitif, fitur yang Pixiv nggak punya
+
+2. **🔗 Remix Tree (Karya Turunan)**
+   - Dengan izin artist asli, user lain bisa bikin "remix/redraw" → Sistem bikin visual tree rantai inspirasi (Original → Remix A → Remix B)
+   - Teknologi: Graph Relationships di DB (parent-child tree), gRPC internal service
+   - Nilai: Konsep genuinely fresh, bikin komunitas kolaboratif bukan kompetitif
+
+#### v2 — Backlog (Dikerjakan Nanti Kalau v1 Selesai):
+3. **🛒 Komisi System** — Artist buka slot komisi, Client pesan artwork custom, status tracking + chat real-time
+4. **⏳ Ephemeral Exhibition** — Pameran sementara yang otomatis hilang setelah X hari (Redis TTL + FOMO)
+5. **🎨 Color Palette Extraction** — Auto-extract warna dominan dari artwork, search by color palette (image processing + Goroutine)
 
 ### Level Project: Mid-Level Portfolio
 
