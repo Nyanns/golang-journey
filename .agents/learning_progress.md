@@ -338,6 +338,7 @@ Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih bai
 2. **🔗 Remix Tree (Karya Turunan)**
    - Dengan izin artist asli, user lain bisa bikin "remix/redraw" → Sistem bikin visual tree rantai inspirasi (Original → Remix A → Remix B)
    - Teknologi: Graph Relationships di DB (parent-child tree), gRPC internal service
+   - **Visualisasi**: Obsidian-like Graph Node (pohon faktor/node interaktif). Frontend pakai React Flow atau D3.js force-directed graph. User bisa klik node, zoom, drag. Setiap node = 1 artwork dengan thumbnail.
    - Nilai: Konsep genuinely fresh, bikin komunitas kolaboratif bukan kompetitif
 
 #### v2 — Backlog (Dikerjakan Nanti Kalau v1 Selesai):
