@@ -2,7 +2,7 @@
 
 ## Terakhir Diupdate: 2026-08-18
 
-## Status: Sesi 6 SEDANG BERJALAN ⏳ (MyAnimeTracker — Anime Tracking & Collection API with PostgreSQL & GORM)
+## Status: Sesi 6 SELESAI ✅ (Lanjut ke Sesi 7 NijiArt)
 
 ---
 
@@ -118,7 +118,7 @@
 
 > **Prinsip: 1 Sesi = 1 Teknologi = 1 Mini Project Praktik**
 
-### Sesi 6: PostgreSQL + GORM — CRUD with DB ⏳ (CURRENT)
+### Sesi 6: PostgreSQL + GORM — CRUD with DB ✅ (SELESAI)
 - [x] Koneksi ke PostgreSQL via GORM (`config/database.go`)
 - [x] Pemahaman Mendalam DSN (Data Source Name)
 - [x] Konsep `AutoMigrate` (Code-First Database Schema)
@@ -130,8 +130,8 @@
   - [x] `r.db.Delete(&models.Anime{}, id)` — Hapus data dengan struct kosong
 - [x] Service Layer (Business Logic + Validation sebelum Repo)
 - [x] Handler Layer (HTTP/Gin → Service)
-- [ ] Wiring di `main.go` (DI chain: DB → Repo → Service → Handler → Router)
-- [ ] Testing CRUD via Postman
+- [x] Wiring di `main.go` (DI chain: DB → Repo → Service → Handler → Router)
+- [x] Testing CRUD via Postman
 
 ### Sesi 7: Database Relations & Professional Setup 🎨 (NijiArt)
 > Mulai project baru: **NijiArt** — Platform sharing fan art anime (Pixiv-like)
