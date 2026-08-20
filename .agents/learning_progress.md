@@ -2,7 +2,7 @@
 
 ## Terakhir Diupdate: 2026-08-18
 
-## Status: Sesi 6 SELESAI ✅ (Lanjut ke Sesi 7 NijiArt)
+## Status: Sesi 6 SELESAI ✅ (Lanjut ke Sesi 7 Lumina)
 
 ---
 
@@ -133,8 +133,8 @@
 - [x] Wiring di `main.go` (DI chain: DB → Repo → Service → Handler → Router)
 - [x] Testing CRUD via Postman
 
-### Sesi 7: Database Relations & Professional Setup 🎨 (NijiArt)
-> Mulai project baru: **NijiArt** — Platform sharing fan art anime (Pixiv-like)
+### Sesi 7: Database Relations & Professional Setup 🎨 (Lumina)
+> Mulai project baru: **Lumina** — Platform sharing fan art anime (Pixiv-like)
 > Mulai sesi ini, kita pakai standar industri dari HARI PERTAMA!
 - [ ] Setup project baru dengan Clean Architecture
 - [ ] **Git Flow**: Branch `main`, `develop`, dan `feature/*`
@@ -145,17 +145,17 @@
 - [ ] Preload & Eager Loading
 - [ ] **Pagination** (`?page=1&limit=20`, GORM `.Offset()` & `.Limit()`)
 - [ ] golang-migrate (up/down migration files)
-- Folder: `09-sesi7-relations/`
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 8: Authentication (JWT + Bcrypt) 🎨 (NijiArt)
+### Sesi 8: Authentication (JWT + Bcrypt) 🎨 (Lumina)
 - [ ] Model: User (username, email, password_hash, bio, avatar_url)
 - [ ] Register (hash password dengan bcrypt)
 - [ ] Login (validasi password → generate JWT Token)
 - [ ] Auth Middleware (cek token di setiap request)
 - [ ] Protected routes (upload artwork) vs Public routes (browse artwork)
-- Folder: `10-sesi8-auth/`
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 9: Redis (Caching + Rate Limiting) 🎨 (NijiArt)
+### Sesi 9: Redis (Caching + Rate Limiting) 🎨 (Lumina)
 - [ ] Install & jalankan Redis (via Docker)
 - [ ] Cache popular artworks & trending tags
 - [ ] GET: cek cache → miss → ambil dari DB → simpan ke cache
@@ -166,26 +166,26 @@
   - [ ] Anti spam upload (10 req/min)
   - [ ] Anti vote manipulation (30 req/min)
   - [ ] General API rate limit (100 req/min)
-- Folder: `11-sesi9-redis/`
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 10: Testing (Unit Test + Mocking) 🎨 (NijiArt)
+### Sesi 10: Testing (Unit Test + Mocking) 🎨 (Lumina)
 > Dipindah ke sini agar kebiasaan menulis test terbentuk lebih awal!
 - [ ] Go testing basics (`_test.go`, `go test`)
 - [ ] Table-driven tests
 - [ ] Mocking dengan testify/mock
 - [ ] Test coverage
-- [ ] Praktik: test Service Layer & Handler Layer NijiArt
-- Folder: `12-sesi10-testing/`
+- [ ] Praktik: test Service Layer & Handler Layer Lumina
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 11: WebSocket (Real-time) 🎨 (NijiArt)
+### Sesi 11: WebSocket (Real-time) 🎨 (Lumina)
 - [ ] Client connect via WebSocket
 - [ ] Real-time notification: "Ada yang like karya kamu!"
 - [ ] Server broadcast pesan ke semua client
 - [ ] Handling connect/disconnect
 - [ ] Menulis test untuk WebSocket handler
-- Folder: `13-sesi11-websocket/`
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 12: Goroutines, Concurrency & File Upload 🎨 (NijiArt)
+### Sesi 12: Goroutines, Concurrency & File Upload 🎨 (Lumina)
 > Upload gambar ke Cloudinary + background processing
 - [ ] goroutine basics (go func)
 - [ ] Channels untuk komunikasi antar goroutine
@@ -193,40 +193,40 @@
 - [ ] **File Upload**: Multipart form upload di Gin
 - [ ] **Cloudinary**: Upload gambar → dapat URL → simpan URL ke DB
 - [ ] Praktik: user upload artwork → goroutine resize thumbnail di background
-- Folder: `14-sesi12-goroutines/`
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 13: Docker & Docker Compose 🎨 (NijiArt)
+### Sesi 13: Docker & Docker Compose 🎨 (Lumina)
 - [ ] Dockerfile untuk Go app
 - [ ] docker-compose.yml (Go + PostgreSQL + Redis)
 - [ ] Multi-stage build
 - [ ] Environment variables di Docker
-- Folder: `15-sesi13-docker/`
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 14: Swagger API Docs & CI/CD Pipeline 🎨 (NijiArt)
+### Sesi 14: Swagger API Docs & CI/CD Pipeline 🎨 (Lumina)
 - [ ] Swagger annotations & generate docs
 - [ ] Serve Swagger UI
 - [ ] **CI/CD**: Setup GitHub Actions workflow
 - [ ] Auto-run `make test` & `golangci-lint` setiap kali Pull Request ke `develop`
-- Folder: `16-sesi14-swagger-cicd/`
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 15: Message Queue (RabbitMQ) 🎨 (NijiArt)
+### Sesi 15: Message Queue (RabbitMQ) 🎨 (Lumina)
 - [ ] Install & jalankan RabbitMQ (via Docker)
 - [ ] Producer & Consumer pattern
 - [ ] Publish event saat ada artwork baru → consumer kirim notifikasi
 - [ ] Dead Letter Queue (handling failed messages)
-- [ ] Praktik: async notification processing untuk NijiArt
-- Folder: `17-sesi15-rabbitmq/`
+- [ ] Praktik: async notification processing untuk Lumina
+- Folder: lumina/ (Proyek Utama)
 
-### Sesi 16: gRPC (Inter-service Communication) 🎨 (NijiArt)
+### Sesi 16: gRPC (Inter-service Communication) 🎨 (Lumina)
 - [ ] Protocol Buffers (protobuf) — define service & message
 - [ ] Unary RPC (request-response biasa)
 - [ ] Server Streaming RPC
 - [ ] gRPC vs REST — kapan pakai yang mana
 - [ ] Praktik: internal artwork recommendation service via gRPC
-- Folder: `18-sesi16-grpc/`
+- Folder: lumina/ (Proyek Utama)
 
-### 🏆 Sesi 17: FINAL — NijiArt Polish & Deploy
-> NijiArt sudah dibangun cicil-cicil dari Sesi 7-16. Sekarang saatnya menyempurnakan!
+### 🏆 Sesi 17: FINAL — Lumina Polish & Deploy
+> Lumina sudah dibangun cicil-cicil dari Sesi 7-16. Sekarang saatnya menyempurnakan!
 - [ ] Code review & refactor seluruh codebase
 - [ ] Frontend: Vite + React + TailwindCSS + Framer Motion (AI bantu buat)
 - [ ] Full integration Backend + Frontend
@@ -302,7 +302,7 @@
 
 ---
 
-## 🎨 MAIN PROJECT: NijiArt — Platform Sharing Fan Art Anime
+## 🎨 MAIN PROJECT: Lumina — Platform Sharing Fan Art Anime
 
 ### Tagline: "Your Art, Your World"
 
@@ -318,7 +318,7 @@ Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih bai
 - **Deployment**: Render (API) + Supabase (DB) + Cloudinary (Images) + Vercel (Frontend)
 
 ### Dibangun Cicil-cicil dari Sesi 7-17
-| Sesi | Teknologi | Fitur NijiArt yang Ditambahkan |
+| Sesi | Teknologi | Fitur Lumina yang Ditambahkan |
 |------|-----------|-------------------------------|
 | 7 | DB Relations | Model User, Artwork, Tag + relasi + pagination |
 | 8 | Auth | Register/Login artist |
@@ -332,7 +332,7 @@ Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih bai
 | 16 | gRPC | Internal Remix Tree service |
 | 17 | Polish & Deploy | Frontend + deploy production |
 
-### 🌟 Fitur Unik NijiArt (Bukan Sekadar Clone Pixiv!)
+### 🌟 Fitur Unik Lumina (Bukan Sekadar Clone Pixiv!)
 
 #### v1 — Dibangun Bersama di Sesi 7-17:
 1. **🎯 Art Challenge (Kontes Mingguan)**

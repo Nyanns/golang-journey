@@ -32,7 +32,7 @@ flowchart LR
     S3 --> S4["🏛️ Sesi 4\nClean Arch\n(H-S-R)"]
     S4 --> S5["🔐 Sesi 5\nConfig\n(.env)"]
     S5 --> S6["🐘 Sesi 6\nMyAnimeTracker\n(PostgreSQL+GORM)"]
-    S6 --> S7["🎨 Sesi 7-17\nNijiArt\n(Full Stack)"]
+    S6 --> S7["🎨 Sesi 7-17\nLumina\n(Full Stack)"]
     S7 --> FP["🎯 GoAntri\n(Solo Challenge)"]
 ```
 
@@ -47,23 +47,23 @@ flowchart LR
 | 5 | `07-sesi5-config` | 12-Factor App, `.env`, fallback defaults, `joho/godotenv` | ✅ |
 | 6 | `08-sesi6-database` | **MyAnimeTracker**: PostgreSQL, GORM, AutoMigrate, Relational CRUD | ⏳ |
 
-### Fase 2: NijiArt 🎨 — Platform Sharing Fan Art Anime
+### Fase 2: Lumina 🎨 — Platform Sharing Fan Art Anime
 
 > Terinspirasi Pixiv, tapi redesign yang lebih baik dan unik.
-> Setiap sesi menambahkan 1 teknologi baru ke NijiArt.
+> Setiap sesi menambahkan 1 teknologi baru ke Lumina.
 
-| Sesi | Folder | Teknologi | Fitur NijiArt |
+| Sesi | Folder | Teknologi | Fitur Lumina |
 | :---: | :--- | :--- | :--- |
-| 7 | `09-sesi7-relations` | Git Flow, Makefile, Linter | Setup standar industri & relasi database |
-| 8 | `10-sesi8-auth` | JWT + Bcrypt | Register/Login artist |
-| 9 | `11-sesi9-redis` | Redis Caching | Cache popular artworks & trending tags |
-| 10 | `12-sesi10-testing` | Unit Test & Mocking | Test Service & Handler Layer |
-| 11 | `13-sesi11-websocket` | WebSocket | Real-time notifications (like/follow) |
-| 12 | `14-sesi12-goroutines` | Goroutines & File Upload | Upload ke Cloudinary + background resize |
-| 13 | `15-sesi13-docker` | Docker & Compose | Containerize seluruh stack |
-| 14 | `16-sesi14-swagger-cicd` | Swagger & CI/CD Pipeline | API docs & GitHub Actions (Auto test) |
-| 15 | `17-sesi15-rabbitmq` | RabbitMQ | Async notification processing |
-| 16 | `18-sesi16-grpc` | gRPC | Internal recommendation service |
+| 7 | `lumina/` | Git Flow, Makefile, Linter | Setup standar industri & relasi database |
+| 8 | `lumina/` | JWT + Bcrypt | Register/Login artist |
+| 9 | `lumina/` | Redis Caching | Cache popular artworks & trending tags |
+| 10 | `lumina/` | Unit Test & Mocking | Test Service & Handler Layer |
+| 11 | `lumina/` | WebSocket | Real-time notifications (like/follow) |
+| 12 | `lumina/` | Goroutines & File Upload | Upload ke Cloudinary + background resize |
+| 13 | `lumina/` | Docker & Compose | Containerize seluruh stack |
+| 14 | `lumina/` | Swagger & CI/CD Pipeline | API docs & GitHub Actions (Auto test) |
+| 15 | `lumina/` | RabbitMQ | Async notification processing |
+| 16 | `lumina/` | gRPC | Internal recommendation service |
 | 17 | — | Polish & Deploy | Frontend (React) + deploy production |
 
 ### 🎯 Tantangan Mandiri: GoAntri — Smart Queue Management
