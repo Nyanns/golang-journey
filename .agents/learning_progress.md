@@ -209,8 +209,13 @@
   - [x] Auth Modals (Login, Register, Email Activation, Password Reset).
   - [x] Public Artist Profile Modal (listing uploaded artworks & statistics).
   - [x] Dynamic SEO & GEO Optimization via `react-helmet-async`.
-  - [x] Smooth Micro-Interactions via `framer-motion`.
-- [x] Integrasi ke Backend API Go (port 8080) dengan JWT Token State Management & Axios Interceptors.
+  - [x] Integrasi ke Backend API Go (port 8080) dengan JWT Token State Management & Axios Interceptors.
+- [ ] **Enterprise Frontend Upgrades (Fase 2 Blueprint)**:
+  - [ ] `@tanstack/react-query`: Server-state caching & optimistic UI updates.
+  - [ ] `@tanstack/react-virtual`: DOM virtualization for infinite scrolling thousands of artworks without browser memory spikes.
+  - [ ] `react-zoom-pan-pinch`: High-resolution artwork inspector (zoom & pan on 4K/8K illustrations).
+  - [ ] `sonner`: Sleek, accessible toast notification system.
+  - [ ] Canvas Pre-Compressor & Image Cropper.
 - [ ] *Branch saat ini*: `feature/frontend` (Dipertahankan, belum dimerge ke `develop` menunggu finalisasi ide/redesign UI dari Sandi).
 
 ### 🏆 Sesi 13: Full-Stack Cloud Deployment (Production Live)
