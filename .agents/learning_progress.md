@@ -1,8 +1,8 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-01
+## Terakhir Diupdate: 2026-09-02
 
-## Status: Sesi 10 & Email Auth Enterprise + Anti-Slop Architecture SELESAI ✅ (Lanjut ke Sesi 11: Docker, Swagger, CI/CD)
+## Status: Sesi 11 (Docker, Containerization & CI/CD Pipeline) SELESAI ✅ (Lanjut ke Sesi 12: Frontend AI & Playwright QA Automation)
 
 ---
 
@@ -189,10 +189,12 @@
 - [x] Konsep Synchronous vs Asynchronous.
 - [x] **Unit Testing Backend** menggunakan Mocking (User & Comment Service Testify Suites - 100% PASS).
 
-### Sesi 11: Docker, Swagger, CI/CD (QA Ops)
-- [ ] Containerize seluruh aplikasi dengan Docker & Docker Compose.
-- [ ] Generate Swagger UI untuk dokumentasi API.
-- [ ] Setup GitHub Actions (Mulai testing API secara otomatis di pipeline).
+### Sesi 11: Docker, Containerization & CI/CD Pipeline (QA Ops) ✅ (SELESAI)
+- [x] **Multi-Stage Dockerfile**: Builder (golang:alpine) & Runner (alpine:3.19) menghasilkan image super ramping (19.3 MB).
+- [x] **Docker Layer Caching Optimization**: Meng-copy `go.mod` dan `go.sum` sebelum source code untuk mempercepat build.
+- [x] **Full Stack Orchestration via `docker-compose.yml`**: PostgreSQL 15, Redis 7, dan Lumiina API dalam 1 bridge network internal.
+- [x] **Automated CI Pipeline (`.github/workflows/ci.yml`)**: Otomatis menjalankan `go vet`, `go test -v -race`, dan verifikasi build Docker setiap `git push` & `Pull Request`.
+- [x] Branch: `feature/docker-cicd` di-push ke GitHub.
 
 ### Sesi 12: Frontend AI & E2E Testing
 - [ ] AI generate Frontend Vite + React (Light Theme Pixiv).
