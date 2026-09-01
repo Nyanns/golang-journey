@@ -198,18 +198,35 @@
 - [x] **Artwork Search, Tag Filter, & Artist Discovery**: ILIKE keyword search, tag query, artist profile preloading (`/users/search`, `/users/:id`, `/users/me`).
 - [x] **Git Workflow**: Branch `feature/docker-cicd` berhasil di-merge ke branch `develop` di GitHub `Nyanns/lumiina`.
 
-### Sesi 12: Frontend AI & E2E Testing
-- [ ] AI generate Frontend Vite + React (Light Theme Pixiv).
-- [ ] Integrasi ke API lokal.
-- [ ] **Fase QA Automation (PROJECT TERPISAH):** Menulis script Playwright untuk E2E testing UI. Script QA akan disimpan di folder dan GitHub Repo tersendiri (contoh: `lumiina-qa-automation`) terpisah dari source code Lumiina agar standar industrinya terasa.
-- [ ] **Referensi QA Roadmap:** Kita akan berpedoman penuh pada standar global [roadmap.sh/qa](https://roadmap.sh/qa) agar kamu menjadi QA utuh secara teori dan praktik (Manual, SDLC, API, Automation, CI/CD).
+### Sesi 12: Frontend Development & API Integration ⏳ (SEDANG BERJALAN)
+- [ ] **Modern Web Architecture (Vite + React + TailwindCSS)**:
+  - [ ] Anti AI-Slop Design System: Light theme (Pixiv-inspired redesign with clean slate & `#0284c7` blue accent).
+  - [ ] Mascots Branding: Lumi & Ina.
+  - [ ] Navbar with real-time keyword search & tag filter pills (`#GenshinImpact`, `#Vocaloid`, `#AnimeArt`).
+  - [ ] Artwork Feed with Masonry Grid Layout & organic card aspect ratios.
+  - [ ] Artwork Detail Modal/Page with Full Image Zoom & Live Comments Thread.
+  - [ ] Drag-and-drop Image Upload Studio with Dynamic Tags & Client-side MIME check.
+  - [ ] Auth Modals (Login, Register, Email Activation Page, Password Reset).
+  - [ ] Public Artist Profile Page (listing uploaded artworks & statistics).
+- [ ] Integrasi ke Backend API Go (port 8080) dengan JWT Token State Management.
 
-### 🏆 Sesi 13: Final Deployment (Lumiina MVP Selesai)
-- [ ] Deploy DB ke Supabase, API ke Render, Frontend ke Vercel.
-- [ ] Portofolio QA Selesai dan Siap Masuk CV! 🎉
+### 🏆 Sesi 13: Full-Stack Cloud Deployment (Production Live)
+- [ ] Deploy Database ke Cloud (Supabase / Neon PostgreSQL).
+- [ ] Deploy Backend Go API Container ke Cloud (Render / Koyeb).
+- [ ] Deploy Frontend React Web ke Cloud (Vercel).
+- [ ] Smoke Testing pada domain production live.
 
-## 🛑 Pindah ke Backlog (V2)
-Fitur-fitur ini sangat bagus, tapi akan memperlambat penyelesaian MVP QA. Disimpan untuk dikerjakan nanti:
+---
+
+## 🛡️ FASE KHUSUS: QA & SDET Engineering Masterclass (Standar Global)
+> **Target Pengujian**: Aplikasi **Lumiina Live** (Production Environment)
+> **Repository Mandiri**: `Nyanns/lumiina-qa-automation` (Terpisah dari source code backend/frontend agar standar industri profesional)
+> **Kurikulum (Mengacu pada [roadmap.sh/qa](https://roadmap.sh/qa))**:
+> 1. **QA Fundamentals & Test Strategy**: SDLC/STLC, Test Plan, Test Case Matrix (Positive/Negative/Edge cases), Equivalence Partitioning, Boundary Value Analysis, Bug Reporting (JIRA/GitHub Issues format).
+> 2. **API Automation Testing**: Postman Collections + Newman CLI / REST client automated test assertions (Status code, Schema validation, JWT token flow, Error handling).
+> 3. **Web UI E2E Automation**: **Playwright** (Page Object Model / POM, multi-browser Chromium/Firefox/WebKit, locators, auto-waiting, visual regression, trace viewer).
+> 4. **Performance & Stress Testing**: **k6** (Load testing, Spike testing, Stress testing, p95/p99 latency analysis).
+> 5. **Automated QA CI/CD Pipeline**: GitHub Actions running automated E2E & API test suites on scheduled cron & PR triggers with HTML test report artifacts.
 - [ ] WebSocket (Real-time notifications)
 - [ ] RabbitMQ (Message Queue)
 - [ ] gRPC (Inter-service communication)
