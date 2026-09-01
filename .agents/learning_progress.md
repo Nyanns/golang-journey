@@ -1,8 +1,8 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-08-18
+## Terakhir Diupdate: 2026-09-01
 
-## Status: Sesi 6 SELESAI ✅ (Lanjut ke Sesi 7 Lumina)
+## Status: Sesi 10 & Email Auth Enterprise + Anti-Slop Architecture SELESAI ✅ (Lanjut ke Sesi 11: Docker, Swagger, CI/CD)
 
 ---
 
@@ -133,105 +133,79 @@
 - [x] Wiring di `main.go` (DI chain: DB → Repo → Service → Handler → Router)
 - [x] Testing CRUD via Postman
 
-### Sesi 7: Database Relations & Professional Setup 🎨 (Lumina)
-> Mulai project baru: **Lumina** — Platform sharing fan art anime (Pixiv-like)
+### Sesi 7: Database Relations & Professional Setup 🎨 (Lumiina) ✅ (SELESAI)
+> Mulai project baru: **Lumiina** — Platform sharing fan art anime (Pixiv-like)
 > Mulai sesi ini, kita pakai standar industri dari HARI PERTAMA!
-- [ ] Setup project baru dengan Clean Architecture
-- [ ] **Git Flow**: Branch `main`, `develop`, dan `feature/*`
-- [ ] **Makefile**: `make run`, `make build`, `make test`
-- [ ] **golangci-lint**: Setup linter untuk jaga kualitas kode
-- [ ] Model: User, Artwork, Tag
-- [ ] GORM Relations (One-to-Many: User → Artworks, Many-to-Many: Artwork ↔ Tags)
-- [ ] Preload & Eager Loading
-- [ ] **Pagination** (`?page=1&limit=20`, GORM `.Offset()` & `.Limit()`)
-- [ ] golang-migrate (up/down migration files)
-- Folder: lumina/ (Proyek Utama)
+- [x] Setup project baru dengan Clean Architecture
+- [x] **Git Flow**: Branch `main`, `develop`, dan `feature/*`
+- [x] **Makefile**: `make run`, `make build`, `make test`
+- [x] **golangci-lint**: Setup linter untuk jaga kualitas kode
+- [x] Model: User (dengan Role: Admin & Regular), Artwork, Tag
+- [x] GORM Relations (One-to-Many: User → Artworks, Many-to-Many: Artwork ↔ Tags)
+- [x] Preload & Eager Loading
+- [x] **Pagination** (`?page=1&limit=20`, GORM `.Offset()` & `.Limit()`)
+- [x] golang-migrate (up/down migration files)
+- Folder: lumiina/ (Proyek Utama)
 
-### Sesi 8: Authentication (JWT + Bcrypt) 🎨 (Lumina)
-- [ ] Model: User (username, email, password_hash, bio, avatar_url)
-- [ ] Register (hash password dengan bcrypt)
-- [ ] Login (validasi password → generate JWT Token)
-- [ ] Auth Middleware (cek token di setiap request)
-- [ ] Protected routes (upload artwork) vs Public routes (browse artwork)
-- Folder: lumina/ (Proyek Utama)
+### Sesi 8: Authentication & RBAC ✅ (SELESAI)
+- [x] Register (Bcrypt) & Login (JWT).
+- [x] Auth Middleware (Validasi Token `Bearer`).
+- [x] RBAC Middleware (Validasi Role `admin` & `regular`).
+- [x] Mendukung Login ganda (Email ATAU Username).
+- [x] Memecahkan Bug Klasik Go: Bahaya `json:"-"` pada struct unmarshalling (solusi: buat `RegisterRequest`).
 
-### Sesi 9: Redis (Caching + Rate Limiting) 🎨 (Lumina)
-- [ ] Install & jalankan Redis (via Docker)
-- [ ] Cache popular artworks & trending tags
-- [ ] GET: cek cache → miss → ambil dari DB → simpan ke cache
-- [ ] Cache invalidation (hapus cache saat POST/PUT/DELETE)
-- [ ] TTL (Time To Live)
-- [ ] **Rate Limiting** (Redis-based, per IP/user)
-  - [ ] Anti brute-force login (5 req/min)
-  - [ ] Anti spam upload (10 req/min)
-  - [ ] Anti vote manipulation (30 req/min)
-  - [ ] General API rate limit (100 req/min)
-- Folder: lumina/ (Proyek Utama)
+### Sesi 9: Core Features & Cloudinary Upload ✅ (SELESAI)
+- [x] CRUD Artwork (Upload multipart/form-data).
+- [x] Relasi Many-to-Many (Tags) menggunakan GORM `FirstOrCreate`.
+- [x] Cloudinary Integration (SDK v2, Upload ke cloud server).
+- [x] Keamanan Siber: Validasi ukuran file (Max 20MB).
+- [x] Keamanan Siber: Pengecekan *Magic Bytes* (MIME type via `http.DetectContentType`) untuk mencegah ekstensi palsu (.exe disamar .jpg).
+- [x] Keamanan Siber: CORS Middleware agar API bisa diakses Frontend (Vite/React).
+- [x] Performa: GORM Indexing pada Foreign Key (`UserID`).
+- [x] Pengenalan *Manual API Testing* via Postman sebagai fondasi QA.
 
-### Sesi 10: Testing (Unit Test + Mocking) 🎨 (Lumina)
-> Dipindah ke sini agar kebiasaan menulis test terbentuk lebih awal!
-- [ ] Go testing basics (`_test.go`, `go test`)
-- [ ] Table-driven tests
-- [ ] Mocking dengan testify/mock
-- [ ] Test coverage
-- [ ] Praktik: test Service Layer & Handler Layer Lumina
-- Folder: lumina/ (Proyek Utama)
+### Sesi 10: Redis Caching, Comments, Security Hardening & Email Auth ✅ (SELESAI)
+- [x] Setup Redis (Install via Docker).
+- [x] Implementasi Rate Limiting Atomik (Redis `TxPipeline` untuk cegah Brute Force).
+- [x] Implementasi Data Caching & Singleflight (Anti-Cache Stampede + Cache Invalidation).
+- [x] **Sistem Komentar Artwork** (Migration 000003, B-Tree Indexes, Pagination, Selective Preload).
+- [x] **Email Verification & Password Reset**:
+  - [x] Database Migration 000004 (`is_verified` column di PostgreSQL).
+  - [x] Gmail SMTP integration (`net/smtp`) dengan Custom Responsive HTML Email Templates (Branding Lumiina: Lumi & Ina).
+  - [x] Non-blocking Asynchronous Goroutine (pengiriman email di background tanpa membuat API lemot).
+  - [x] Ephemeral Tokens di Redis (TTL 24 jam untuk aktivasi email, TTL 15 menit untuk reset password).
+  - [x] Cyber Defense: Anti-Account Enumeration Defense pada endpoint `forgot-password`.
+- [x] **Enterprise Security Hardening**:
+  - [x] HTTP Security Headers Middleware (CSP, X-Frame-Options, nosniff, Referrer-Policy).
+  - [x] Trusted Proxies configuration (Anti-IP Spoofing).
+  - [x] Stored XSS Input Sanitization (`html.EscapeString`).
+  - [x] PostgreSQL Connection Pool Optimization (`MaxOpenConns: 100`, `MaxIdleConns: 10`).
+- [x] Konsep Synchronous vs Asynchronous.
+- [x] **Unit Testing Backend** menggunakan Mocking (User & Comment Service Testify Suites - 100% PASS).
 
-### Sesi 11: WebSocket (Real-time) 🎨 (Lumina)
-- [ ] Client connect via WebSocket
-- [ ] Real-time notification: "Ada yang like karya kamu!"
-- [ ] Server broadcast pesan ke semua client
-- [ ] Handling connect/disconnect
-- [ ] Menulis test untuk WebSocket handler
-- Folder: lumina/ (Proyek Utama)
+### Sesi 11: Docker, Swagger, CI/CD (QA Ops)
+- [ ] Containerize seluruh aplikasi dengan Docker & Docker Compose.
+- [ ] Generate Swagger UI untuk dokumentasi API.
+- [ ] Setup GitHub Actions (Mulai testing API secara otomatis di pipeline).
 
-### Sesi 12: Goroutines, Concurrency & File Upload 🎨 (Lumina)
-> Upload gambar ke Cloudinary + background processing
-- [ ] goroutine basics (go func)
-- [ ] Channels untuk komunikasi antar goroutine
-- [ ] WaitGroup & Mutex
-- [ ] **File Upload**: Multipart form upload di Gin
-- [ ] **Cloudinary**: Upload gambar → dapat URL → simpan URL ke DB
-- [ ] Praktik: user upload artwork → goroutine resize thumbnail di background
-- Folder: lumina/ (Proyek Utama)
+### Sesi 12: Frontend AI & E2E Testing
+- [ ] AI generate Frontend Vite + React (Light Theme Pixiv).
+- [ ] Integrasi ke API lokal.
+- [ ] **Fase QA Automation (PROJECT TERPISAH):** Menulis script Playwright untuk E2E testing UI. Script QA akan disimpan di folder dan GitHub Repo tersendiri (contoh: `lumiina-qa-automation`) terpisah dari source code Lumiina agar standar industrinya terasa.
+- [ ] **Referensi QA Roadmap:** Kita akan berpedoman penuh pada standar global [roadmap.sh/qa](https://roadmap.sh/qa) agar kamu menjadi QA utuh secara teori dan praktik (Manual, SDLC, API, Automation, CI/CD).
 
-### Sesi 13: Docker & Docker Compose 🎨 (Lumina)
-- [ ] Dockerfile untuk Go app
-- [ ] docker-compose.yml (Go + PostgreSQL + Redis)
-- [ ] Multi-stage build
-- [ ] Environment variables di Docker
-- Folder: lumina/ (Proyek Utama)
+### 🏆 Sesi 13: Final Deployment (Lumiina MVP Selesai)
+- [ ] Deploy DB ke Supabase, API ke Render, Frontend ke Vercel.
+- [ ] Portofolio QA Selesai dan Siap Masuk CV! 🎉
 
-### Sesi 14: Swagger API Docs & CI/CD Pipeline 🎨 (Lumina)
-- [ ] Swagger annotations & generate docs
-- [ ] Serve Swagger UI
-- [ ] **CI/CD**: Setup GitHub Actions workflow
-- [ ] Auto-run `make test` & `golangci-lint` setiap kali Pull Request ke `develop`
-- Folder: lumina/ (Proyek Utama)
-
-### Sesi 15: Message Queue (RabbitMQ) 🎨 (Lumina)
-- [ ] Install & jalankan RabbitMQ (via Docker)
-- [ ] Producer & Consumer pattern
-- [ ] Publish event saat ada artwork baru → consumer kirim notifikasi
-- [ ] Dead Letter Queue (handling failed messages)
-- [ ] Praktik: async notification processing untuk Lumina
-- Folder: lumina/ (Proyek Utama)
-
-### Sesi 16: gRPC (Inter-service Communication) 🎨 (Lumina)
-- [ ] Protocol Buffers (protobuf) — define service & message
-- [ ] Unary RPC (request-response biasa)
-- [ ] Server Streaming RPC
-- [ ] gRPC vs REST — kapan pakai yang mana
-- [ ] Praktik: internal artwork recommendation service via gRPC
-- Folder: lumina/ (Proyek Utama)
-
-### 🏆 Sesi 17: FINAL — Lumina Polish & Deploy
-> Lumina sudah dibangun cicil-cicil dari Sesi 7-16. Sekarang saatnya menyempurnakan!
-- [ ] Code review & refactor seluruh codebase
-- [ ] Frontend: Vite + React + TailwindCSS + Framer Motion (AI bantu buat)
-- [ ] Full integration Backend + Frontend
-- [ ] Deploy: Render (API) + Supabase (DB) + Cloudinary (Images) + Vercel (Frontend)
-- [ ] Final testing & demo
+## 🛑 Pindah ke Backlog (V2)
+Fitur-fitur ini sangat bagus, tapi akan memperlambat penyelesaian MVP QA. Disimpan untuk dikerjakan nanti:
+- [ ] WebSocket (Real-time notifications)
+- [ ] RabbitMQ (Message Queue)
+- [ ] gRPC (Inter-service communication)
+- [ ] Dashboard UI Khusus Admin di Frontend
+- [ ] Kontes / Art Challenge
+- [ ] Remix Tree (Visualisasi karya turunan)
 
 ### 🎯 Tantangan Mandiri (Lain Waktu): GoAntri — Smart Queue Management
 > Project ini untuk membuktikan bahwa Sandi bisa membangun aplikasi LENGKAP dari NOL secara MANDIRI, tanpa bimbingan. Ujian sejati seorang Mid-Level Dev.
@@ -244,7 +218,7 @@
 - [x] **Multiple Return Values**: Paham kenapa fungsi seperti `gorm.Open` mereturn `(*gorm.DB, error)`. Paham pentingnya error checking sebagai fondasi keamanan Go.
 - [x] **Package Scope & Import**: Paham aturan import antar folder (huruf kapital) dan kenapa file di folder yang sama (`package config`) tidak perlu di-import.
 - [x] **Clean Architecture Dependency Rule**: Paham aturan "Satu Arah" (Handler → Service → Repository → Models). Pantang melakukan *Circular Dependency*.
-- [x] **Career Pivot Strategy**: Paham nilai lebih dari latar belakang S1 + HTB Level 10 (Cybersecurity) di ekosistem Go, dan jalur *pivot* yang menjanjikan (SDET, SOC, AppSec/DevSecOps).
+- [x] **Career Pivot Strategy (Taktik Mourinho - Pragmatic Play)**: **(UPDATE)** Strategi "Batu Loncatan": Lanjutkan belajar Go Backend (Lumina) sebagai "Senjata Rahasia" saat interview QA (Kalimat sakti: *"Saya paham cara ngetes API karena saya bisa bikin API skala industri pakai Go"*). Jika 1-2 bulan *apply* Backend buntu, LANGSUNG PIVOT belajar Katalon/Playwright selama sebulan, lalu lamar QA Automation/SDET. Profil (S1 + HTB + Go Backend) akan langsung dilirik HRD karena minimnya pelamar QA yang punya fundamental *backend* & *security* sedalam ini.
 - [x] **Microservices & Security Architecture**: Paham evolusi arsitektur dari Monolitik (1 Container) ➡️ Microservices per Fitur (Stack/Cluster) ➡️ Serverless/FaaS (Level Dewa). Menguasai pola pikir *Red Teamer*: paham konsep *Blast Radius*, *Lateral Movement*, dan bagaimana memecah container dapat mengisolasi serangan RCE (Mencegah *Total System Compromise*).
 - [x] **GORM & Pointers Mechanics**: Memahami bahwa `&anime` di GORM adalah pemberian "ember kosong" untuk diisi, dan pointer receiver `(r *AnimeRepository)` mencegah fotocopy memori. Serta paham keajaiban *Method Chaining* (misal `.Error`).
 - [x] **Constructor & Dependency Injection**: Paham analogi "Pabrik / Bidan" (`NewAnimeRepository`) yang bertugas mencetak objek nyata dan menyuntikkan "senjata" berupa koneksi database (`db *gorm.DB`).
@@ -302,14 +276,16 @@
 
 ---
 
-## 🎨 MAIN PROJECT: Lumina — Platform Sharing Fan Art Anime
+## 🎨 MAIN PROJECT: Lumiina — Platform Sharing Fan Art Anime
 
-### Tagline: "Your Art, Your World"
+### Tagline: "Your Art, Your World" (Mascot: Lumi & Ina)
 
 ### Konsep Utama
 Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih baik).
+- **Mascots**: Dua karakter ikonik bernama **Lumi** dan **Ina**.
 - **Artist**: Register → Upload karya → Dapat followers → Lihat statistik
 - **Viewer**: Browse artwork → Like/Bookmark → Follow artist → Komentar
+- **UI/UX**: Infinite Scroll, Masonry Grid Layout (ukuran organik), Micro-interactions (Framer Motion saat hover), Skeleton Loading.
 
 ### Pembagian Kerja
 - **Backend (Sandi)**: Go + Gin + GORM + PostgreSQL + Redis + WebSocket + JWT + RabbitMQ + gRPC
@@ -347,9 +323,10 @@ Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih bai
    - Nilai: Konsep genuinely fresh, bikin komunitas kolaboratif bukan kompetitif
 
 #### v2 — Backlog (Dikerjakan Nanti Kalau v1 Selesai):
-3. **🛒 Komisi System** — Artist buka slot komisi, Client pesan artwork custom, status tracking + chat real-time
-4. **⏳ Ephemeral Exhibition** — Pameran sementara yang otomatis hilang setelah X hari (Redis TTL + FOMO)
-5. **🎨 Color Palette Extraction** — Auto-extract warna dominan dari artwork, search by color palette (image processing + Goroutine)
+3. **💬 Sistem Komentar (Comments)** — User bisa memberikan komentar per artwork. (Relasi One-to-Many dari Artwork ke Comments). Menggunakan `golang-migrate` sequence kedua (000002) untuk latihan migrasi bertahap.
+4. **🛒 Komisi System** — Artist buka slot komisi, Client pesan artwork custom, status tracking + chat real-time
+5. **⏳ Ephemeral Exhibition** — Pameran sementara yang otomatis hilang setelah X hari (Redis TTL + FOMO)
+6. **🎨 Color Palette Extraction** — Auto-extract warna dominan dari artwork, search by color palette (image processing + Goroutine)
 
 ### Level Project: Mid-Level Portfolio
 

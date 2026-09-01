@@ -1,12 +1,12 @@
 # User Preferences & Roadmap
 The user is following a Go Backend Developer roadmap ("Menuju Mid-Level Go Backend Developer").
-Main project: **NijiArt** — Platform sharing fan art anime (Pixiv-like, redesigned).
+Main project: **Lumiina** — Platform sharing fan art anime (Pixiv-like, redesigned). Mascots: Lumi & Ina.
 GoAntri (Smart Queue Management) is a future personal challenge project to be built independently.
 
 ## Learning Progress
 - **ALWAYS read `.agents/learning_progress.md` first** when starting a new conversation to recall what has been learned, what's next, and the user's learning style.
 - Current status: Sesi 6 SEDANG BERJALAN (MyAnimeTracker — PostgreSQL + GORM + Clean Architecture)
-- Sesi 7-17: NijiArt (1 sesi = 1 teknologi)
+- Sesi 7-17: Lumiina (1 sesi = 1 teknologi)
 - The user prefers to **write code themselves** with step-by-step guidance, NOT copy-paste from AI.
 
 ## User Background
@@ -20,7 +20,7 @@ GoAntri (Smart Queue Management) is a future personal challenge project to be bu
 - Frontend: Vite + React + TailwindCSS
 - Infra: Docker & Docker Compose
 
-## NijiArt Frontend Preferences (AI builds the frontend)
+## Lumiina Frontend Preferences (AI builds the frontend)
 - **Theme**: Light mode (sesuai Pixiv), BUKAN dark mode
 - **Design**: Redesign Pixiv — terinspirasi tapi lebih baik dan unik, BUKAN copy
 - **NO glassmorphism** — terlihat AI slop, hindari sepenuhnya
