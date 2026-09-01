@@ -189,12 +189,14 @@
 - [x] Konsep Synchronous vs Asynchronous.
 - [x] **Unit Testing Backend** menggunakan Mocking (User & Comment Service Testify Suites - 100% PASS).
 
-### Sesi 11: Docker, Containerization & CI/CD Pipeline (QA Ops) ✅ (SELESAI)
-- [x] **Multi-Stage Dockerfile**: Builder (golang:alpine) & Runner (alpine:3.19) menghasilkan image super ramping (19.3 MB).
-- [x] **Docker Layer Caching Optimization**: Meng-copy `go.mod` dan `go.sum` sebelum source code untuk mempercepat build.
+### Sesi 11: Docker, Containerization & CI/CD Pipeline (QA Ops) ✅ (SELESAI & MERGED)
+- [x] **Multi-Stage Dockerfile**: Builder (golang:alpine) & Runner (alpine:3.19) menghasilkan image super ramping (19.3 MB) dengan Healthcheck `/livez`.
+- [x] **Docker Layer Caching Optimization**: Meng-copy `go.mod` dan `go.sum` sebelum source code untuk mempercepat build & caching.
 - [x] **Full Stack Orchestration via `docker-compose.yml`**: PostgreSQL 15, Redis 7, dan Lumiina API dalam 1 bridge network internal.
 - [x] **Automated CI Pipeline (`.github/workflows/ci.yml`)**: Otomatis menjalankan `go vet`, `go test -v -race`, dan verifikasi build Docker setiap `git push` & `Pull Request`.
-- [x] Branch: `feature/docker-cicd` di-push ke GitHub.
+- [x] **Complete OpenAPI 2.0 / Swagger Interactive Docs**: Seluruh 12 endpoint terdokumentasi rapi di `/swagger/index.html`.
+- [x] **Artwork Search, Tag Filter, & Artist Discovery**: ILIKE keyword search, tag query, artist profile preloading (`/users/search`, `/users/:id`, `/users/me`).
+- [x] **Git Workflow**: Branch `feature/docker-cicd` berhasil di-merge ke branch `develop` di GitHub `Nyanns/lumiina`.
 
 ### Sesi 12: Frontend AI & E2E Testing
 - [ ] AI generate Frontend Vite + React (Light Theme Pixiv).
