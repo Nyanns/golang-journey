@@ -29,6 +29,20 @@ GoAntri (Smart Queue Management) is a future personal challenge project to be bu
 - **Anti AI-slop**: Gunakan skill `anti-slop` untuk memastikan desain terasa human-crafted
 - **Skill reference**: Gunakan skill `frontend-design` untuk design system
 
+## Installed Agent Skills & Standards
+- `context-engineering`: Token-per-task economics, observation masking (4-tier), anchored iterative compression, KV-cache optimization.
+- `persistent-memory`: 3-layer memory hierarchy, first-turn protocol, `learning_progress.md` tracking, mistake journaling, structured handoffs.
+- `self-improvement`: Reflexion loops (Generate→Execute→Critique→Refine), 3-part failure mining, post-session evaluation, bounded self-editing.
+- `go-backend-mastery`: Uber Go style guide, clean layered architecture, GORM/Postgres patterns, concurrency safety.
+- `harness-engineering`: 4-surface classification (locked/editable/append-only/human), deterministic verification gates, durable state, governance.
+- `api-security-hardening`: OWASP API security, constant-time token comparison, anti-enumeration, defensive headers.
+- `go-performance-profiling`: `pprof` profiling (CPU/Heap/Mutex), escape analysis, zero-alloc patterns, `sync.Pool`, `benchstat`.
+- `distributed-systems-resilience`: Transactional Outbox (`FOR UPDATE SKIP LOCKED`), Redis Lua idempotency, circuit breakers.
+- `database-internals-sql-tuning`: `EXPLAIN ANALYZE`, composite/partial/GIN indexing, row locking, connection pool tuning.
+- `sre-observability-resilience`: RED method, OpenTelemetry tracing, `slog` correlation IDs, `/livez` & `/readyz` probes.
+- `anti-slop`: Anti-AI slop standards for backend code, UI, and domain data.
+- `frontend-design`: Modern UI/UX system (light mode, Pixiv blue accents, Framer Motion).
+
 ## Additional Topics (Wajib Dipelajari)
 - Swagger/OpenAPI docs (swaggo/swag) — dokumentasi API profesional
 - .env & config management — menggunakan godotenv atau viper

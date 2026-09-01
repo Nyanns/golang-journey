@@ -131,7 +131,13 @@
 - [x] Service Layer (Business Logic + Validation sebelum Repo)
 - [x] Handler Layer (HTTP/Gin → Service)
 - [x] Wiring di `main.go` (DI chain: DB → Repo → Service → Handler → Router)
-- [x] Testing CRUD via Postman
+- [x] Testing
+
+### Sesi: SRE & API Resilience (Lumiina)
+- Tanggal: 2026-09-01
+- Konsep dipelajari: Structured Logging (slog), Graceful Shutdown (os.Signal, context.WithTimeout), Global Error Recovery, Context Timeout Middleware, Swagger Setup.
+- File yang dibuat/dimodifikasi: `cmd/api/main.go`, `config/config.go`, `internal/middleware/error_handler.go`, `internal/middleware/timeout.go`
+- Keputusan arsitektur: Menggunakan standard lib Go `slog` untuk logging, dan membungkus `gin-gonic` router di dalam `http.Server` standar untuk memungkinkan graceful shutdown.
 
 ### Sesi 7: Database Relations & Professional Setup 🎨 (Lumiina) ✅ (SELESAI)
 > Mulai project baru: **Lumiina** — Platform sharing fan art anime (Pixiv-like)
