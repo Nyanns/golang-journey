@@ -198,17 +198,20 @@
 - [x] **Artwork Search, Tag Filter, & Artist Discovery**: ILIKE keyword search, tag query, artist profile preloading (`/users/search`, `/users/:id`, `/users/me`).
 - [x] **Git Workflow**: Branch `feature/docker-cicd` berhasil di-merge ke branch `develop` di GitHub `Nyanns/lumiina`.
 
-### Sesi 12: Frontend Development & API Integration ⏳ (SEDANG BERJALAN)
-- [ ] **Modern Web Architecture (Vite + React + TailwindCSS)**:
-  - [ ] Anti AI-Slop Design System: Light theme (Pixiv-inspired redesign with clean slate & `#0284c7` blue accent).
-  - [ ] Mascots Branding: Lumi & Ina.
-  - [ ] Navbar with real-time keyword search & tag filter pills (`#GenshinImpact`, `#Vocaloid`, `#AnimeArt`).
-  - [ ] Artwork Feed with Masonry Grid Layout & organic card aspect ratios.
-  - [ ] Artwork Detail Modal/Page with Full Image Zoom & Live Comments Thread.
-  - [ ] Drag-and-drop Image Upload Studio with Dynamic Tags & Client-side MIME check.
-  - [ ] Auth Modals (Login, Register, Email Activation Page, Password Reset).
-  - [ ] Public Artist Profile Page (listing uploaded artworks & statistics).
-- [ ] Integrasi ke Backend API Go (port 8080) dengan JWT Token State Management.
+### Sesi 12: Frontend Development & API Integration (Fase 1 Selesai - Pending User Polish) 🎨
+- [x] **Modern Web Architecture (Vite + React + TailwindCSS)**:
+  - [x] Anti AI-Slop Design System: Light theme (Pixiv-inspired redesign with clean slate & `#0284c7` blue accent).
+  - [x] Mascots Branding: Lumi & Ina.
+  - [x] Navbar with real-time keyword search & tag filter pills (`#GenshinImpact`, `#Vocaloid`, `#AnimeArt`).
+  - [x] Artwork Feed with Masonry Grid Layout (`react-masonry-css`) & organic card aspect ratios.
+  - [x] Artwork Detail Modal with ArtStation split-screen viewer & Live Comments Thread.
+  - [x] Drag-and-drop Image Upload Studio with Dynamic Tags & client-side validation.
+  - [x] Auth Modals (Login, Register, Email Activation, Password Reset).
+  - [x] Public Artist Profile Modal (listing uploaded artworks & statistics).
+  - [x] Dynamic SEO & GEO Optimization via `react-helmet-async`.
+  - [x] Smooth Micro-Interactions via `framer-motion`.
+- [x] Integrasi ke Backend API Go (port 8080) dengan JWT Token State Management & Axios Interceptors.
+- [ ] *Branch saat ini*: `feature/frontend` (Dipertahankan, belum dimerge ke `develop` menunggu finalisasi ide/redesign UI dari Sandi).
 
 ### 🏆 Sesi 13: Full-Stack Cloud Deployment (Production Live)
 - [ ] Deploy Database ke Cloud (Supabase / Neon PostgreSQL).
