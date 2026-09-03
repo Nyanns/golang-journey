@@ -5,7 +5,7 @@ GoAntri (Smart Queue Management) is a future personal challenge project to be bu
 
 ## Learning Progress
 - **ALWAYS read `.agents/learning_progress.md` first** when starting a new conversation to recall what has been learned, what's next, and the user's learning style.
-- Current status: Sesi 6 SEDANG BERJALAN (MyAnimeTracker — PostgreSQL + GORM + Clean Architecture)
+- Current status: Sesi 12 SEDANG BERJALAN (Lumiina — Backend Hardening A+ Selesai; Menunggu UI/UX Redesign & Polish bersama Sandi)
 - Sesi 7-17: Lumiina (1 sesi = 1 teknologi)
 - The user prefers to **write code themselves** with step-by-step guidance, NOT copy-paste from AI.
 
