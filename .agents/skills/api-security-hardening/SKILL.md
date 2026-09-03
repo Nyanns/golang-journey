@@ -1,49 +1,112 @@
 ---
 name: api-security-hardening
-description: Enterprise API security guidelines including OWASP API Top 10, constant-time comparisons, anti-enumeration, strict JWT lifecycle, security headers, and defensive validation.
+description: Enterprise API security guidelines including OWASP API Top 10 2023, constant-time comparisons, anti-enumeration, strict JWT lifecycle, security headers, and defensive validation.
 ---
 
-# 🛡️ API Security Hardening Standard (OWASP Top 10 & Defense-in-Depth)
+# 🛡️ API Security Hardening Standard (OWASP API Top 10 2023 & Defense-in-Depth)
 
-Designed for high-security Go backends (HTB Level 10 mindset & Enterprise Standards).
+> **References**: owasp.org/API-Security/editions/2023/en/0x00-header/, portswigger.net/web-security, nist.gov/sp800-63
 
 ---
 
 ## 1. ⏱️ Timing-Attack Prevention
-- **Constant-Time Comparison**:
-  - Always use `crypto/subtle.ConstantTimeCompare([]byte(tokenA), []byte(tokenB))` when comparing sensitive tokens, HMACs, or hashes.
-  - Never use direct string equality (`==`) on secrets to eliminate side-channel timing attacks.
+- **Constant-Time Comparison**: Always use `crypto/subtle.ConstantTimeCompare([]byte(a), []byte(b))` for secret tokens and HMAC verification. Never use `==` on sensitive strings.
+- **Dummy Bcrypt for Non-Existent Users**: When a login identifier doesn't exist in DB, still compute `bcrypt.CompareHashAndPassword(dummyHash, []byte(password))` (~70-130ms) so response time is identical regardless of user existence — eliminates **timing-based account enumeration**.
 
 ---
 
-## 2. 🥷 Anti-Account Enumeration & Data Leakage
-- **Uniform Authentication Responses**:
-  - `Login`, `ForgotPassword`, `ResendVerification` must return uniform responses regardless of whether the user/email exists.
-  - *Example*: Always respond with `"If your email is registered, we have sent instructions."` with indistinguishable response latency (or handled via async workers).
-- **Masking Internal Errors**:
-  - Never expose SQL errors, stack traces, or internal server paths in production HTTP responses. Return sanitized domain messages.
+## 2. 🥷 OWASP API Top 10 2023 — Updated Coverage
+
+| ID | Vulnerability | Go Mitigation |
+|---|---|---|
+| API1 | Broken Object Level Authorization | Verify `userID == resource.OwnerID` in every handler, not just middleware |
+| API2 | Broken Authentication | Short-lived JWTs, `nbf`/`iss`/`aud` claims, Redis revocation blacklist |
+| API3 | Broken Object Property Level Authorization | Explicit `Select()` in GORM, never return raw structs with all fields |
+| API4 | Unrestricted Resource Consumption | `http.MaxBytesReader`, pagination with max-limit clamp, rate limiting |
+| API5 | Broken Function Level Authorization | Role-based middleware, admin endpoints behind separate auth check |
+| API6 | Unrestricted Access to Sensitive Business Flows | Rate limit + CAPTCHA on registration, forgot-password, payment flows |
+| API7 | SSRF (Server-Side Request Forgery) | Whitelist allowed domains, never fetch user-supplied URLs directly |
+| API8 | Security Misconfiguration | Security headers, non-root Docker user, localhost-only DB ports |
+| API9 | Improper Inventory Management | Swagger docs, version your APIs (`/api/v1/`), deprecate old versions explicitly |
+| API10 | Unsafe Consumption of APIs | Validate and sanitize third-party API responses, don't trust blindly |
 
 ---
 
 ## 3. 🔑 JWT Lifecycle & Token Security
-- **Short-Lived Access Tokens (e.g. 15m) + Secure Refresh Tokens (e.g. 7d)**.
-- **Strict Claims Validation**: Validate `iss` (issuer), `aud` (audience), `exp` (expiration), and `nbf` (not before).
-- **Token Blacklisting / Revocation**:
-  - Store invalidated JWT IDs (`jti`) or user token versions in Redis with an expiration matching the token TTL for instantaneous revocation.
+- **Short-Lived Access Tokens**: 15-30 minutes max.
+- **Strict Claims Validation**: `iss`, `aud`, `exp`, `nbf` (not-before), `iat` (issued-at).
+- **Token Revocation via Redis Blacklist**: Store `jti` or token hash in Redis with TTL = token remaining lifetime. Check on every authenticated request.
+- **Rotate Secrets**: Use asymmetric RS256 or EdDSA for stateless microservice scenarios. HS256 only for single-service monoliths.
+- **Invalidate on Password Reset**: Always revoke all active sessions when user changes password.
 
 ---
 
 ## 4. 🌐 Defensive HTTP Headers & CSP
-- **Enforce Strict Security Headers**:
-  - `Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;`
-  - `X-Frame-Options: DENY`
-  - `X-Content-Type-Options: nosniff`
-  - `Referrer-Policy: strict-origin-when-cross-origin`
-  - `Strict-Transport-Security: max-age=31536000; includeSubDomains`
+```
+Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Permissions-Policy: geolocation=(), microphone=(), camera=()
+```
 
 ---
 
 ## 5. 🧱 Input Validation & Defense-in-Depth
-- **Strict Request Binding**: Use Gin struct tags with rigid validation (`binding:"required,email,max=255"`).
-- **Rate Limiting**: Protect authentication endpoints (`/login`, `/register`, `/forgot-password`) with IP-based and user-based rate limiters (Redis sliding window / token bucket).
-- **SQL Injection Defense**: Always use parameterized queries (GORM prepared statements) — NEVER string concatenate input into SQL clauses.
+- **Strict Request Binding**: Gin struct tags (`binding:"required,email,max=255"`).
+- **Rate Limiting**: Atomic Redis Lua script (`INCR` + conditional `EXPIRE` only on first hit). Include RFC-standard headers: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`, `Retry-After`.
+- **SQL Injection Defense**: Always use GORM parameterized queries. Never concatenate user input into SQL.
+- **XSS Prevention**: Sanitize user-generated HTML content server-side (e.g., `bluemonday`). Enforce `Content-Type: application/json` on all API responses.
+
+---
+
+## 6. 🐳 Container & Infrastructure Security
+- **Non-Root User**: Dockerfile runner stage must use `adduser -S appuser && USER appuser`.
+- **Minimal Base Image**: Use `alpine` or `distroless` — avoid full Debian/Ubuntu base for production.
+- **Localhost Port Binding**: Never expose DB/Redis ports to `0.0.0.0`. Use `127.0.0.1:5432` in `docker-compose.yml`.
+- **Secrets Management**: Use Docker secrets or environment variables. Never `COPY` secret files into image layers.
+
+---
+
+## 7. 🔬 Slowloris & DoS Defense
+Configure `http.Server` timeouts (critical — Go's default has NO timeout):
+```go
+server := &http.Server{
+    ReadHeaderTimeout: 5 * time.Second,   // Slowloris mitigation
+    ReadTimeout:       30 * time.Second,
+    WriteTimeout:      30 * time.Second,
+    IdleTimeout:       120 * time.Second,
+    MaxHeaderBytes:    1 << 20,           // 1MB
+}
+```
+
+---
+
+## 8. 🌐 Anti-OWASP CORS Misconfiguration (Strict Origin Whitelisting)
+- **The Danger**: Blindly reflecting request `Origin` with `Access-Control-Allow-Credentials: true` allows any malicious website to execute authenticated API requests using the victim's session/cookies.
+- **The Mitigation**: Maintain an explicit `originSet` whitelist. Never echo untrusted origins:
+  ```go
+  func CORSMiddleware(allowedOrigins ...string) gin.HandlerFunc {
+      originSet := make(map[string]bool)
+      for _, o := range allowedOrigins { originSet[o] = true }
+      return func(c *gin.Context) {
+          origin := c.Request.Header.Get("Origin")
+          if origin != "" && originSet[origin] {
+              c.Writer.Header().Set("Access-Control-Allow-Origin", origin)
+              c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+              c.Writer.Header().Set("Vary", "Origin")
+          }
+          c.Next()
+      }
+  }
+  ```
+
+---
+
+## 9. 🔑 Fail-Fast Cryptographic Secret Length Enforcement
+- `JWT_SECRET` must be strictly enforced to ≥ 32 characters (256 bits) during startup.
+- Insecure default placeholders (e.g. `"secret"`, `"password"`, `"changeme"`) must trigger immediate process termination (`os.Exit(1)`).
+
+
+

@@ -49,8 +49,29 @@ Standards for enterprise observability, monitoring, metrics, and incident resili
   <-quit
 
   ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-  defer cancel()
   if err := srv.Shutdown(ctx); err != nil {
       slog.Error("Server forced to shutdown", "error", err)
   }
   ```
+
+---
+
+## 5. 📊 Prometheus Metrics Scraping (`/metrics`) & Error Envelopes
+- **Prometheus Scrape Endpoint**:
+  ```go
+  import "github.com/prometheus/client_golang/prometheus/promhttp"
+  r.GET("/metrics", gin.WrapH(promhttp.Handler()))
+  ```
+  Exposes runtime stats (`go_goroutines`, `go_memstats_alloc_bytes`, `go_gc_duration_seconds`).
+- **Standard Error Envelopes (RFC 7807 inspired)**:
+  Always bundle `request_id` into error JSON responses for cross-system customer support & log correlation:
+  ```json
+  {
+    "error": {
+      "code": "RESOURCE_NOT_FOUND",
+      "message": "Artwork not found",
+      "request_id": "d3b62afb-0abc-4361-af98-9915257aa909"
+    }
+  }
+  ```
+

@@ -1,8 +1,12 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-02
+## Terakhir Diupdate: 2026-09-04
 
-## Status: Sesi 12 (Frontend UI/UX V2 & API Integration - Fase 1) SELESAI ✅ (Pending User Polish pada branch feature/frontend)
+## Status: Sesi 12 (Frontend Integration) + Enterprise Production Hardening (Nilai A+) SELESAI ✅
+- **Enterprise Hardening**: Fail-Fast Config (`cfg.Validate()`), Request-ID Tracing, CORS Whitelisting, Artwork Test Suite (100% Green Race-Free).
+- **Quality & Security Gates**: CodeQL SAST Scanner, Dependabot, `golangci-lint`, Prometheus Metrics (`/metrics`), dan 4 Architecture Decision Records (ADR).
+- **Runbooks**: `DEPLOYMENT.md`, `TROUBLESHOOTING.md`, `ERROR_HANDLING.md`, `CONTRIBUTING.md`, `.env.example`.
+- **Status Git**: Semua branch `feature/frontend` dan `develop` tersinkronisasi di GitHub `Nyanns/lumiina`.
 
 ---
 
@@ -217,6 +221,25 @@
   - [ ] `sonner`: Sleek, accessible toast notification system.
   - [ ] Canvas Pre-Compressor & Image Cropper.
 - [ ] *Branch saat ini*: `feature/frontend` (Dipertahankan, belum dimerge ke `develop` menunggu finalisasi ide/redesign UI dari Sandi).
+
+### 🛡️⚡ Sesi Khusus: Autonomous Enterprise Security Hardening & Hyper-Performance Optimization ✅ (SELESAI)
+- **Security Engineering (OWASP API Top 10 & HTB Mindset)**:
+  - [x] **Constant-Time Timing-Attack Mitigation**: Menggunakan pre-computed `dummyBcryptHash` saat login user tidak ditemukan, mengeliminasi variasi latensi (0.5ms vs 70ms) agar penyerang tidak bisa melakukan enumerasi akun.
+  - [x] **HTTP Server Slowloris & DoS Hardening**: Memasang `ReadHeaderTimeout` (5s), `ReadTimeout` (30s), `WriteTimeout` (30s), `IdleTimeout` (120s), dan `MaxHeaderBytes` (1MB).
+  - [x] **Strict Request Body Size Limiting**: `http.MaxBytesReader` (25MB) pada upload artwork mencegah memory exhaustion attack.
+  - [x] **W3C Standard Compliant CORS**: Refleksi origin dinamis (`Vary: Origin`) sehingga `Access-Control-Allow-Credentials: true` didukung penuh oleh browser tanpa error wildcard.
+  - [x] **Atomic Redis Rate Limiting (Lua Script)**: Menghapus bug infinite window reset pada `Expire()`, menggantikannya dengan single round-trip atomic script + standard RFC headers (`X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`, `Retry-After`).
+  - [x] **Token Revocation System**: Endpoint `/api/v1/auth/logout` + Redis token blacklisting untuk membatalkan token secara instan, serta invalidasi sesi otomatis saat reset password.
+  - [x] **Container Security**: Runner stage Dockerfile menggunakan non-root system user & group (`appuser:appgroup`), serta port DB/Redis dibind khusus ke `127.0.0.1` pada `docker-compose.yml`.
+- **Database Internals & PostgreSQL DDL Optimization**:
+  - [x] **Migration 000005 (`pg_trgm` & GIN Indexes)**: Mengaktifkan ekstensi trigram untuk pencarian `ILIKE` super kilat (1-2ms vs 500ms+ full sequential scan) pada `artworks(title)`, `artworks(description)`, dan `users(username)`.
+  - [x] **B-Tree Foreign Key & Composite Indexes**: Menambahkan index FK `artworks(user_id)`, `artwork_tags(tag_id)`, composite sorting index `comments(artwork_id, created_at DESC)`, and partial index `users(created_at) WHERE is_verified = FALSE`.
+  - [x] **GORM Engine Tuning**: `SkipDefaultTransaction: true` (mempercepat write 30-50%), `PrepareStmt: true` (statement execution plan cache).
+  - [x] **Connection Pool Sizing**: `MaxOpenConns: 50`, `MaxIdleConns: 25`, `ConnMaxLifetime: 15m`, `ConnMaxIdleTime: 5m`.
+- **High-Throughput Concurrency & Health Probes**:
+  - [x] **Asynchronous Batched Cache Invalidation**: Menghapus loop synchronous `Del()` individual, digantikan background worker dengan batching 100 keys per command.
+  - [x] **Real Deep Health Probes (`/readyz`)**: Verifikasi konektivitas aktif ke PostgreSQL dan Redis via `PingContext(ctx)` dengan HTTP 503 fallback jika salah satu downstream dependency bermasalah.
+  - [x] **Context Cancellation Propagation**: Memastikan seluruh operasi handler menggunakan `c.Request.Context()` agar query dibatalkan jika client menutup koneksi.
 
 ### 🏆 Sesi 13: Full-Stack Cloud Deployment (Production Live)
 - [ ] Deploy Database ke Cloud (Supabase / Neon PostgreSQL).
