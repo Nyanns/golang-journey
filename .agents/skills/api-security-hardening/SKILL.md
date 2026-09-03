@@ -108,5 +108,23 @@ server := &http.Server{
 - `JWT_SECRET` must be strictly enforced to ≥ 32 characters (256 bits) during startup.
 - Insecure default placeholders (e.g. `"secret"`, `"password"`, `"changeme"`) must trigger immediate process termination (`os.Exit(1)`).
 
+---
+
+## 10. 🔒 Password Complexity & Strength Enforcement
+- Enforce character diversity across 4 sets (uppercase `[A-Z]`, lowercase `[a-z]`, digits `[0-9]`, symbols `[!@#$%^&*...]`).
+- Enforce strict confirmation matching using Gin's `binding:"eqfield=Password"`.
+- Reject user registrations and password resets immediately at the validation layer before running expensive `bcrypt` hashing, preventing CPU exhaustion attacks.
+
+---
+
+## 11. 🛡️ Security Audit Trails on Authentication Events
+- **Log Failed Logins (WARN)**: Record `identifier`, `ip`, and `request_id` for intrusion detection / SIEM monitoring:
+  ```go
+  slog.Warn("Security Audit: Failed authentication attempt", "identifier", id, "ip", c.ClientIP(), "request_id", reqID)
+  ```
+- **Log Success Events (INFO)**: Record user registration and login events.
+- **Zero-Secret Logging Guarantee**: Never log raw passwords, hashes, reset tokens, or bearer tokens in logs.
+
+
 
 

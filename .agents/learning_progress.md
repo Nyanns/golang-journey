@@ -4,14 +4,20 @@
 
 ## Status: Sesi 12 SEDANG BERJALAN — Lumiina Frontend & Production Hardening
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
-  - Fail-Fast Config (`cfg.Validate()`), Request-ID Correlation Tracing, Strict CORS Whitelisting.
-  - Unit Test Suite (`ArtworkService`, `Config`, `Middleware`) 100% PASS race-detector clean.
-  - Prometheus Metrics Endpoint (`/metrics`), 4 Architecture Decision Records (ADRs).
-  - Runbooks: `DEPLOYMENT.md`, `TROUBLESHOOTING.md`, `ERROR_HANDLING.md`, `CONTRIBUTING.md`, `.env.example`.
+  - **Fail-Fast & Security**: `cfg.Validate()`, Request-ID Correlation Tracing, Strict CORS Whitelisting.
+  - **Phase 1 Critical Fixes**:
+    - Struct-Level Input Validation (`binding:"required,alphanum,min=3,max=30,eqfield=Password"`).
+    - Enterprise Password Complexity (`ValidatePasswordStrength`: Upper, Lower, Digit, Symbol, min 8).
+    - Standardized `AppError` Architecture (RFC 7807 JSON error envelopes with `request_id`).
+    - GORM Slow Query Logger (`SlowThreshold: 200ms`, `LogLevel: logger.Warn`).
+    - Security Audit Logging (`slog.Warn` on failed logins, `slog.Info` on registrations).
+    - Migration Tracking (`make migrate-version`, active version: 5).
+  - **Unit Testing**: 100% PASS race-detector clean across all packages.
+  - **Observability & ADRs**: Prometheus `/metrics` endpoint, 4 ADRs, and 4 production runbooks.
 - **Bagian 2 (Frontend UI/UX Redesign & Polish)**: **BELUM SELESAI / PENDING ⏳**
   - User (Sandi) belum memperbaiki UI/UX dan belum melakukan redesign.
   - **Agenda Sesi Berikutnya**: Fokus penuh mengerjakan Redesign UI/UX Lumiina (Light mode Pixiv-inspired, non-glassmorphism, Framer Motion, human-crafted, integrasi API lengkap).
-- **Branch Aktif**: `feature/frontend` (Commit `687c10b`, sinkron dengan `develop` dan remote GitHub `Nyanns/lumiina`).
+- **Branch Aktif**: `feature/frontend` (Commit `d050ec9`, sinkron dengan `develop` dan remote GitHub `Nyanns/lumiina`).
 
 ---
 

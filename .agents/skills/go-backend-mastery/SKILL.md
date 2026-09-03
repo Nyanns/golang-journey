@@ -168,4 +168,61 @@ type APIResponse[T any] = struct {
 - Structure: **Title**, **Status** (Accepted/Proposed), **Context** (problem), **Decision** (solution & justification), **Consequences** (trade-offs).
 - Kept alongside source code in version control to preserve engineering rationale across team generations.
 
+---
+
+## 11. 🛡️ Struct-Level Input Validation & Password Complexity
+- **Gin Tag Validation**: Use `go-playground/validator/v10` tags directly on request DTO structs:
+  ```go
+  type RegisterRequest struct {
+      Username        string `json:"username" binding:"required,alphanum,min=3,max=30"`
+      Email           string `json:"email" binding:"required,email"`
+      Password        string `json:"password" binding:"required,min=8"`
+      ConfirmPassword string `json:"confirm_password" binding:"required,min=8,eqfield=Password"`
+  }
+  ```
+- **Enterprise Password Strength Enforcement**:
+  Never rely solely on length checks. Validate character entropy:
+  ```go
+  func ValidatePasswordStrength(password string) error {
+      if len(password) < 8 { return errors.New("password must be at least 8 characters") }
+      var hasUpper, hasLower, hasDigit, hasSymbol bool
+      for _, char := range password {
+          switch {
+          case unicode.IsUpper(char): hasUpper = true
+          case unicode.IsLower(char): hasLower = true
+          case unicode.IsDigit(char): hasDigit = true
+          case unicode.IsPunct(char) || unicode.IsSymbol(char): hasSymbol = true
+          }
+      }
+      if !hasUpper || !hasLower || !hasDigit || !hasSymbol {
+          return errors.New("password must contain uppercase, lowercase, digit, and special character")
+      }
+      return nil
+  }
+  ```
+
+---
+
+## 12. 📜 Standardized `AppError` Architecture (RFC 7807)
+- **Eliminate Raw String Errors**: Domain errors must carry machine-readable `Code`, human-readable `Message`, and HTTP `Status`:
+  ```go
+  type AppError struct {
+      Code    string `json:"code"`
+      Message string `json:"message"`
+      Status  int    `json:"status"`
+      Err     error  `json:"-"`
+  }
+  ```
+- **Consistent JSON Error Envelope**: Every client error must bundle correlation tracing:
+  ```json
+  {
+    "error": {
+      "code": "AUTH_WEAK_PASSWORD",
+      "message": "password must contain at least one uppercase letter",
+      "request_id": "57c049e6-0869-47fb-b5ba-1288b5285c8b"
+    }
+  }
+  ```
+
+
 

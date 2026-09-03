@@ -134,5 +134,28 @@ FROM pg_stat_user_tables
 ORDER BY dead_pct DESC;
 ```
 
+---
+
+## 7. 🐢 Application Slow Query Logging & Migration Tracking
+- **GORM Slow Query Threshold**:
+  Configure ORM logger to log any query taking > 200ms at `WARN` level:
+  ```go
+  gormLogger := logger.New(
+      log.New(os.Stdout, "\r\n", log.LstdFlags),
+      logger.Config{
+          SlowThreshold:             200 * time.Millisecond,
+          LogLevel:                  logger.Warn,
+          IgnoreRecordNotFoundError: true,
+      },
+  )
+  ```
+- **Migration Tracking Visibility**:
+  `golang-migrate` tracks applied migrations in the `schema_migrations` table (`version`, `dirty`). Always expose CLI targets to check the live database version:
+  ```makefile
+  migrate-version:
+      migrate -path db/migrations -database "$$DATABASE_URL" version
+  ```
+
+
 
 
