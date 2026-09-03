@@ -120,10 +120,48 @@ server := &http.Server{
 ## 11. 🛡️ Security Audit Trails on Authentication Events
 - **Log Failed Logins (WARN)**: Record `identifier`, `ip`, and `request_id` for intrusion detection / SIEM monitoring:
   ```go
-  slog.Warn("Security Audit: Failed authentication attempt", "identifier", id, "ip", c.ClientIP(), "request_id", reqID)
+  slog.Warn("Security Audit: Failed authentication attempt", "identifier", sanitize.Log(id), "ip", sanitize.Log(c.ClientIP()), "request_id", reqID)
   ```
 - **Log Success Events (INFO)**: Record user registration and login events.
 - **Zero-Secret Logging Guarantee**: Never log raw passwords, hashes, reset tokens, or bearer tokens in logs.
+
+---
+
+## 12. ✉️ Anti-Email Header & Content Injection (CWE-093 / CWE-20)
+- **Header Injection Defense**: Always validate email recipients with `net/mail.ParseAddress` and aggressively strip carriage returns (`\r`) and newlines (`\n`) from email addresses and subjects before MIME header assembly:
+  ```go
+  cleanTo := strings.ReplaceAll(strings.ReplaceAll(strings.TrimSpace(to), "\r", ""), "\n", "")
+  cleanSubject := strings.ReplaceAll(strings.ReplaceAll(strings.TrimSpace(subject), "\r", ""), "\n", "")
+  parsed, err := mail.ParseAddress(cleanTo)
+  ```
+- **Email Body XSS Prevention**: Always HTML-escape user parameters (`html.EscapeString(username)`) injected into HTML email templates to prevent phishing or script injection in desktop/web email clients.
+
+---
+
+## 13. 🪵 Anti-Log Injection & Log Forgery (CWE-117)
+- **The Threat**: Attackers inject fake log entries, split log lines, or corrupt SIEM analytics via CRLF characters (`\r\n`) or terminal escape codes.
+- **The Rule**: Never pass raw user inputs (`identifier`, `username`, `email`, `ip`, `c.Request.URL.Path`) directly to logger calls.
+- **Sanitizer Pattern**:
+  ```go
+  func Log(s string) string {
+      s = strings.ReplaceAll(s, "\r", "")
+      s = strings.ReplaceAll(s, "\n", "")
+      return strings.Map(func(r rune) rune {
+          if r < 32 || r == 127 { return -1 }
+          return r
+      }, s)
+  }
+  ```
+
+---
+
+## 14. 🌐 DOM-Based XSS & File Preview Sanitization (CWE-079)
+- **Object URL Safety**: When rendering user-uploaded file previews via `URL.createObjectURL(file)`, ensure the URL protocol is strictly verified (`blob:`):
+  ```javascript
+  const safePreviewUrl = previewUrl && previewUrl.startsWith('blob:') ? previewUrl : null;
+  ```
+- **Lifecycle Cleanup**: Always revoke object URLs on component unmount or when the file changes (`URL.revokeObjectURL(previewUrl)`) in a `useEffect` cleanup return to prevent browser memory leaks.
+
 
 
 

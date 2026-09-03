@@ -12,12 +12,17 @@
     - GORM Slow Query Logger (`SlowThreshold: 200ms`, `LogLevel: logger.Warn`).
     - Security Audit Logging (`slog.Warn` on failed logins, `slog.Info` on registrations).
     - Migration Tracking (`make migrate-version`, active version: 5).
+  - **CodeQL SAST Hardening (100% Resolved Alerts)**:
+    - Fixed Critical Email Header/Content Injection (CWE-093): `net/mail.ParseAddress`, CRLF stripping, and `html.EscapeString`.
+    - Fixed High DOM XSS (CWE-079): `blob:` scheme enforcement and `URL.revokeObjectURL` lifecycle cleanup.
+    - Fixed Medium Log Injection (CWE-117): `internal/pkg/sanitize/log.go` applied to `user_handler.go`, `user_service.go`, and `error_handler.go`.
+    - Pruned unused frontend imports (`Sparkles`, `LogIn`, `UserPlus`, `KeyRound`, `UserIcon`).
   - **Unit Testing**: 100% PASS race-detector clean across all packages.
   - **Observability & ADRs**: Prometheus `/metrics` endpoint, 4 ADRs, and 4 production runbooks.
 - **Bagian 2 (Frontend UI/UX Redesign & Polish)**: **BELUM SELESAI / PENDING ⏳**
   - User (Sandi) belum memperbaiki UI/UX dan belum melakukan redesign.
   - **Agenda Sesi Berikutnya**: Fokus penuh mengerjakan Redesign UI/UX Lumiina (Light mode Pixiv-inspired, non-glassmorphism, Framer Motion, human-crafted, integrasi API lengkap).
-- **Branch Aktif**: `feature/frontend` (Commit `d050ec9`, sinkron dengan `develop` dan remote GitHub `Nyanns/lumiina`).
+- **Branch Aktif**: `feature/frontend` (Commit `f059e6c`, sinkron dengan `develop` dan remote GitHub `Nyanns/lumiina`).
 
 ---
 
