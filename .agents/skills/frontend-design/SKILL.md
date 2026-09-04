@@ -11,25 +11,29 @@ When generating, designing, or refactoring frontend interfaces, ALWAYS adhere to
 
 ## 1. 🌈 Color System & Palette Philosophy (Anti-Generic Constraint)
 - **NO Generic Colors**: Never use pure red (`#ff0000`), harsh pure black (`#000000`), or cheap neon gradients.
+- **Light Mode Foundation (Default)**:
+  - Canvas: `bg-slate-50` / `bg-white`
+  - Surface/Cards: `bg-white` with crisp `border border-slate-200/90` and subtle micro-shadow `shadow-[0_1px_3px_rgba(0,0,0,0.04)]`
+  - Text Primary: `text-slate-900`
+  - Text Muted: `text-slate-500`
 - **Dark Mode Palette**:
-  - Background: `bg-slate-950` or `bg-zinc-950`
-  - Surface/Cards: `bg-slate-900/80` or `bg-zinc-900/70` with subtle border `border-slate-800/80`
-  - Text Primary: `text-slate-100` / `text-zinc-100`
-  - Text Muted: `text-slate-400` / `text-zinc-400`
+  - Background: `bg-[#121519]` / `bg-slate-950`
+  - Surface/Cards: `bg-[#1a1e24]` / `bg-slate-900` with subtle border `border-slate-800`
+  - Text Primary: `text-slate-100`
+  - Text Muted: `text-slate-400`
 - **Brand Accent Colors**:
-  - Primary: Refined Indigo (`indigo-500` / `indigo-600`), Violet, or Emerald.
-  - Glow & Gradients: Subtle mesh gradients (`bg-gradient-to-tr from-indigo-500/10 via-purple-500/10 to-transparent`).
+  - Primary: Pixiv Sky Blue (`#0096fa` / `sky-500` / `sky-600`).
+  - Active/Favorite: Rose (`rose-500` / `rose-600`) for likes/favorites.
 
 ---
 
-## 2. 🪟 Surface & Depth (Glassmorphism & Diffusion Shadows)
-- **Glassmorphic Cards**:
-  `backdrop-blur-xl bg-slate-900/60 border border-slate-700/40 rounded-2xl shadow-xl`
-- **Diffusion Shadows**:
-  Use multi-layered diffuse shadows instead of harsh dark outlines:
-  `shadow-[0_20px_50px_-15px_rgba(0,0,0,0.3)]`
-- **Inner Highlights**:
-  Add subtle top inner border for a glassy 3D look: `shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]`
+## 2. 🪟 Surface & Depth (Zero Glassmorphism & Micro-Shadows)
+- **NO Glassmorphism**:
+  - ❌ Avoid `backdrop-blur-*` AI-slop soup.
+  - ✅ Use crisp, solid surfaces (`bg-white` dark: `bg-[#1a1e24]`) with clean 1px borders (`border-slate-200` dark: `border-slate-800`).
+- **Micro-Shadows**:
+  - Clean elevation with subtle natural shadow: `shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-md`
+  - Card hover lift: `transition-all duration-200 ease-out hover:-translate-y-0.5`
 
 ---
 

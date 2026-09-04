@@ -2,7 +2,7 @@
 
 ## Terakhir Diupdate: 2026-09-04
 
-## Status: Sesi 12 SEDANG BERJALAN — Lumiina Frontend & Production Hardening
+## Status: Sesi 12 SELESAI ✅ — Lumiina Frontend & Production Hardening
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
   - **Fail-Fast & Security**: `cfg.Validate()`, Request-ID Correlation Tracing, Strict CORS Whitelisting.
   - **Phase 1 Critical Fixes**:
@@ -19,10 +19,32 @@
     - Pruned unused frontend imports (`Sparkles`, `LogIn`, `UserPlus`, `KeyRound`, `UserIcon`).
   - **Unit Testing**: 100% PASS race-detector clean across all packages.
   - **Observability & ADRs**: Prometheus `/metrics` endpoint, 4 ADRs, and 4 production runbooks.
-- **Bagian 2 (Frontend UI/UX Redesign & Polish)**: **BELUM SELESAI / PENDING ⏳**
-  - User (Sandi) belum memperbaiki UI/UX dan belum melakukan redesign.
-  - **Agenda Sesi Berikutnya**: Fokus penuh mengerjakan Redesign UI/UX Lumiina (Light mode Pixiv-inspired, non-glassmorphism, Framer Motion, human-crafted, integrasi API lengkap).
-- **Branch Aktif**: `feature/frontend` (Commit `f059e6c`, sinkron dengan `develop` dan remote GitHub `Nyanns/lumiina`).
+- **Bagian 2 (Frontend UI/UX Redesign & Multi-Page Architecture)**: **SELESAI ✅**
+  - **Brand Identity Integration**: Menggunakan logo resmi `lumiina_logo_hd.jpg` di navbar, favicon, dan auth. Palet warna primer Lumiina Blue / Pixiv Sky Blue (`#0096fa`).
+  - **Multi-Page Dedicated Routes (`react-router-dom`)**:
+    - `/` & `/explore`: HomePage 2-kolom (Feed di kiri + Sidebar kanan: Sorotan Hari Ini, Tag Populer, Komunitas Lumi & Ina).
+    - `/artworks/:id`: ArtworkDetailPage (Cinema viewer split stage, info kreator, tombol interaksi Like/Share, dan kolom diskusi rapi).
+    - `/upload`: UploadPage (Studio unggah karya 2-kolom dengan drag-and-drop & tag suggestions).
+    - `/login` & `/register` & `/forgot-password`: Halaman autentikasi mandiri yang fokus dan profesional.
+    - `/profile/:id`: ProfilePage ala X/Twitter (Banner luas, avatar bulat bertumpuk, bio, statistik, dan galeri karya).
+  - **Zero Glassmorphism (Anti AI-Slop)**: Menghapus seluruh `backdrop-blur-*` dan menggantikannya dengan kanvas putih bersih, border tegas 1px `border-slate-200`, dan bayangan mikro.
+  - **Authentic Artwork Card**: Metadata judul, avatar, dan nama kreator selalu terlihat di bawah gambar (tidak tersembunyi di balik hover gelap).
+  - **Business Logic Hardening & Pixiv Header Standards**:
+    - Navbar logo disempurnakan (hover zoom dinonaktifkan, ukuran proporsional `h-7 sm:h-[30px]`).
+    - Guest Mode Header dibersihkan (hanya ada tombol Theme Mode + Sign In murni tanpa icon pintu/tombol Sign Up).
+    - Guest Like Protection & Real Persistence: Migrasi DB 6 (`likes` table), Go Backend API (`POST /api/v1/artworks/:id/like`), Redis cache invalidation, dan agregasi batch `LikeCount`. Tamu tidak bisa like, tetapi tetap melihat total like riil komunitas (`isLiked: false`, `count: 1`).
+    - Recommended Users Logic: Tamu tidak melihat widget rekomendasi akun, user login tidak merekomendasikan dirinya sendiri (`u.id !== user.id`), dan section otomatis kosong jika belum ada user lain.
+    - Clean Sidebar Footer & Carousel Divider: Menghapus Privacy & English (US), serta menambahkan pembatas horizontal antara seksi Trending & Recommended Artwork. Halaman "Show all" direncanakan dengan batas maksimal 20 artwork.
+  - **UX Font Audit & Typography Standard**:
+    - Menghapus Plus Jakarta Sans (yang terlalu lebar/mencolok dan bersaing dengan artwork).
+    - Menetapkan **Inter** sebagai satu font terbaik untuk antarmuka galeri seni (*"Artwork is the Hero"*), dilengkapi *fallback stack* font sistem Jepang (`Hiragino Sans`, `Yu Gothic UI`, `Meiryo`, `system-ui`) agar teks CJK/anime ter-render alami dan mulus seperti Pixiv.
+  - **Like & Unlike (Pembatalan Like) 100% Sinkronisasi**:
+    - **Root Cause Fix**: Memperbaiki daemon Go backend yang sebelumnya masih menjalankan binary lama, sehingga middleware `optionalAuth` rute feed dan detail karya aktif sepenuhnya.
+    - **Safe Type Assertion**: Handler backend menggunakan *type switch* aman (`float64`, `uint`, `int`, `int64`) untuk context `user_id` guna mencegah error 401 palsu yang memicu penghapusan token di interceptor.
+    - **Authoritative Server State**: Memperbaiki `LikesContext.jsx` dengan menghapus blokade `if (!prev[id])`, menormalisasi `Number(id)`, dan mereset state saat logout.
+    - **Detail Page Integration**: `GetArtworkByID` mendukung `currentUserID` untuk `repo.GetByIDForUser`, dan `ArtworkDetailPage.jsx` memanggil `syncFromServer`.
+    - **React Error Boundary Guard**: Memperbaiki `LoginPage.jsx` dan `RegisterPage.jsx` agar mengekstrak `.message` dari objek error RFC 7807 JSON (`{code, message, request_id}`) agar tidak menyebabkan React crash.
+- **Branch Aktif**: `feature/frontend` (Siap direview, diuji, dan dimerge ke `develop`).
 
 ---
 

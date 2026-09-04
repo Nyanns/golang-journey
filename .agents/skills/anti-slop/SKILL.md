@@ -75,21 +75,40 @@ flowchart TD
   - Crisp, clean light theme (Slate/Zinc neutral foundation with **ONE intentional brand accent**, e.g., `#0284c7` Pixiv Blue or `#4f46e5` Indigo).
   - Solid backgrounds with subtle 1px border lines (`border-slate-200`).
 
-### 🎯 Axis 5: Structural Variety (Variasi Makrostruktur)
-- **BANNED**: The repetitive "Hero Banner ➡️ 3 Identical Cards with Round Icons ➡️ Floating CTA Box ➡️ Footer".
+### 🎯 Axis 6: Content-First Typography ("Artwork is the Hero")
+- **BANNED**:
+  - ❌ Overly wide, playful, or quirky geometric sans (like Plus Jakarta Sans) for art gallery feeds that distract from creator illustrations.
 - **STANDARD**:
-  - **Masonry Grid** for organic artwork feeds (Pixiv style).
-  - **Master-Detail Split Panels** for artwork viewing + comments.
-  - **Bento Grids** and **Asymmetric Cards** for dashboards and feature discovery.
+  - Clean, neutral, high x-height typography (**Inter**) as the primary interface font.
+  - Native CJK font stack fallbacks (`Hiragino Sans`, `Yu Gothic UI`, `Meiryo`, `system-ui`) so Japanese, Kanji, and anime titles render crisp and authentic.
+
+### 🎯 Axis 7: Responsive Brand Identity ("No Shrunk Wordmarks")
+- **BANNED**:
+  - ❌ Squeezing a horizontal logo wordmark into a 32px navbar slot until its text becomes illegible and blurry.
+  - ❌ Adding cheap hover zoom transforms on brand logos (`hover:scale-105` on navbar brand).
+- **STANDARD**:
+  - Use a high-resolution, dedicated single-letter icon (`L`) alongside crisp text typography, or maintain proper fixed height without distortion.
+  - Keep logo interactions static or subtle color transitions without bouncing.
 
 ---
 
-## 4. 📋 Pre-Emit Quality Gates (Wajib Lolos Sebelum Kode Selesai)
+## 4. 🔄 Reactive State Synchronization Standards
+- **Server as Absolute Truth**: Never let frontend optimistic updates permanently discard authoritative backend API payloads (`if (!prev[id])` anti-pattern).
+- **Graceful Logout Cleanup**: Always scrub user-specific engagement state (likes, bookmarks) upon logout while preserving aggregate community metrics.
+- **Defensive Error Extraction**: When handling RFC 7807 JSON error responses (`{error: {code, message}}`), always sanitize payloads to string before passing to React JSX.
+- **Numeric ID Normalization**: Always cast URL params and API identifiers to consistent numeric types (`Number(id)`) to eliminate string/integer dictionary key mismatch.
 
-Sebelum membagikan UI/UX ke user, AI harus memverifikasi 5 gerbang kualitas ini:
+---
+
+## 5. 📋 Pre-Emit Quality Gates (Wajib Lolos Sebelum Kode Selesai)
+
+Sebelum membagikan UI/UX ke user, AI harus memverifikasi gerbang kualitas ini:
 
 1. [ ] **No AI Slop Fingerprints**: Tidak ada gradasi neon ungu, tidak ada efek blur kaca (glassmorphism), tidak ada card melayang terisolasi tanpa navbar/footer.
-2. [ ] **State Coverage**: Sudah menangani state *Success*, *Error/Expired*, *Loading*, dan *Empty State*.
-3. [ ] **Real Domain Terminology**: Menggunakan istilah platform seni/komunitas nyata (kreator, ilustrasi, tag, bookmark, resolusi).
-4. [ ] **Functional Actions**: Tombol memiliki tujuan jelas dan aksi primer/sekunder yang tegas (tidak ada tombol redundan/aneh).
-5. [ ] **Responsive & Fixed Dimensions**: Ikon SVG selalu memiliki atribut dimensi pasti (`width="X" height="Y"`) untuk mencegah layout shift.
+2. [ ] **Content-First Typography**: Menggunakan font netral (*Inter*) dengan CJK system fallback, bukan display font yang mendominasi artwork.
+3. [ ] **No Shrunk Wordmarks**: Logo proporsional, tajam, dan tidak terdistorsi/terlalu kecil di bar navigasi.
+4. [ ] **State Coverage**: Sudah menangani state *Success*, *Error/Expired*, *Loading*, dan *Empty State*.
+5. [ ] **State Sync & Revert**: Fitur interaksi (Like, Bookmark) mendukung optimistic update + server sync + revert rollback saat network error.
+6. [ ] **Real Domain Terminology**: Menggunakan istilah platform seni/komunitas nyata (kreator, ilustrasi, tag, bookmark, resolusi).
+7. [ ] **Functional Actions**: Tombol memiliki tujuan jelas dan aksi primer/sekunder yang tegas (tidak ada tombol redundan/aneh).
+8. [ ] **Responsive & Fixed Dimensions**: Ikon SVG selalu memiliki atribut dimensi pasti (`width="X" height="Y"`) untuk mencegah layout shift.
