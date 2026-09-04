@@ -31,3 +31,20 @@ Each entry uses a 3-part failure signature (Verifier Cause → Causal Status →
 - **Prevention Rule**: When handling API errors in frontend components, always sanitize the payload to guaranteed string before passing to React JSX.
 - **Files Affected**: `web/src/pages/LoginPage.jsx`, `web/src/pages/RegisterPage.jsx`
 
+### [2026-09-05] [Category: SECURITY_AUDIT_HARDENING]
+- **Context**: SQL ORDER BY clauses, session revocation epoch check, and CSP hardening.
+- **Error**: `fmt.Sprintf` in SQL clause order, session revocation key set in Redis during password reset but never checked in `AuthMiddleware`, and `unsafe-inline` in CSP.
+- **Root Cause**:
+  1. String interpolation `fmt.Sprintf` in SQL queries creates bad precedents and vulnerability vectors.
+  2. Redis revocation key (`user_revocation:<id>`) was stored on password reset, but `AuthMiddleware` omitted comparing token `iat` against this epoch.
+  3. CSP header included `'unsafe-inline'` in `script-src`, weakening XSS defenses.
+- **Fix Applied**:
+  1. Parameterized GORM ORDER BY expressions with `gorm.Expr("...", userID)`.
+  2. Added Redis epoch comparison in `AuthMiddleware`: aborts request if `iat < epoch`.
+  3. Hardened CSP to `script-src 'self'`.
+- **Prevention Rule**:
+  1. Never use `fmt.Sprintf` for SQL query construction under any circumstances — always use `?` placeholders or `gorm.Expr`.
+  2. Every revocation mechanism written in service layers must have a corresponding verification step in the authentication middleware.
+  3. Keep CSP policies as restrictive as possible, omitting `unsafe-inline` from script execution contexts.
+- **Files Affected**: `internal/repository/artwork_repository.go`, `internal/middleware/auth_middleware.go`, `internal/middleware/security_headers.go`
+

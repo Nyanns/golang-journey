@@ -1,6 +1,6 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-04
+## Terakhir Diupdate: 2026-09-05
 
 ## Status: Sesi 12 SEDANG BERJALAN ⏳ — Lumiina Frontend UI/UX & Production Hardening
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
@@ -45,6 +45,53 @@
     - **Authoritative Server State**: Memperbaiki `LikesContext.jsx` dengan menghapus blokade `if (!prev[id])`, menormalisasi `Number(id)`, dan mereset state saat logout.
     - **Detail Page Integration**: `GetArtworkByID` mendukung `currentUserID` untuk `repo.GetByIDForUser`, dan `ArtworkDetailPage.jsx` memanggil `syncFromServer`.
     - **React Error Boundary Guard**: Memperbaiki `LoginPage.jsx` dan `RegisterPage.jsx` agar mengekstrak `.message` dari objek error RFC 7807 JSON (`{code, message, request_id}`) agar tidak menyebabkan React crash.
+  - **Lumiina Upload Studio (`/upload`) Advanced Artist Tools & Contrast Overhaul**:
+    - **Advanced Digital Artist Tools**:
+      - *Value Check Mode (明度/Grayscale)*: Toggle hitam-putih untuk memeriksa hierarki kontras pencahayaan dan kedalaman tone sebelum karya dipublikasikan (standar digital painting & ilustrasi).
+      - *Feed Crop Simulator*: Simulator thumbnail 1:1 persegi dengan pilihan titik fokus (*Top* untuk wajah/kepala karakter, *Center*, *Bottom* untuk aksi/detail).
+      - *Studio Backdrop Switcher*: 4 latar kanvas (18% Neutral Gray standar colorist studio, OLED Dark untuk uji lineart/glow, Pure White untuk uji kontras light mode, dan Checkerboard untuk deteksi lubang transparansi alpha PNG).
+      - *Harmonic Palette Extractor*: Ekstraksi 5 warna dominan otomatis dari gambar via kanvas offscreen dengan fitur 1-klik salin HEX dan tombol *Copy Palette*.
+      - *Watermark Safety Preview*: Pratinjau letak watermark sudut `© [artist] • Lumiina` agar artist yakin watermark tidak menutupi tanda tangan atau mata karakter.
+      - *Resolution & Quality Intelligence Matrix*: Menghitung dimensi, MP, rasio aspek, ukuran file, serta tier kualitas (`4K Ultra HD`, `2K QHD Crisp`, `Full HD`).
+      - *1:1 Native Resolution Inspector*: Modal layar penuh untuk memeriksa goresan kuas, kebersihan garis, dan anti-aliasing.
+    - **Header Navigasi Minimalis (Standar ArtStation/Figma/Cara)**:
+      - Menata bagian kiri atas menjadi tombol navigasi taktil `[ ← Feed ]` yang rapi, pemisah vertikal tipis `|`, serta breadcrumb informatif `Upload • New Illustration`.
+    - **Perbaikan Kontras Warna Menyeluruh (Light Mode & Dark Mode)**:
+      - Memperbaiki kontras tombol *Publish Artwork* (disabled state tidak lagi samar/gelap di Dark Mode, kini memiliki border tegas dan teks yang jelas terbaca).
+      - Memperbaiki kontras label formulir (`text-slate-900` / `text-white`), placeholder input, dan tombol *Cancel*.
+      - Memperbaiki kontras chip tag dan tombol tag populer dengan border tegas.
+  - **ArtStation-Style HashID URL Obfuscation & Vanity Profiles (Anti-Enumeration & Enterprise Privacy)**:
+    - **Vulnerability Remediation**: Menghapus seluruh URL sekuensial telanjang (`/artworks/1`, `/profile/1`, `/comments/1`) yang rentan IDOR / ID Enumeration, scraping data otomatis, dan kebocoran metrik bisnis ke pihak luar.
+    - **Sqids Obfuscation Engine (`internal/pkg/hashid`)**: Mengintegrasikan algoritma Sqids dengan panjang minimal 6 karakter alfanumerik acak (`1` $\rightarrow$ `H1rJsY`, `2` $\rightarrow$ `Wkyz19`).
+    - **Zero Database Migration**: PostgreSQL tetap menggunakan `id BIGINT PRIMARY KEY` dengan indeks B-Tree yang ultra-cepat ($O(\log N)$).
+    - **Bi-Directional JSON Serialization**: `Artwork.MarshalJSON()` dan `Comment.MarshalJSON()` otomatis mengonversi ID menjadi string slug, dan Gin Handler mendecode slug menjadi `uint` ID.
+    - **Vanity Profile URLs (`/profile/:username`)**: Mengikuti standar industri global (Cara, ArtStation, GitHub, X), profil kreator menggunakan handle unik (`http://localhost:5173/profile/Nyanns`).
+    - **Smart User Profile Resolver (`user_repository.go`)**: Mendukung pencarian profil multi-layer:
+      1. Numerik murni (misal `/profile/1` untuk backward compatibility).
+      2. Case-insensitive username (`LOWER(username) = LOWER(?)` atau `@username`).
+      3. Fallback HashID slug.
+    - **Seamless Canonical URL Auto-Redirection**: Jika pengguna membuka link lama atau numerik langsung (`/artworks/1` atau `/profile/1`), frontend secara instan dan mulus meng-canonicalize URL di bilah alamat peramban menjadi `/artworks/H1rJsY` atau `/profile/Nyanns` tanpa reload halaman.
+    - **Profile Share Feature**: Tombol salin tautan profil taktil dengan umpan balik visual *"Link Copied!"*.
+    - **Email Localization Hardening**: Seluruh subjek email di `mailer.go` dan template HTML dinormalisasi 100% ke dalam Bahasa Inggris profesional.
+  - **Full Security Audit & Code Quality Remediation (14/14 Findings Remediated)**:
+    - **🔴 Critical Fixes**:
+      - *C1 (Credential Leak Check)*: Audit riwayat Git mengonfirmasi `.env` **0 commit** di Git history (aman dari kebocoran masa lalu).
+      - *C2 (Session Revocation Epoch)*: `AuthMiddleware` memeriksa `user_revocation:<id>` epoch dari Redis jika password direset, langsung menolak token JWT lama (`iat < epoch`).
+      - *C3 (CSP Hardening)*: Menghapus `'unsafe-inline'` dari directive `script-src` pada `security_headers.go` untuk menutup vektor eksekusi XSS.
+    - **🟡 High Fixes**:
+      - *H1 (SQL Injection Defense)*: Menghapus `fmt.Sprintf` raw formatting pada klausa `.Order()` di `artwork_repository.go`, menggantikannya dengan `gorm.Expr` parameterized query.
+      - *H2 (Panic Elimination)*: Mengganti semua type assertion rawan panic `.(float64)` di seluruh handler Gin dengan safe type switch via helper `extractCurrentUserID(c)`.
+      - *H3 (Pagination Clamping)*: Menambahkan sanitasi batas ketat `limit: [1, 50]` dan `page >= 1` pada `comment_handler.go` dan `user_handler.go` untuk mencegah *negative offset* dan DoS request besar.
+      - *H4 (DRY Cache Invalidation)*: Mengekstrak logic invalidasi cache Redis yang terduplikasi 3x ke package bersama `internal/pkg/cache/invalidator.go` yang membersihkan keys artwork, tags populer, dan feed secara batched.
+      - *H5 (Optimized Login Payload)*: Menambahkan metadata user (`id` hashid, `username`, `role`) pada response login untuk mengeliminasi round-trip tambahan ke `/users/me`.
+    - **🔵 Medium Fixes**:
+      - *M1 (Data Minimization)*: Endpoint registrasi kini hanya mengembalikan pesan status konfirmasi email bersih tanpa membocorkan objek user internal.
+      - *M2 (Structured Observability)*: Mengganti legacy `log.Printf` di `user_service.go` dengan structured logging `log/slog`.
+      - *M3 (Serialization Precedence)*: Mendokumentasikan Go struct shadowing pada `Artwork.MarshalJSON` terkait field ID.
+      - *M4 (CORS Expose-Headers)*: Menambahkan `Access-Control-Expose-Headers` untuk `X-RateLimit-*` dan `X-Request-ID` agar browser JavaScript dapat membaca kuota rate limit.
+      - *M5 (Unique Index Integrity)*: Menambahkan composite constraint `uniqueIndex:idx_user_artwork` pada GORM model `Like` sinkron dengan constraint database PostgreSQL.
+      - *M6 (Information Leakage Masking)*: Menghapus forwarding error mentah `err.Error()` dari Cloudinary ke client pada `CreateArtwork`, menyembunyikan stack trace / detail cloud.
+    - **Verification**: `go vet ./...` 0 issues, `go test -race ./...` 100% PASS (0 data race), endpoint `/readyz` deep probe PostgreSQL & Redis berstatus `ready`.
 - **Branch Aktif**: `feature/frontend` (Siap direview, diuji, dan dimerge ke `develop`).
 
 ---

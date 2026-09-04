@@ -38,6 +38,7 @@ description: Enterprise API security guidelines including OWASP API Top 10 2023,
 - **Token Revocation via Redis Blacklist**: Store `jti` or token hash in Redis with TTL = token remaining lifetime. Check on every authenticated request.
 - **Rotate Secrets**: Use asymmetric RS256 or EdDSA for stateless microservice scenarios. HS256 only for single-service monoliths.
 - **Invalidate on Password Reset**: Always revoke all active sessions when user changes password.
+- **User Revocation Epoch Enforcement**: Store `user_revocation:<userID>` Unix epoch in Redis upon password change. In `AuthMiddleware`, compare `int64(iat) < epoch` to invalidate any pre-existing tokens immediately.
 
 ---
 
@@ -49,6 +50,7 @@ X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
 Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 Permissions-Policy: geolocation=(), microphone=(), camera=()
+Access-Control-Expose-Headers: X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, X-Request-ID
 ```
 
 ---
@@ -56,8 +58,11 @@ Permissions-Policy: geolocation=(), microphone=(), camera=()
 ## 5. 🧱 Input Validation & Defense-in-Depth
 - **Strict Request Binding**: Gin struct tags (`binding:"required,email,max=255"`).
 - **Rate Limiting**: Atomic Redis Lua script (`INCR` + conditional `EXPIRE` only on first hit). Include RFC-standard headers: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`, `Retry-After`.
-- **SQL Injection Defense**: Always use GORM parameterized queries. Never concatenate user input into SQL.
-- **XSS Prevention**: Sanitize user-generated HTML content server-side (e.g., `bluemonday`). Enforce `Content-Type: application/json` on all API responses.
+- **SQL Injection Defense**: Always use GORM parameterized queries (`gorm.Expr("...", param)` or `?`). Never use `fmt.Sprintf` or string concatenation in SQL clauses (even for ORDER BY or numeric IDs).
+- **Pagination Boundary Clamping**: Never pass unbounded or unsanitized pagination queries directly to SQL offset calculations. Guard: `limit: [1, 50]`, `page >= 1` to prevent negative offset errors and resource exhaustion.
+- **HashID Entity Obfuscation**: Obfuscate sequential database primary keys (`/artworks/1`, `/comments/1`) via Sqids / HashIDs (e.g. `H1rJsY`) to mitigate IDOR, sequential scraping, and metric disclosure.
+- **Safe Context Type Assertions**: Never use unchecked `.(float64)` or `.(uint)` on context claims. Always use safe type switches (`switch v := val.(type)`) to avoid server runtime panics.
+- **XSS Prevention**: Sanitize user-generated HTML content server-side (`html.EscapeString` or `bluemonday`). Enforce `Content-Type: application/json` on all API responses.
 
 ---
 
