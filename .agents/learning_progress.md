@@ -2,7 +2,7 @@
 
 ## Terakhir Diupdate: 2026-09-04
 
-## Status: Sesi 12 SELESAI ✅ — Lumiina Frontend & Production Hardening
+## Status: Sesi 12 SEDANG BERJALAN ⏳ — Lumiina Frontend UI/UX & Production Hardening
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
   - **Fail-Fast & Security**: `cfg.Validate()`, Request-ID Correlation Tracing, Strict CORS Whitelisting.
   - **Phase 1 Critical Fixes**:
@@ -19,7 +19,8 @@
     - Pruned unused frontend imports (`Sparkles`, `LogIn`, `UserPlus`, `KeyRound`, `UserIcon`).
   - **Unit Testing**: 100% PASS race-detector clean across all packages.
   - **Observability & ADRs**: Prometheus `/metrics` endpoint, 4 ADRs, and 4 production runbooks.
-- **Bagian 2 (Frontend UI/UX Redesign & Multi-Page Architecture)**: **SELESAI ✅**
+- **Bagian 2 (Frontend UI/UX Redesign, Business Logic & Polish)**: **SEDANG BERJALAN ⏳**
+  - *Catatan Penting*: Implementasi arsitektur multi-page, dual-axis carousels, Inter font, dan like sync saat ini merupakan milestone bagian kecil. Sesi 12 **masih terus berjalan** dan akan disempurnakan lebih lanjut bersama Sandi.
   - **Brand Identity Integration**: Menggunakan logo resmi `lumiina_logo_hd.jpg` di navbar, favicon, dan auth. Palet warna primer Lumiina Blue / Pixiv Sky Blue (`#0096fa`).
   - **Multi-Page Dedicated Routes (`react-router-dom`)**:
     - `/` & `/explore`: HomePage 2-kolom (Feed di kiri + Sidebar kanan: Sorotan Hari Ini, Tag Populer, Komunitas Lumi & Ina).
