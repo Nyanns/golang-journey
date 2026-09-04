@@ -106,7 +106,7 @@
       - *Compact Vertical Spacing*: Mencegah flex stretch dengan `items-start`, memangkas padding berlebih menjadi `py-2.5`, dan menstabilkan line-height agar komentar 1 kata tidak menyisakan ruang kosong besar.
       - *YouTube 3-Dots Action Popover*: Mengganti teks `Delete` telanjang menjadi tombol titik tiga (`MoreVertical`) rapi di pojok kanan atas komentar, yang membuka dropdown popover `🗑️ Delete` dengan listener click-outside.
     - **"More from this Artist" Discovery Loop**: Menampilkan strip karya lain dari seniman yang sama secara horizontal di bawah kanvas untuk meningkatkan retensi penjelajahan.
-- **Branch Aktif**: `feature/frontend` (Siap direview, diuji, dan dimerge ke `develop`).
+  - **Branch Aktif**: `develop` (Feature frontend telah dimerge dan diverifikasi 100% PASS).
 
 ---
 
