@@ -92,6 +92,13 @@
       - *M5 (Unique Index Integrity)*: Menambahkan composite constraint `uniqueIndex:idx_user_artwork` pada GORM model `Like` sinkron dengan constraint database PostgreSQL.
       - *M6 (Information Leakage Masking)*: Menghapus forwarding error mentah `err.Error()` dari Cloudinary ke client pada `CreateArtwork`, menyembunyikan stack trace / detail cloud.
     - **Verification**: `go vet ./...` 0 issues, `go test -race ./...` 100% PASS (0 data race), endpoint `/readyz` deep probe PostgreSQL & Redis berstatus `ready`.
+  - **Artwork Detail Page (`/artworks/:id`) UI/UX Overhaul (Pixiv & ArtStation Gold Standard)**:
+    - **Double-Header Elimination**: Menyembunyikan Navbar global feed pada rute `/artworks/:id` di `App.jsx`, mengeliminasi penumpukan header 112px yang memakan tinggi layar.
+    - **Single Unified Gallery Header (52px)**: Header tunggal yang bersih dengan tombol `[ ← Feed ]` (shortcut `Esc`), breadcrumb judul karya & handle kreator, canvas backdrop switcher, tombol Share dengan feedback visual *"Link Copied!"*, toggle tema, dan tombol hapus karya (dengan safe dialog modal).
+    - **Cinema Canvas & Backdrop Switcher**: Kanvas adaptif dengan 3 pilihan latar: OLED Deep Dark (`#080a0e`), 18% Neutral Studio Gray (`#1e2229`), dan Clean Bright (`#f8fafc`).
+    - **Full-Screen Lightbox Inspector**: Modal layar penuh dengan backdrop blur, opsi fit-to-screen atau zoom 100% resolusi native, dan navigasi escape.
+    - **Cohesive Artist & Discussion Panel**: Kartu profil seniman, judul, deskripsi berformat rapi, chip hashtag interaktif, engagement dock (Like dengan animasi pulse dan counter riil, share, komentar), serta thread diskusi interaktif dengan badge `Author` untuk kreator.
+    - **"More from this Artist" Discovery Loop**: Menampilkan strip karya lain dari seniman yang sama secara horizontal di bawah kanvas untuk meningkatkan retensi penjelajahan.
 - **Branch Aktif**: `feature/frontend` (Siap direview, diuji, dan dimerge ke `develop`).
 
 ---
