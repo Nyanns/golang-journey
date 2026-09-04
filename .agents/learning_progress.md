@@ -94,10 +94,17 @@
     - **Verification**: `go vet ./...` 0 issues, `go test -race ./...` 100% PASS (0 data race), endpoint `/readyz` deep probe PostgreSQL & Redis berstatus `ready`.
   - **Artwork Detail Page (`/artworks/:id`) UI/UX Overhaul (Pixiv & ArtStation Gold Standard)**:
     - **Double-Header Elimination**: Menyembunyikan Navbar global feed pada rute `/artworks/:id` di `App.jsx`, mengeliminasi penumpukan header 112px yang memakan tinggi layar.
-    - **Single Unified Gallery Header (52px)**: Header tunggal yang bersih dengan tombol `[ ← Feed ]` (shortcut `Esc`), breadcrumb judul karya & handle kreator, canvas backdrop switcher, tombol Share dengan feedback visual *"Link Copied!"*, toggle tema, dan tombol hapus karya (dengan safe dialog modal).
-    - **Cinema Canvas & Backdrop Switcher**: Kanvas adaptif dengan 3 pilihan latar: OLED Deep Dark (`#080a0e`), 18% Neutral Studio Gray (`#1e2229`), dan Clean Bright (`#f8fafc`).
+    - **Single Unified Gallery Header (52px)**: Header tunggal yang bersih dengan tombol `[ ← Feed ]` (shortcut `Esc`), breadcrumb judul karya & handle kreator, tombol hapus karya (dengan safe dialog modal), dan tombol tema yang tersinkronisasi.
+    - **Synchronized Theme Switcher**: Mengadopsi **Segmented Tactile Pill Switcher** (`☀️ Sun` & `🌙 Moon` dengan active knob) seragam dengan Navbar dan Studio Upload.
+    - **Cinema Canvas & Backdrop Switcher**: Kanvas adaptif dengan 3 pilihan latar: OLED Deep Dark (`#080a0e`), 18% Neutral Studio Gray (`#1e2229`), dan Clean Bright (`#f8fafc`) yang disajikan sebagai floating overlay elegan di dalam kanvas gambar.
     - **Full-Screen Lightbox Inspector**: Modal layar penuh dengan backdrop blur, opsi fit-to-screen atau zoom 100% resolusi native, dan navigasi escape.
-    - **Cohesive Artist & Discussion Panel**: Kartu profil seniman, judul, deskripsi berformat rapi, chip hashtag interaktif, engagement dock (Like dengan animasi pulse dan counter riil, share, komentar), serta thread diskusi interaktif dengan badge `Author` untuk kreator.
+    - **Smart Creator Card & Dynamic Follow CTA**:
+      - Jika karya milik orang lain: tombol interaktif `+ Follow` / `✓ Following` (Pixiv Blue `#0096fa`, transisi taktil).
+      - Jika karya milik sendiri (owner): tombol navigasi `Profile` ke halaman akun pribadi.
+    - **Symmetric & Compact Discussion Section (YouTube Standard)**:
+      - *Horizontal Symmetry*: Menambahkan avatar akun aktif di sebelah kiri input box `Write your thoughts...`, sehingga avatar input lurus sejajar 100% dengan avatar komentar di bawahnya.
+      - *Compact Vertical Spacing*: Mencegah flex stretch dengan `items-start`, memangkas padding berlebih menjadi `py-2.5`, dan menstabilkan line-height agar komentar 1 kata tidak menyisakan ruang kosong besar.
+      - *YouTube 3-Dots Action Popover*: Mengganti teks `Delete` telanjang menjadi tombol titik tiga (`MoreVertical`) rapi di pojok kanan atas komentar, yang membuka dropdown popover `🗑️ Delete` dengan listener click-outside.
     - **"More from this Artist" Discovery Loop**: Menampilkan strip karya lain dari seniman yang sama secara horizontal di bawah kanvas untuk meningkatkan retensi penjelajahan.
 - **Branch Aktif**: `feature/frontend` (Siap direview, diuji, dan dimerge ke `develop`).
 
