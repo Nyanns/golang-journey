@@ -48,3 +48,18 @@ Each entry uses a 3-part failure signature (Verifier Cause → Causal Status →
   3. Keep CSP policies as restrictive as possible, omitting `unsafe-inline` from script execution contexts.
 - **Files Affected**: `internal/repository/artwork_repository.go`, `internal/middleware/auth_middleware.go`, `internal/middleware/security_headers.go`
 
+### [2026-09-05] [Category: RUNTIME_RENDER_LOOP]
+- **Context**: State synchronization between React Context providers (`LikesContext`, `BookmarkContext`) and discovery pages (`HomePage`, `ArtworksDiscoveryPage`).
+- **Error**: Screen flicker and infinite network request loop when browsing artworks.
+- **Root Cause**: `syncFromServer` was defined as an unmemoized plain function inside the Provider. Every state change caused the Provider to re-render, creating a new function reference for `syncFromServer`. Consuming components that included `syncFromServer` in their `useCallback` / `useEffect` dependencies repeatedly re-fetched the API, triggering another state update in an infinite loop.
+- **Fix Applied**: Wrapped `syncFromServer` in `useCallback` with `[isAuthenticated]` dependency array in both `LikesContext.jsx` and `BookmarkContext.jsx`.
+- **Prevention Rule**: Any callback function exported by a React Context that may be included in consumers' dependency arrays MUST be wrapped in `useCallback` with minimal, stable dependencies.
+- **Files Affected**: `web/src/context/LikesContext.jsx`, `web/src/context/BookmarkContext.jsx`
+
+### [2026-09-05] [Category: ASYNC_IMAGE_FALLBACK]
+- **Context**: Rendering artwork cards with skeleton pulse loaders in `ArtworkCard.jsx`.
+- **Error**: Cards stuck in infinite dark skeleton pulsing if images failed to load or were blocked.
+- **Root Cause**: `isLoaded` state was only toggled to `true` on the `<img onLoad=...>`, with no `onError` fallback handler.
+- **Fix Applied**: Added `onError={() => setIsLoaded(true)}` to transition out of the loading placeholder gracefully on broken/blocked image URLs.
+- **Prevention Rule**: Image elements with loading skeletons must always pair `onLoad` with `onError` to guarantee layout stabilization.
+- **Files Affected**: `web/src/components/ArtworkCard.jsx`
