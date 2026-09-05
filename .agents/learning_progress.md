@@ -150,9 +150,28 @@
       - Modal interaktif yang dapat diakses dengan mengklik angka **Followers** atau **Following** di halaman `ProfilePage`.
       - Tab switcher mulus antara "Followers" dan "Following" lengkap dengan counter badge.
       - Daftar kreator menampilkan avatar, display name, handle, bio singkat, link profil, dan tombol aksi Follow/Unfollow interaktif langsung dari dalam modal.
-    - **Branch Aktif**: `feature/follow-system` (Commit: `7240aaf`, 100% tests pass, build clean).
-
----
+    - **Branch Follow System**: `feature/follow-system` (Commit: `7240aaf`, 100% tests pass, build clean).
+  - **Pixiv-Style Artwork Bookmark & Collection System (Branch `feature/bookmark-system`)**:
+    - **Database Migration v9 (`000009_create_bookmarks_table`)**:
+      - Junction table `bookmarks` dengan kolom `user_id BIGINT`, `artwork_id BIGINT`, `created_at TIMESTAMP WITH TIME ZONE`.
+      - Composite unique constraint: `CONSTRAINT unique_user_artwork_bookmark UNIQUE (user_id, artwork_id)`.
+      - Fast lookup indexes: `idx_bookmarks_artwork_id`, `idx_bookmarks_user_id`, dan composite order index `idx_bookmarks_user_created (user_id, created_at DESC)`.
+    - **Go Backend Clean Architecture**:
+      - Model: `internal/model/bookmark.go` (`Bookmark`, `BookmarkStatusResponse`, `UserBookmarksResponse`).
+      - Model Extension: `internal/model/artwork.go` diperkaya dengan `BookmarkCount int64` dan `IsBookmarked bool` (dengan tag `gorm:"-"`).
+      - Repository: `internal/repository/bookmark_repository.go` (`ToggleBookmark`, `GetBookmarkCount`, `IsUserBookmarked`, `BatchCheckBookmarked`, `GetUserBookmarks`).
+      - High Performance Batch Querying: `artwork_repository.go` dimodifikasi (`populateLikeCounts` & `populateUserLikeStatus`) agar sekaligus mem-batch fetch count bookmark dan status user dalam $O(1)$ batch query via `IN (?)`, mengeliminasi problem N+1 queries pada feed homepage dan profil.
+      - Service: `internal/service/bookmark_service.go` (`ToggleBookmark`, `GetBookmarkStatus`, `GetUserBookmarks`).
+      - Handler: `internal/handler/bookmark_handler.go` (`POST /api/v1/artworks/:id/bookmark`, `GET /api/v1/artworks/:id/bookmark-status`, `GET /api/v1/users/:id/bookmarks`) dengan resolusi aman ID/HashID/Vanity handle dan fallback `optionalAuth`.
+      - Wiring: Diregisterkan di `cmd/api/main.go`, unit test Go 100% PASS, server daemon beroperasi normal.
+    - **React Frontend Architecture & UX**:
+      - API Client: `web/src/api/client.js` menambahkan namespace `bookmarksAPI` (`toggle`, `getStatus`, `getUserBookmarks`).
+      - Context: `web/src/context/BookmarkContext.jsx` menyediakan state global tersentralisasi (`getBookmarkInfo`, `toggleBookmark`, `syncFromServer`, optimistic UI update & debounce protection).
+      - App Root: `App.jsx` dibungkus dengan `BookmarkProvider`.
+      - Feed & Artwork Cards: `FeedPostCard.jsx` dan `ArtworkCard.jsx` terhubung ke `BookmarkContext` dengan ribbon icon bookmark amber interaktif, animasi scale taktil Framer Motion, dan live counter.
+      - Profile Page Collection Tabs: `ProfilePage.jsx` mengadopsi standar Pixiv dengan tab switcher ("Illustrations" vs "Bookmarks"), counter badge real-time, empty state ramah ilustrator, dan URL query parameter sync (`/profile/:username?tab=bookmarks`).
+      - Navbar Dropdown: Menu "Bookmarks" di avatar dropdown langsung mengarahkan user ke `/profile/:username?tab=bookmarks`.
+    - **Branch Aktif & Status Git**: `feature/bookmark-system` (Commit `4a4ee99`, build Vite production clean, sudah di-push ke GitHub remote `Nyanns/lumiina`).
 
 ## 🗂️ Struktur Folder Project
 
