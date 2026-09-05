@@ -26,8 +26,10 @@
     - `/` & `/explore`: HomePage 2-kolom (Feed di kiri + Sidebar kanan: Sorotan Hari Ini, Tag Populer, Komunitas Lumi & Ina).
     - `/artworks/:id`: ArtworkDetailPage (Cinema viewer split stage, info kreator, tombol interaksi Like/Share, dan kolom diskusi rapi).
     - `/upload`: UploadPage (Studio unggah karya 2-kolom dengan drag-and-drop & tag suggestions).
-    - `/login` & `/register` & `/forgot-password`: Halaman autentikasi mandiri yang fokus dan profesional.
+    - `/login` & `/register` & `/forgot-password`: Halaman autentikasi mandiri yang fokus dan profesional dengan background artwork resmi Lumi & Ina di art studio.
+    - `/about`, `/guidelines`, `/terms`, `/privacy`: Hub Dokumentasi & Legalitas Terpadu (`LegalInfoPage.jsx`) dengan navigasi tab instan, URL synchronization, dan konten otentik anti-slop (100% hak cipta seniman, zero unsolicited AI scraping, standar klasifikasi konten, jaminan tanpa penjualan data).
     - `/profile/:id`: ProfilePage ala X/Twitter (Banner luas, avatar bulat bertumpuk, bio, statistik, dan galeri karya).
+  - **HD Mascot Artwork & Art Studio Composition**: Mengadopsi art style referensi baru dengan garis tinta tajam, warna vibran, cel-shading dinamis, dan latar belakang studio gambar HD yang jernih. Komposisi widescreen 16:9 membingkai kartu login di tengah dengan Lumi di sisi kiri dan Ina di sisi kanan tanpa tertutup.
   - **Zero Glassmorphism (Anti AI-Slop)**: Menghapus seluruh `backdrop-blur-*` dan menggantikannya dengan kanvas putih bersih, border tegas 1px `border-slate-200`, dan bayangan mikro.
   - **Authentic Artwork Card**: Metadata judul, avatar, dan nama kreator selalu terlihat di bawah gambar (tidak tersembunyi di balik hover gelap).
   - **Business Logic Hardening & Pixiv Header Standards**:
@@ -106,7 +108,49 @@
       - *Compact Vertical Spacing*: Mencegah flex stretch dengan `items-start`, memangkas padding berlebih menjadi `py-2.5`, dan menstabilkan line-height agar komentar 1 kata tidak menyisakan ruang kosong besar.
       - *YouTube 3-Dots Action Popover*: Mengganti teks `Delete` telanjang menjadi tombol titik tiga (`MoreVertical`) rapi di pojok kanan atas komentar, yang membuka dropdown popover `🗑️ Delete` dengan listener click-outside.
     - **"More from this Artist" Discovery Loop**: Menampilkan strip karya lain dari seniman yang sama secara horizontal di bawah kanvas untuk meningkatkan retensi penjelajahan.
-  - **Branch Aktif**: `develop` (Feature frontend telah dimerge dan diverifikasi 100% PASS).
+  - **Pixiv-Inspired Modern Profile Overhaul & Customization**:
+    - **Penghapusan Badge `REGULAR`**: Menghapus label `REGULAR` dari kartu profil sehingga tampilan kreator lebih bersih dan terfokus pada karya serta status verified.
+    - **Database Migration v7 (`000007_add_profile_fields_to_users`)**: Menambahkan kolom `display_name`, `bio`, `avatar_url`, `banner_url`, `location`, `website`, dan `social_links` (JSONB) pada tabel `users`.
+    - **Backend Endpoints & File Security**: Menambahkan endpoint `PUT /api/v1/users/profile`, `POST /api/v1/users/avatar`, dan `POST /api/v1/users/banner` lengkap dengan Magic Bytes MIME sniffing (JPEG/PNG/WebP/GIF) dan upload Cloudinary.
+    - **Social Media Icons Bar (Pixiv Standard)**: Integrasi ikon SVG presisi tinggi untuk X (Twitter), Instagram, Pawoo/Mastodon, GitHub, YouTube, DeviantArt, dan Website pribadi dengan auto-formatting URL.
+    - **Interactive Studio Modal (`EditProfileModal.jsx`)**: Pratinjau live foto avatar bulat & banner sampul, form Nickname (`0/50`), Self Introduction (`0/1000`) dengan toggle *View profile*, dan manager akun media sosial dinamis.
+    - **Anti-Slop Pixiv/LinkedIn Image Cropping Studio (`ImageCropModal.jsx`)**:
+      - *Eliminasi AI-Slop & Border Dashed*: Menghapus border putus-putus dan gradasi neon ungu/indigo di Navbar, ProfilePage, dan EditProfileModal; digantikan kanvas slate netral Pixiv (`bg-slate-100 dark:bg-[#181c24]`) dan aperture mask vignette solid (`ring-2 ring-white/95 shadow-[0_0_0_9999px_rgba(10,13,20,0.78)]`).
+      - *Bounded Dragging Math (Zero Blank Gaps)*: Gambar diskalakan presisi (`scaleBase = Math.max(cropW / effW, cropH / effH)`) dengan batasan geser ketat `[-maxPanX, maxPanX]` sehingga gambar tidak pernah menyisakan celah kosong.
+      - *Dimension Guidelines & Sharpness Detection*: Menampilkan aturan spesifikasi teknis (Avatar: Rec. 500×500 px, Min. 200×200 px, Max 5MB; Banner: Rec. 1920×640 px, Min. 960×320 px, Max 10MB) dengan auto-detection status ketajaman (`✓ Optimal Sharpness` vs `⚠️ Under minimum`).
+      - *Subtle Adaptive Rule-of-Thirds Grid*: Garis panduan 1px yang aktif saat drag/zoom dan redup saat diam.
+      - *Live Circular Mini Preview*: Menampilkan replika potongan avatar 28px secara real-time di sudut kontrol.
+      - *Full Control Suite*: Step rotation lossless $\pm 90^\circ$, smooth mouse wheel / pinch zoom (100% - 300%), dan export HTML5 Canvas JPEG kualitas 92%.
+    - **Pixiv Login & Register Experience Redesign (`LoginPage.jsx`, `RegisterPage.jsx`, `AuthLayout.jsx`)**:
+      - *Official Lumi & Ina Mascot Background*: Latar belakang ilustrasi anime resolusi tinggi *full-bleed* menampilkan maskot resmi Lumi (pirang ceria) & Ina (perak anggun) dengan art style cat air/komorebi, kartu akreditasi di pojok kanan bawah (`Lumi & Ina — Sunny Meadow • Art by @lumiina_studio • LUMIINA OFFICIAL MASCOTS`), serta tautan legal di pojok kiri bawah.
+      - *Pure White Floating Pixiv Card*: Card tengah putih solid (`rounded-[28px]`, `shadow-2xl`) dengan logo wordmark resmi dan tagline *"Your creative journey awaits"*.
+      - *Social Login Quick Bar*: 4 tombol lingkaran sentuh untuk Apple, Google, X (Twitter), dan Facebook.
+      - *Soft Inset Input Fields*: Input abu-abu lembut (`bg-slate-100`) dengan tombol toggle show/hide kata sandi inline (`Eye` / `EyeOff`).
+      - *Pill Action Buttons*: Tombol primer Pixiv Sky Blue (`#0096fa`) dan tombol sekunder abu-abu lembut (`bg-slate-100`).
+      - *Real-time Password Strength Matrix*: Kriteria validasi terpadu (8+ karakter, huruf besar & kecil, angka, simbol) yang sinkron dengan fungsi backend `ValidatePasswordStrength`.
+  - **Follow & Unfollow System End-to-End + Followers/Following Modal (Branch `feature/follow-system`)**:
+    - **Database Migration v8 (`000008_create_follows_table`)**:
+      - Tabel `follows` dengan composite unique constraint `(follower_id, following_id)`.
+      - `CONSTRAINT check_prevent_self_follow CHECK (follower_id <> following_id)` mencegah self-follow di level PostgreSQL.
+      - Dual bidirectional B-Tree indexes: `idx_follows_follower` dan `idx_follows_following` untuk `O(log N)` bidirectional query.
+    - **Go Backend Clean Architecture**:
+      - Model: `internal/model/follow.go` (`Follow`, `FollowStatusResponse`, `FollowUserItem`, pagination envelopes).
+      - Repository: `internal/repository/follow_repository.go` (`ToggleFollow`, `IsFollowing`, `GetFollowCounts`, `GetFollowers`, `GetFollowing`, `BatchCheckFollowing`).
+      - Service: `internal/service/follow_service.go` & `internal/service/follow_service_test.go` (100% passing tests).
+      - Handler: `internal/handler/follow_handler.go` (`ToggleFollow`, `GetFollowStatus`, `GetFollowers`, `GetFollowing`) mendukung vanity handle, numeric ID, dan HashID.
+    - **Dynamic `IsFollowing` Resolution on Discovery Endpoints**:
+      - Menyuntikkan `followRepo` ke dalam `UserHandler` dan `ArtworkHandler`.
+      - Rute discovery publik (`/users/search`, `/users/:id`, `/artworks/:id`) diintegrasikan dengan `optionalAuthMiddleware`.
+      - Jika ada user login, backend otomatis mempopulasikan `is_following: true/false` pada hasil pencarian dan profil karya menggunakan `BatchCheckFollowing` secara efisien.
+    - **Frontend Follow Architecture (`FollowContext.jsx`)**:
+      - Preload otomatis daftar kreator yang di-follow oleh user saat login (`followsAPI.getFollowing`).
+      - Menyinkronkan `following_count` di `AuthContext` (`updateUser`) setiap kali toggle follow berhasil.
+      - Optimistic UI update dengan instant revert saat terjadi network error.
+    - **Pixiv-Style Followers & Following Modal (`FollowListModal.jsx`)**:
+      - Modal interaktif yang dapat diakses dengan mengklik angka **Followers** atau **Following** di halaman `ProfilePage`.
+      - Tab switcher mulus antara "Followers" dan "Following" lengkap dengan counter badge.
+      - Daftar kreator menampilkan avatar, display name, handle, bio singkat, link profil, dan tombol aksi Follow/Unfollow interaktif langsung dari dalam modal.
+    - **Branch Aktif**: `feature/follow-system` (Commit: `7240aaf`, 100% tests pass, build clean).
 
 ---
 
