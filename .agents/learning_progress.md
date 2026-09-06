@@ -16,6 +16,11 @@
     - **Serverless Cache Invalidation**: `InvalidateArtworkCache` dijadikan synchronous dengan bounded timeout 2s untuk mencegah goroutine dibekukan/dimatikan oleh lifecycle Vercel serverless, dan diperluas mencakup seluruh pattern `artworks:*`.
     - **Browser Cache-Control & Real-time State**: Menghapus `Cache-Control: public, max-age=...` pada endpoint dinamis dan menggantinya dengan `no-cache, no-store, must-revalidate`, sehingga aksi hapus karya tidak tertinggal di cache browser lokal pembaca.
     - **Vercel Edge vs Function Gzip**: Melewati middleware `gzip.Gzip` ketika berjalan di Vercel (`os.Getenv("VERCEL") == ""`) agar tidak terjadi double compression / broken chunked encoding dengan Vercel Edge.
+    - **Email Verification SPA Architecture & Security Hardening**:
+      - *Root Cause Discovered*: Browser modern (Chrome/Brave/Firefox) mengaktifkan Storage Partitioning / Sandbox isolation ketika membuka tautan dari redirect Google Mail (`google.com/url`), sehingga skrip inline HTML yang dikirim backend mentah (`/api/v1/auth/verify-email`) diblokir saat mengakses `localStorage` (mengakibatkan user mendarat di halaman utama sebagai Guest).
+      - *Dedicated Frontend Route*: Membangun halaman resmi React `/verify-email?token=...` (`VerifyEmailPage.jsx`) dengan `AuthLayout`, animasi status (verifying, success, error), dan auto-login native ke `AuthContext`.
+      - *Secure Resend Endpoint*: Menambahkan `POST /api/v1/auth/resend-verification` dengan proteksi Anti-Enumeration (selalu return response generik 200 OK) dan rate limit cooldown 60 detik di Redis per akun untuk mencegah penyalahgunaan SMTP.
+      - *Seamless Backward Compatibility*: Link email legacy yang mengarah ke `/api/v1/auth/verify-email` otomatis di-302 redirect ke rute React `/verify-email`.
     - **User Acceptance**: Sandi mengonfirmasi langsung di production bahwa seluruh aplikasi berfungsi sempurna, sinkron, dan loading super cepat! ⚡
 - **Sesi 12 (Frontend UI/UX, Mobile RWD, PWA & Containerization)**: SELESAI ✅
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
