@@ -200,6 +200,12 @@
     - Multi-stage `Dockerfile` Go API: Alpine minimal runner dengan user non-root `appuser` dan healthcheck probe `/livez`.
     - `web/Dockerfile`: Multi-stage Vite build + Nginx Alpine runner dengan SPA routing, caching aset statis 6 bulan, dan kompresi gzip.
     - `docker-compose.yml`: Orkestrasi 4 kontainer (`lumiina_postgres`, `lumiina_redis`, `lumiina_api`, `lumiina_web`).
+  - **Modern Responsive Web Design & Viewport Ergonomics (2026 Standards)**:
+    - Dynamic Viewport Heights (`dvh` & `svh` menggantikan static `vh`) pada canvas detail karya, upload preview, dan modal untuk mengeliminasi clipping URL bar browser mobile.
+    - Thumb-Zone Mobile Bottom Navigation Bar (`BottomNav.jsx`) dengan hardware safe-area insets (`env(safe-area-inset-bottom)`), elevated center upload CTA, dan clearance padding (`pb-24 md:pb-8`).
+    - Fluid multi-tier grid density: 2 kolom di mobile, 3 kolom tablet, 4-5 kolom desktop, 6 kolom ultrawide (`2xl:grid-cols-6`).
+    - Eliminasi touch-hover trap: Kontrol interaktif tetap terlihat dengan ambient touch visibility (`opacity-85 sm:opacity-0 group-hover:opacity-100`).
+    - Sinkronisasi agent skills: Mengupdate `frontend-design/SKILL.md` (Section 7) dan `anti-slop/SKILL.md` (Axis 8 & Gate 9).
 
 ## 🗂️ Struktur Folder Project
 

@@ -90,6 +90,16 @@ flowchart TD
   - Use a high-resolution, dedicated single-letter icon (`L`) alongside crisp text typography, or maintain proper fixed height without distortion.
   - Keep logo interactions static or subtle color transitions without bouncing.
 
+### 🎯 Axis 8: Mobile & Touch Ergonomics ("No Desktop-Only Thinking")
+- **BANNED**:
+  - ❌ "The Mobile Hover Trap": hiding critical interactive controls strictly behind `group-hover:opacity-100` with 0% opacity default on touch devices where hover is impossible.
+  - ❌ Static `100vh` on mobile image stages, which calculates height ignoring the mobile browser address bar, resulting in clipped controls or jarring layout jumps (CLS).
+  - ❌ Squeezing all navigation into a cramped top mobile navbar that cannot be reached with one thumb.
+- **STANDARD**:
+  - Use dynamic viewport units (`dvh` and `svh`) with safe minimum heights (`min-h-[260px] sm:min-h-[420px]`).
+  - Mobile bottom navigation bar (< 768px) within natural thumb-reach with hardware safe area insets (`env(safe-area-inset-bottom)`).
+  - Responsive bottom clearance padding (`pb-24 md:pb-8`) on parent layout containers so fixed bottom navigation never masks content.
+
 ---
 
 ## 4. 🔄 Reactive State Synchronization Standards
@@ -112,3 +122,4 @@ Sebelum membagikan UI/UX ke user, AI harus memverifikasi gerbang kualitas ini:
 6. [ ] **Real Domain Terminology**: Menggunakan istilah platform seni/komunitas nyata (kreator, ilustrasi, tag, bookmark, resolusi).
 7. [ ] **Functional Actions**: Tombol memiliki tujuan jelas dan aksi primer/sekunder yang tegas (tidak ada tombol redundan/aneh).
 8. [ ] **Responsive & Fixed Dimensions**: Ikon SVG selalu memiliki atribut dimensi pasti (`width="X" height="Y"`) untuk mencegah layout shift.
+9. [ ] **Mobile Ergonomics & DVH**: Kanvas dan modal menggunakan `dvh`/`svh` (bukan static `vh`), aksi penting tidak tersembunyi di balik hover-only pada layar sentuh, dan memiliki safe-area insets serta clearance padding (`pb-24 md:pb-8`).

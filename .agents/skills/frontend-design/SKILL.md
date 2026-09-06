@@ -83,3 +83,41 @@ When generating, designing, or refactoring frontend interfaces, ALWAYS adhere to
   - Provide an Instagram-style optimizer status badge showing original vs optimized size (e.g. `14.8 MB → 740 KB (-95%)`).
   - Provide an explicit toggle for artists who specifically request raw uncompressed archival uploads.
 
+---
+
+## 7. 📱 Modern Responsive Web Design & Viewport Ergonomics (2026 Standards)
+
+### Dynamic Viewport Heights (`dvh` & `svh` vs Static `vh`)
+- **NEVER use static `vh` for full/split media stages or modals**:
+  Mobile browsers (Safari iOS, Chrome Android) collapse/expand their address and navigation bars dynamically on scroll. Static `100vh` calculates height as if the address bar is hidden, causing bottom buttons and image controls to get cut off or trigger layout shifts (CLS).
+- **Enforce Dynamic Viewport Heights**:
+  - Use `max-h-[75dvh]` or `max-h-[85dvh]` with explicit responsive minimums: `min-h-[260px] sm:min-h-[420px]` and `object-contain`.
+  - Use `svh` (Small Viewport Height) for fixed overlay bars or sheet backdrops where content must guarantee visibility even when mobile browser chrome is fully expanded.
+
+### Mobile Thumb-Zone Ergonomics & Bottom Navigation
+- **Primary Mobile Reachability**:
+  Smartphone screens (6.1" to 6.8"+) make top-screen buttons unreachable with one hand.
+  - Core navigation (Feed, Explore, Search, Bookmarks, Profile) and primary creation action (`+ Upload`) must be accessible within the lower thumb zone via a fixed `<BottomNav />` (< 768px).
+  - Prominent center action button (e.g. elevated square/pill with subtle brand glow) for the primary conversion/creation loop.
+- **Safe Area Inset Protection**:
+  Mobile navigation bars must explicitly respect hardware notches, home indicator bars, and gesture areas:
+  `pb-[max(0.75rem,env(safe-area-inset-bottom))]`
+- **Bottom Clearance Padding**:
+  Any page or container rendering above a fixed mobile bottom bar must provide clearance padding to prevent the bar from covering content or form submit buttons:
+  `pb-24 md:pb-8` on the main page wrapper.
+
+### Fluid Multi-Tier Grid Breakpoints
+Galleries and media feeds must scale density gracefully across all modern display tiers:
+- **Mobile (< 640px)**: `grid-cols-2 gap-3` (rich 2-column density, clean touch target cards).
+- **Tablet / Phablet (640px - 768px)**: `sm:grid-cols-3 gap-3 sm:gap-4`.
+- **Laptop / Small Desktop (768px - 1280px)**: `md:grid-cols-4 lg:grid-cols-4 gap-4`.
+- **Desktop Widescreen (1280px - 1536px)**: `xl:grid-cols-5 gap-4`.
+- **Ultrawide & High-DPI Displays (>= 1536px)**: `2xl:grid-cols-6 gap-4`.
+
+### Touch Device State Handling (No Hover Traps)
+- **Eliminate Invisible Touch Controls**:
+  Elements relying strictly on `opacity-0 group-hover:opacity-100` are invisible on touch screens and frustrate mobile users.
+  - On touch devices, provide gentle ambient visibility (`opacity-85 sm:opacity-0 group-hover:opacity-100`) or dedicated touch triggers.
+  - Active states (`active:scale-95`) must give immediate haptic/tactile visual feedback for finger taps.
+
+
