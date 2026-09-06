@@ -11,11 +11,12 @@ When generating, designing, or refactoring frontend interfaces, ALWAYS adhere to
 
 ## 1. 🌈 Color System & Palette Philosophy (Anti-Generic Constraint)
 - **NO Generic Colors**: Never use pure red (`#ff0000`), harsh pure black (`#000000`), or cheap neon gradients.
-- **Light Mode Foundation (Default)**:
-  - Canvas: `bg-slate-50` / `bg-white`
-  - Surface/Cards: `bg-white` with crisp `border border-slate-200/90` and subtle micro-shadow `shadow-[0_1px_3px_rgba(0,0,0,0.04)]`
-  - Text Primary: `text-slate-900`
-  - Text Muted: `text-slate-500`
+- **Light Mode Foundation (Default — Eye-Friendly & High Readability)**:
+  - Canvas: `bg-[#f1f3f7]` (comfortable, warm matte slate-gray; eliminates blinding white glare and eye strain).
+  - Surface/Cards: `bg-white` with crisp boundary `border border-slate-200/90` and tactile depth `shadow-[0_1px_3px_rgba(15,23,42,0.06)]` so cards pop naturally above the canvas.
+  - Text Primary: `text-slate-900` (`#0f172a` — ultra sharp 18.7:1 contrast).
+  - Text Secondary / Handles: `text-slate-700` (`#334155` — strong 8.5:1 contrast).
+  - Text Muted / Dates / Metadata: `text-slate-600` / `text-slate-500` (never use faint `text-slate-400` on white cards).
 - **Dark Mode Palette**:
   - Background: `bg-[#121519]` / `bg-slate-950`
   - Surface/Cards: `bg-[#1a1e24]` / `bg-slate-900` with subtle border `border-slate-800`
@@ -24,6 +25,7 @@ When generating, designing, or refactoring frontend interfaces, ALWAYS adhere to
 - **Brand Accent Colors**:
   - Primary: Pixiv Sky Blue (`#0096fa` / `sky-500` / `sky-600`).
   - Active/Favorite: Rose (`rose-500` / `rose-600`) for likes/favorites.
+  - Bookmark: Amber (`amber-500` / `amber-600`).
 
 ---
 
