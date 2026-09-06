@@ -2,7 +2,13 @@
 
 ## Terakhir Diupdate: 2026-09-06
 
-## Status: Sesi 13 SEDANG BERJALAN 🚀 — Lumiina Cloud Deployment (Production Live)
+## Status: Sesi 13 SELESAI 🚀 — Lumiina Cloud Production Live!
+- **Sesi 13 (Cloud Deployment, Database Pooling & Production Launch)**: **SELESAI ✅**
+  - **Official Live Domain**: `https://lumiina-art.vercel.app` (100% Free Tier, No Credit Card)
+  - **Cloud Database (Supabase PostgreSQL - Singapore)**: Connected via IPv4 Supavisor Pooler (`aws-0-ap-southeast-1.pooler.supabase.com`), all 10 SQL migrations applied cleanly.
+  - **Cloud Cache & Rate Limiting (Upstash Redis - Singapore)**: Connected via TLS (`REDIS_USE_TLS=true`).
+  - **Single Fullstack Executable (`//go:embed`)**: Production React + Vite + PWA build baked directly into the Go binary. Instant memory serving, zero disk I/O, robust SPA client fallback.
+  - **Verification**: `200 OK` on `/`, `/index.html`, `/assets/*`, `/manifest.webmanifest`, `/favicon.*`, and `/api/v1/artworks`.
 - **Sesi 12 (Frontend UI/UX, Mobile RWD, PWA & Containerization)**: SELESAI ✅
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
   - **Fail-Fast & Security**: `cfg.Validate()`, Request-ID Correlation Tracing, Strict CORS Whitelisting.
