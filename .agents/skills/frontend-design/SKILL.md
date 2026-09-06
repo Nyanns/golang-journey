@@ -67,3 +67,19 @@ When generating, designing, or refactoring frontend interfaces, ALWAYS adhere to
 - **Icons**: Use [Lucide React](https://lucide.dev) with consistent stroke-width (`size={18}` or `size={20}`, `strokeWidth={1.75}`).
 - **Badges/Tags**:
   `inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20`
+
+---
+
+## 6. ⚡ Client-Side Media Preprocessing (Instagram-Style Standards)
+- **Zero Raw Bloat Uploads**:
+  Never upload 10MB–20MB uncompressed raw DSLR or digital painting files directly over the network.
+- **Intelligent Client-Side Downscaling**:
+  - Resample oversized images down to optimal web bounds (max 2560px for artworks/galleries, 500px for avatars, 1920px for headers) using high-quality HTML5 Canvas bicubic resampling (`ctx.imageSmoothingQuality = 'high'`).
+- **High-Efficiency Encoding**:
+  - Default to WebP with JPEG fallback at 0.88–0.90 quality factor (visually lossless, maintains crisp line-art, slashes payload size by 85%–95%).
+- **Alpha-Channel Awareness**:
+  - Inspect canvas pixel data for transparent alpha before converting to avoid black backgrounds on transparent illustrations or stickers.
+- **User Agency & Transparent Feedback**:
+  - Provide an Instagram-style optimizer status badge showing original vs optimized size (e.g. `14.8 MB → 740 KB (-95%)`).
+  - Provide an explicit toggle for artists who specifically request raw uncompressed archival uploads.
+

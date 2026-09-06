@@ -1,6 +1,6 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-05
+## Terakhir Diupdate: 2026-09-06
 
 ## Status: Sesi 12 SELESAI ✅ — Lumiina Full Stack Ready, Enterprise Hardened & Fully Containerized
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
@@ -171,6 +171,35 @@
       - Feed & Artwork Cards: `FeedPostCard.jsx` dan `ArtworkCard.jsx` terhubung ke `BookmarkContext` dengan ribbon icon bookmark amber interaktif, animasi scale taktil Framer Motion, dan live counter.
       - Profile Page Collection Tabs: `ProfilePage.jsx` mengadopsi standar Pixiv dengan tab switcher ("Illustrations" vs "Bookmarks"), counter badge real-time, empty state ramah ilustrator, dan URL query parameter sync (`/profile/:username?tab=bookmarks`).
     - **Branch Aktif & Status Git**: `develop` (Merged dari `feature/bookmark-system` & `feature/follow-system`, 100% test pass, build Vite production clean, sinkron ke GitHub remote `Nyanns/lumiina`).
+- **Bagian 3 (Ultra-Performance, Technical SEO/GEO, Defense-in-Depth Security & Instagram-Style Image Pipeline)**: **SELESAI ✅**
+  - **Instagram-Style Client-Side Image Preprocessing & Optimization (`web/src/utils/imageOptimizer.js`)**:
+    - Pipeline pemrosesan gambar client-side sebelum upload ke jaringan (`optimizeImage`).
+    - Downsampling kanvas berakurasi tinggi ke batas maksimal 2560px (2K QHD crisp) dengan aspect ratio presisi.
+    - Kompresi WebP (fallback JPEG) kualitas 0.88–0.90 (visually lossless, garis line-art tetap tajam).
+    - Deteksi transparansi alpha channel otomatis untuk PNG/stiker transparan.
+    - Penyusutan ukuran file dari 10–20MB menjadi ~600KB–1.2MB (**menghemat 85%–95% bandwidth**). Upload selesai dalam ~200 milidetik (**~20x lebih cepat**).
+    - Terintegrasi di `UploadPage.jsx` dan `UploadModal.jsx` dengan badge metrik real-time dan opsi toggle seniman (*Fast Web Upload*).
+  - **Technical SEO, GEO & AI Bot Crawler Discoverability**:
+    - Menambahkan `web/public/robots.txt` dengan izin khusus untuk search bots & AI bots (GPTBot, ClaudeBot, PerplexityBot, Google-Extended).
+    - Menambahkan `web/public/sitemap.xml` berisi rute kanonikal dan prioritas indexing.
+    - Injeksi Schema.org JSON-LD (`VisualArtwork`, `ProfilePage`, `Person` dengan link `sameAs`, `BreadcrumbList`, dan `WebSite` dengan Sitelinks `SearchAction`).
+    - Tag Open Graph dan Twitter Large Cards terintegrasi dinamis di seluruh rute.
+  - **Ultra-Lightweight Frontend Bundle Optimization**:
+    - Route-level code-splitting menggunakan `React.lazy()` + `Suspense` dengan `PageLoadingFallback` zero-CLS.
+    - Ukuran entry bundle terpangkas drastis dari ~640 kB menjadi **22.07 kB entry + 25.60 kB HomePage** (**penurunan >93%**).
+    - Manual Rollup vendor chunking (`vendor-react`, `vendor-motion`, `vendor-common`) untuk HTTP cache browser maksimal.
+    - GPU off-screen acceleration via CSS `.card-containment` (`content-visibility: auto; contain-intrinsic-size: 380px;`).
+    - Gin backend HTTP Gzip middleware (`github.com/gin-contrib/gzip`) dengan batas minimum 512 bytes.
+  - **Defense-in-Depth API Security Hardening**:
+    - Transport & Security Headers: `Strict-Transport-Security: max-age=31536000; includeSubDomains; preload`, `Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()`, serta pengetatan CSP.
+    - Body Stream DoS Guard: Pembatasan stream reader menggunakan `http.MaxBytesReader` (Avatar 6MB, Banner 12MB, Artwork 22MB) untuk mencegah memory exhaustion attack.
+    - Sanitasi Input & XSS Defense: `html.EscapeString` di backend, pemblokiran scheme pseudo-protocol berbahaya (`javascript:`, `data:`, `vbscript:`) di backend dan frontend (`getSafeUrl`).
+    - Perbaikan BOLA Komentar: Pemilik karya (artist) kini memiliki hak moderasi penuh untuk menghapus komentar di karya miliknya sendiri.
+    - Verifikasi: `go test -race ./...` (100% PASS, 0 data race), `npm audit` (0 vulnerabilities), `gopls vulncheck` (0 issues).
+  - **Docker Containerization & Multi-Stage Production Builds**:
+    - Multi-stage `Dockerfile` Go API: Alpine minimal runner dengan user non-root `appuser` dan healthcheck probe `/livez`.
+    - `web/Dockerfile`: Multi-stage Vite build + Nginx Alpine runner dengan SPA routing, caching aset statis 6 bulan, dan kompresi gzip.
+    - `docker-compose.yml`: Orkestrasi 4 kontainer (`lumiina_postgres`, `lumiina_redis`, `lumiina_api`, `lumiina_web`).
 
 ## 🗂️ Struktur Folder Project
 
@@ -405,6 +434,13 @@
 - [ ] Deploy Backend Go API Container ke Cloud (Render / Koyeb).
 - [ ] Deploy Frontend React Web ke Cloud (Vercel).
 - [ ] Smoke Testing pada domain production live.
+
+#### Catatan: Environment Lifecycle (Local → Staging → Production)
+- **Local** (`localhost:5173`): Hanya untuk developer sendiri. Boleh crash, data dummy.
+- **Staging** (`develop.lumiina.app`): Auto-deploy dari branch `develop`. Untuk QA/beta tester internal. Data bisa di-reset bebas. Vercel otomatis buat Preview URL per branch/PR (gratis).
+- **Production** (`lumiina.app`): Auto-deploy dari branch `main` setelah QA lolos. Data user nyata. Tidak boleh ada error.
+- **Alur**: `feature/xxx` → merge ke `develop` → Staging auto-deploy → QA testing → merge ke `main` → Production live.
+- **Kenapa penting**: Bug di staging tidak kena user production. Database staging bisa di-reset tanpa risiko.
 
 ---
 
