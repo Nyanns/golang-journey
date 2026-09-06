@@ -197,16 +197,21 @@
     - Sanitasi Input & XSS Defense: `html.EscapeString` di backend, pemblokiran scheme pseudo-protocol berbahaya (`javascript:`, `data:`, `vbscript:`) di backend dan frontend (`getSafeUrl`).
     - Perbaikan BOLA Komentar: Pemilik karya (artist) kini memiliki hak moderasi penuh untuk menghapus komentar di karya miliknya sendiri.
     - Verifikasi: `go test -race ./...` (100% PASS, 0 data race), `npm audit` (0 vulnerabilities), `gopls vulncheck` (0 issues).
-  - **Docker Containerization & Multi-Stage Production Builds**:
-    - Multi-stage `Dockerfile` Go API: Alpine minimal runner dengan user non-root `appuser` dan healthcheck probe `/livez`.
-    - `web/Dockerfile`: Multi-stage Vite build + Nginx Alpine runner dengan SPA routing, caching aset statis 6 bulan, dan kompresi gzip.
-    - `docker-compose.yml`: Orkestrasi 4 kontainer (`lumiina_postgres`, `lumiina_redis`, `lumiina_api`, `lumiina_web`).
-  - **Modern Responsive Web Design & Viewport Ergonomics (2026 Standards)**:
-    - Dynamic Viewport Heights (`dvh` & `svh` menggantikan static `vh`) pada canvas detail karya, upload preview, dan modal untuk mengeliminasi clipping URL bar browser mobile.
-    - Thumb-Zone Mobile Bottom Navigation Bar (`BottomNav.jsx`) dengan hardware safe-area insets (`env(safe-area-inset-bottom)`), elevated center upload CTA, dan clearance padding (`pb-24 md:pb-8`).
-    - Fluid multi-tier grid density: 2 kolom di mobile, 3 kolom tablet, 4-5 kolom desktop, 6 kolom ultrawide (`2xl:grid-cols-6`).
-    - Eliminasi touch-hover trap: Kontrol interaktif tetap terlihat dengan ambient touch visibility (`opacity-85 sm:opacity-0 group-hover:opacity-100`).
-    - Sinkronisasi agent skills: Mengupdate `frontend-design/SKILL.md` (Section 7) dan `anti-slop/SKILL.md` (Axis 8 & Gate 9).
+  - **Modern Responsive Web Design, PWA & Production Hardening**:
+    - **Progressive Web App (PWA) Standard**: Integrasi `vite-plugin-pwa@1.3.0` dengan Workbox caching, 4 maskable/standard icons di `public/`, manifest compliant, Apple iOS status bar tags, serta `PwaInstallBanner.jsx` & hook `usePWAInstall.js`.
+    - **Light Mode Ergonomic Overhaul**: Mengganti kanvas putih silau (`#f8fafc`) menjadi abu-abu matte tenang (`#f1f3f7`) di seluruh halaman, serta menaikkan kontras tipografi ke standar WCAG AAA (`text-slate-900`, `text-slate-700`).
+    - **Production Security & Optimization Hardening (21 Checklist Evaluation)**:
+      - *Secondary Image Decode Validation*: Mengintegrasikan `image.DecodeConfig` (JPEG, PNG, WebP via `golang.org/x/image/webp`) di `artwork_handler.go` dan `user_handler.go` untuk menangkal polyglot payload / exploit manipulasi magic bytes.
+      - *Zero-Downtime JWT Secret Rotation*: Menambahkan konfigurasi `JWTSecretOld` dan mekanisme fallback signature verification di `auth_middleware.go`.
+      - *Redis Token Revocation Footprint Cut (75%)*: Mengganti penyimpanan raw JWT string menjadi digest SHA-256 (`revoked_token:sha256(token)`) di `user_service.go` dan `auth_middleware.go`.
+      - *ReDoS & Deep Offset DoS Protection*: Membatasi panjang query pencarian (`len(q) > 200`) dan membatasi offset pagination (`offset > 50000`).
+      - *Production CORS Guard*: Memvalidasi origin HTTPS ketat saat `APP_ENV=production`.
+      - *Database Migration 000010*: Menambahkan indeks `idx_comments_user_id` untuk lookup profil dan moderasi komentar.
+      - *Cache-Control Headers*: Header `Cache-Control: public, max-age=60/120` pada endpoint feed publik dan detail artwork.
+    - **Docker Production Multi-Stage Builds**:
+      - `lumiina-api:latest`: **~20 MB** (Alpine 3.19, non-root user `appuser`, stripped static binary `-w -s`, `/livez` healthcheck).
+      - `lumiina-web:latest`: **~31 MB** (Nginx Alpine, pre-gzipped assets, SPA routing fallback, API reverse proxy).
+      - Orkestrasi `docker-compose.yml` siap deploy.
 
 ## 🗂️ Struktur Folder Project
 
