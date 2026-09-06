@@ -2,7 +2,8 @@
 
 ## Terakhir Diupdate: 2026-09-06
 
-## Status: Sesi 12 SELESAI ✅ — Lumiina Full Stack Ready, Enterprise Hardened & Fully Containerized
+## Status: Sesi 13 SEDANG BERJALAN 🚀 — Lumiina Cloud Deployment (Production Live)
+- **Sesi 12 (Frontend UI/UX, Mobile RWD, PWA & Containerization)**: SELESAI ✅
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
   - **Fail-Fast & Security**: `cfg.Validate()`, Request-ID Correlation Tracing, Strict CORS Whitelisting.
   - **Phase 1 Critical Fixes**:
@@ -435,11 +436,23 @@
   - [x] **Real Deep Health Probes (`/readyz`)**: Verifikasi konektivitas aktif ke PostgreSQL dan Redis via `PingContext(ctx)` dengan HTTP 503 fallback jika salah satu downstream dependency bermasalah.
   - [x] **Context Cancellation Propagation**: Memastikan seluruh operasi handler menggunakan `c.Request.Context()` agar query dibatalkan jika client menutup koneksi.
 
-### 🏆 Sesi 13: Full-Stack Cloud Deployment (Production Live)
-- [ ] Deploy Database ke Cloud (Supabase / Neon PostgreSQL).
-- [ ] Deploy Backend Go API Container ke Cloud (Render / Koyeb).
-- [ ] Deploy Frontend React Web ke Cloud (Vercel).
-- [ ] Smoke Testing pada domain production live.
+### 🏆 Sesi 13: Full-Stack Cloud Deployment (Production Live) — SEDANG BERJALAN 🚀
+- [x] **Containerization Finalized & Production Verified**:
+  - `lumiina-api:latest` (20.2 MB): Alpine-based multi-stage runner with non-root security (`appuser:appgroup`), stripped static binary, and `/livez` probe.
+  - `lumiina-web:latest` (31.0 MB): Nginx Alpine with SPA routing, `/api/` reverse proxy, PWA no-cache headers, and pre-gzipped static assets.
+  - `docker-compose.yml`: 4-container orchestration (`lumiina_postgres`, `lumiina_redis`, `lumiina_api`, `lumiina_web`).
+- [ ] **Step 1: Cloud Database Provisioning**:
+  - Setup PostgreSQL di Cloud (Supabase / Neon DB) + setup Redis di Cloud (Upstash Redis).
+  - Jalankan migrasi schema database (`golang-migrate` version 1 s/d 9).
+- [ ] **Step 2: Backend Go API Cloud Deployment**:
+  - Deploy container `lumiina-api` ke Cloud Runner (Render / Koyeb / Fly.io).
+  - Konfigurasi Environment Variables production (DB DSN, Redis URL, JWT Secret, Cloudinary credentials, SMTP Gmail).
+  - Verifikasi deep healthcheck `/readyz` dan `/livez` di URL public live.
+- [ ] **Step 3: Frontend React Web Cloud Deployment**:
+  - Deploy Vite SPA ke **Vercel** (terhubung otomatis ke GitHub `Nyanns/lumiina`).
+  - Konfigurasi rewrite rules / proxy `VITE_API_URL` ke backend cloud.
+- [ ] **Step 4: Smoke Testing & Production Verification**:
+  - Registrasi user, aktivasi email, login JWT, upload artwork (WebP client compression + Cloudinary), like, bookmark, follow, dan install PWA di live domain!
 
 #### Catatan: Environment Lifecycle (Local → Staging → Production)
 - **Local** (`localhost:5173`): Hanya untuk developer sendiri. Boleh crash, data dummy.
