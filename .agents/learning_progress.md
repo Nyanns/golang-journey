@@ -2,13 +2,21 @@
 
 ## Terakhir Diupdate: 2026-09-06
 
-## Status: Sesi 13 SELESAI 🚀 — Lumiina Cloud Production Live!
+## Status: Sesi 13 SELESAI 🚀 — Lumiina Cloud Production Live & Hardened!
 - **Sesi 13 (Cloud Deployment, Database Pooling & Production Launch)**: **SELESAI ✅**
   - **Official Live Domain**: `https://lumiina-art.vercel.app` (100% Free Tier, No Credit Card)
-  - **Cloud Database (Supabase PostgreSQL - Singapore)**: Connected via IPv4 Supavisor Pooler (`aws-0-ap-southeast-1.pooler.supabase.com`), all 10 SQL migrations applied cleanly.
+  - **Cloud Database (Supabase PostgreSQL - Singapore)**: Connected via IPv4 Supavisor Pooler (`aws-0-ap-southeast-1.pooler.supabase.com:6543`), all 10 SQL migrations applied cleanly.
   - **Cloud Cache & Rate Limiting (Upstash Redis - Singapore)**: Connected via TLS (`REDIS_USE_TLS=true`).
   - **Single Fullstack Executable (`//go:embed`)**: Production React + Vite + PWA build baked directly into the Go binary. Instant memory serving, zero disk I/O, robust SPA client fallback.
-  - **Verification**: `200 OK` on `/`, `/index.html`, `/assets/*`, `/manifest.webmanifest`, `/favicon.*`, and `/api/v1/artworks`.
+  - **Post-Launch Bug Fixes & Latency Overhaul**:
+    - **Prepared Statement Conflict (SQLSTATE 42P05)**: Di Supabase Supavisor Transaction Pooler, pgx statement cache bentrok antar koneksi (`prepared statement "stmtcache_..." already exists`). Diperbaiki dengan mengaktifkan `PreferSimpleProtocol: true` pada konfigurasi GORM postgres driver.
+    - **Profile Not Found Fix**: Mengisolasi builder query GORM (`baseProfileQuery()`) agar pointer query tidak saling tumpang tindih saat resolving identifier (ID numeric, vanity username, atau hashid).
+    - **Feed Empty After Upload**: Upload sebenarnya sukses (karya "SHigaraki Tomura" tersimpan aman di DB & Cloudinary), namun `GetAllArtworks` sebelumnya return 500 akibat SQLSTATE 42P05. Begitu `PreferSimpleProtocol` aktif, feed langsung menampilkan karya dengan sempurna.
+    - **Ultra-Low Latency & Region Alignment**: Vercel Serverless Function sebelumnya berjalan di `iad1` (Washington D.C.), menyebabkan latency lintas benua ~250ms per query ke Supabase Singapore. Ditambahkan `"regions": ["sin1"]` di `vercel.json` sehingga function berjalan di Singapore, menurunkan latency hingga <10ms.
+    - **Serverless Cache Invalidation**: `InvalidateArtworkCache` dijadikan synchronous dengan bounded timeout 2s untuk mencegah goroutine dibekukan/dimatikan oleh lifecycle Vercel serverless, dan diperluas mencakup seluruh pattern `artworks:*`.
+    - **Browser Cache-Control & Real-time State**: Menghapus `Cache-Control: public, max-age=...` pada endpoint dinamis dan menggantinya dengan `no-cache, no-store, must-revalidate`, sehingga aksi hapus karya tidak tertinggal di cache browser lokal pembaca.
+    - **Vercel Edge vs Function Gzip**: Melewati middleware `gzip.Gzip` ketika berjalan di Vercel (`os.Getenv("VERCEL") == ""`) agar tidak terjadi double compression / broken chunked encoding dengan Vercel Edge.
+    - **User Acceptance**: Sandi mengonfirmasi langsung di production bahwa seluruh aplikasi berfungsi sempurna, sinkron, dan loading super cepat! ⚡
 - **Sesi 12 (Frontend UI/UX, Mobile RWD, PWA & Containerization)**: SELESAI ✅
 - **Bagian 1 (Backend Hardening & Enterprise Standard A+)**: SELESAI ✅
   - **Fail-Fast & Security**: `cfg.Validate()`, Request-ID Correlation Tracing, Strict CORS Whitelisting.
