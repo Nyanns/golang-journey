@@ -1,8 +1,12 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-06
+## Terakhir Diupdate: 2026-09-07
 
-## Status: Sesi 13 SELESAI 🚀 — Lumiina Cloud Production Live & Hardened!
+## Status: BABAK BARU DIMULAI 🎯 — QA & SDET Engineering Masterclass!
+- **Setup QA Lab & Kurikulum**: **SELESAI ✅**
+  - Dibuat folder `qa-journey/` dengan subfolder per modul praktik.
+  - Master Kurikulum: `qa-journey/KURIKULUM_QA.md` (9 modul terstruktur mengacu pada `roadmap.sh/qa` & ISTQB, dari pemula hingga SDET profesional).
+  - Target Pengujian: **Lumiina Live Production** (`https://lumiina-art.vercel.app`).
 - **Sesi 13 (Cloud Deployment, Database Pooling & Production Launch)**: **SELESAI ✅**
   - **Official Live Domain**: `https://lumiina-art.vercel.app` (100% Free Tier, No Credit Card)
   - **Cloud Database (Supabase PostgreSQL - Singapore)**: Connected via IPv4 Supavisor Pooler (`aws-0-ap-southeast-1.pooler.supabase.com:6543`), all 10 SQL migrations applied cleanly.
