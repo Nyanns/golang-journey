@@ -1,8 +1,11 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-07
+## Terakhir Diupdate: 2026-09-09
 
-## Status: BABAK BARU DIMULAI 🎯 — QA & SDET Engineering Masterclass!
+## Status: QA & SDET Engineering Masterclass — Modul 1 & 2 SELESAI ✅ (Persiapan Modul 3 Besok)
+- **Modul 1 (QA Fundamentals & Test Mindset)**: **SELESAI ✅** (ISTQB 7 principles, Cost of Quality, SDLC vs STLC, Test Pyramid, Smoke/Sanity/Regression).
+- **Modul 2 (Black Box Test Design Techniques)**: **SELESAI ✅** (Equivalence Partitioning, Boundary Value Analysis, Decision Table, State Transition, Error Guessing).
+- **Modul 3 (Dokumentasi QA & Test Case Matrix)**: **DRAFT SELESAI 📝** (Template 10 kolom IEEE 829 & 5 skenario awal Lumiina Auth siap dieksekusi besok di Google Sheets).
 - **Setup QA Lab & Kurikulum**: **SELESAI ✅**
   - Dibuat folder `qa-journey/` dengan subfolder per modul praktik.
   - Master Kurikulum: `qa-journey/KURIKULUM_QA.md` (9 modul terstruktur mengacu pada `roadmap.sh/qa` & ISTQB, dari pemula hingga SDET profesional).
@@ -500,6 +503,23 @@
 > 3. **Web UI E2E Automation**: **Playwright** (Page Object Model / POM, multi-browser Chromium/Firefox/WebKit, locators, auto-waiting, visual regression, trace viewer).
 > 4. **Performance & Stress Testing**: **k6** (Load testing, Spike testing, Stress testing, p95/p99 latency analysis).
 > 5. **Automated QA CI/CD Pipeline**: GitHub Actions running automated E2E & API test suites on scheduled cron & PR triggers with HTML test report artifacts.
+- [x] **Modul 1: QA Fundamentals & Test Engineering Mindset** ✅ (SELESAI)
+  - Filosofi Kualitas & Cost of Quality (Rule of Ten).
+  - 4 Kasta Kualitas: SQA vs QC vs Testing vs SDET.
+  - 7 Prinsip Pengujian ISTQB.
+  - SDLC vs STLC & Shift-Left Testing.
+  - The Test Pyramid (Unit 70%, Integration 20%, E2E 10%).
+  - Smoke vs Sanity vs Regression testing.
+  - Dokumen artefak tersimpan di: `qa-journey/01-fundamentals-and-test-cases/01-qa-fundamentals-notes.md`.
+- [x] **Modul 2: Black Box Test Design Techniques (EP, BVA, Decision Table)** ✅ (SELESAI)
+  - Pengertian mendalam Black Box Testing vs Grey Box vs White Box.
+  - Equivalence Partitioning (EP) — Partisi Valid & Invalid.
+  - Boundary Value Analysis (BVA) — 2-Value Boundary ($Min-1, Min, Max, Max+1$).
+  - Decision Table Testing — $2^n$ Truth Table untuk kondisi bercabang.
+  - State Transition Testing — Siklus status legal & pemblokiran jalan pintas ilegal.
+  - Error Guessing & Adversarial Testing (XSS, Zero-width space, Magic Bytes).
+  - Dokumen artefak tersimpan di: `qa-journey/01-fundamentals-and-test-cases/02-test-design-techniques-notes.md`.
+- [ ] **Modul 3: Dokumentasi QA & Test Case Matrix Standar Industri** 🚀 (SEDANG BERJALAN)
 - [ ] WebSocket (Real-time notifications)
 - [ ] RabbitMQ (Message Queue)
 - [ ] gRPC (Inter-service communication)
