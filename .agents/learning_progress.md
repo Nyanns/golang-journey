@@ -1,11 +1,18 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-09
+## Terakhir Diupdate: 2026-09-11
 
-## Status: QA & SDET Engineering Masterclass — Modul 1 & 2 SELESAI ✅ (Persiapan Modul 3 Besok)
-- **Modul 1 (QA Fundamentals & Test Mindset)**: **SELESAI ✅** (ISTQB 7 principles, Cost of Quality, SDLC vs STLC, Test Pyramid, Smoke/Sanity/Regression).
-- **Modul 2 (Black Box Test Design Techniques)**: **SELESAI ✅** (Equivalence Partitioning, Boundary Value Analysis, Decision Table, State Transition, Error Guessing).
-- **Modul 3 (Dokumentasi QA & Test Case Matrix)**: **DRAFT SELESAI 📝** (Template 10 kolom IEEE 829 & 5 skenario awal Lumiina Auth siap dieksekusi besok di Google Sheets).
+## Status: QA & SDET Engineering Masterclass — Modul 3 Sedang Berjalan & Official HD Branding Live 🚀
+- **Official Brand Identity Overhaul (Live Production)**: **SELESAI ✅**
+  - **Navbar Brand Wordmark**: Mengintegrasikan `logo_wordmark.png` HD ultra-crisp horizontal (`13.36.16.png`).
+  - **Badge & Identity Logo**: Mengganti logo huruf "L" tunggal menjadi emblem resmi Bintang + Lumiina (`13.35.08.png`) pada `logo_icon.png`, `logo_icon_transparent.png`, dan `logo.jpg`.
+  - **PWA & Splash App Icon**: Mengintegrasikan squircle app icon bersinar (`13.33.35.png`) ke seluruh ukuran PWA (`pwa-512x512.png`, `pwa-192x192.png`, `maskable-icon-512x512.png`, `apple-touch-icon.png`, `favicon-32x32.png`, `favicon.png`, `favicon.ico?v=3`).
+  - **Auth Entrance Screen (`AuthLayout.jsx`)**: Menampilkan squircle app icon bersinar di atas wordmark resmi, memberikan kesan native app store yang sangat elegan saat masuk ke login/register.
+  - **PWA Install Banner & Footers**: Terhubung langsung ke squircle icon baru.
+  - **Live Production Deployment**: Ter-compile ke dalam Go binary `//go:embed` dan telah live aktif di Singapore region `[sin1]` pada `https://lumiina-art.vercel.app`.
+- **Modul 1 (QA Fundamentals & Test Mindset)**: **SELESAI ✅**
+- **Modul 2 (Black Box Test Design Techniques)**: **SELESAI ✅**
+- **Modul 3 (Dokumentasi QA & Test Case Matrix)**: **SEDANG BERJALAN 📝** (Setup Google Sheets IEEE 829 selesai, siap eksekusi live).
 - **Setup QA Lab & Kurikulum**: **SELESAI ✅**
   - Dibuat folder `qa-journey/` dengan subfolder per modul praktik.
   - Master Kurikulum: `qa-journey/KURIKULUM_QA.md` (9 modul terstruktur mengacu pada `roadmap.sh/qa` & ISTQB, dari pemula hingga SDET profesional).
