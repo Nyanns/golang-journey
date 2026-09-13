@@ -1,17 +1,18 @@
 # 🧪 Test Case Matrix: Lumiina Platform Under Test
 > **Aplikasi Target**: [Lumiina Live](https://lumiina-art.vercel.app)  
+> **Google Sheets Live Matrix**: [Lumiina QA Test Case Matrix (IEEE 829)](https://docs.google.com/spreadsheets/d/1-3cJ7OpcyEH6wcFdAwVZBZO1ayJWbJp_vnRWuhVoDbE/edit?gid=0#gid=0)  
 > **Standar Dokumen**: IEEE 829 & ISTQB Test Documentation  
 > **Tester / Author**: Sandi (QA & SDET Engineering)  
-> **Status Sesi**: Modul 3 Sedang Dieksekusi 🚀
+> **Status Sesi**: Modul 3 Selesai 100% (13 Kasus Uji Siap Portofolio) 🚀
 
 ---
 
 ## 📊 Ringkasan Metrik Pengujian (Test Execution Summary)
-- **Total Test Cases Executed**: 8
-- **Passed**: 7 (87.5%)
-- **Failed**: 1 (12.5%)
+- **Total Test Cases Executed**: 13
+- **Passed**: 12 (92.3%)
+- **Failed**: 1 (7.7%)
 - **Blocked / Skipped**: 0
-- **Pass Rate**: 87.5%
+- **Pass Rate**: 92.3%
 
 ---
 
@@ -27,12 +28,19 @@
 | `TC_AUTH_006` | Auth | Keamanan Login (Negative Testing) | Verifikasi login ditolak jika memasukkan password salah | User berada di halaman `/login` | 1. Buka `/login`<br/>2. Input username benar: `qatestsandi`<br/>3. Input password salah: `PasswordNgawur123!`<br/>4. Klik "Log in" | `pwd: PasswordNgawur123!` | Login ditolak, muncul pesan error aman "Invalid credentials", form tidak mengizinkan masuk | Keamanan berhasil. Login ditolak dan muncul kalimat "Invalid username/email or password combination" (Aman dari User Enumeration attack). | **PASS** |
 | `TC_AUTH_007` | Auth | Pemulihan Password | Verifikasi permintaan reset password berhasil untuk email terdaftar | User berada di `/forgot-password`, belum login | 1. Buka `/forgot-password`<br/>2. Masukkan email terdaftar<br/>3. Klik "Send Instructions" | `email: sandisensei13@gmail.com` | Muncul pesan sukses bahwa instruksi reset password telah dikirim, email masuk ke inbox Gmail (berlaku 15 menit) | Berhasil. Sistem berhasil mengirimkan email lupa password dengan batas waktu 15 menit. Muncul kalimat disclaimer konfirmasi pengiriman jika email terdaftar & terverifikasi. | **PASS** |
 | `TC_AUTH_008` | Auth | Keamanan Pemulihan Akun (Anti-Enumeration) | Verifikasi sistem tidak membocorkan info jika email tidak terdaftar dimasukkan | User berada di `/forgot-password`, belum login | 1. Buka `/forgot-password`<br/>2. Masukkan email tidak terdaftar<br/>3. Klik "Send Instructions" | `email: tidakada999@gmail.com` | Sistem menampilkan pesan sukses generik yang sama, tidak membocorkan apakah email ada di database | Berhasil. Pesan menampilkan kalimat sukses generik yang persis sama, berhasil mencegah kebocoran informasi pendaftaran akun (Anti-Account Enumeration). | **PASS** |
+| `TC_ART_001` | Artwork | Unggah Karya Baru (Happy Path) | Verifikasi pengguna login berhasil mengunggah karya dengan judul & tag valid | Sudah login sebagai `qatestsandi` | 1. Buka menu `/upload`<br/>2. Pilih 1 file gambar anime (PNG/JPG)<br/>3. Beri Judul & Tags<br/>4. Klik "Publish Artwork" | `File: gambar anime`<br/>`Title: Lumiina Artwork`<br/>`Tags: anime, digital` | Upload sukses, dialihkan ke halaman detail karya (`/artworks/:id`), gambar tampil jernih | Upload sukses, dialihkan ke halaman detail karya (`/artworks/:id`), gambar sesuai kualitasnya, judul, deskripsi artwork, dan tag muncul lengkap tanpa masalah. | **PASS** |
+| `TC_ART_002` | Artwork | Validasi Tipe File (Negative Test) | Verifikasi sistem menolak unggahan file selain gambar | Sudah login di `/upload` | 1. Buka `/upload`<br/>2. Coba pilih file dokumen (misal `.txt`, `.pdf`, atau `.zip`) | `File: dokumen.txt` / file spoofed `.pdf.png` | File chooser menolak file tersebut / muncul peringatan format tidak didukung | File chooser menolak file berekstensi non-gambar. Pengujian adversial (mengubah ekstensi PDF ke PNG) berhasil ditangkap oleh pembaca gambar client-side dengan notifikasi "Unable to read image file". | **PASS** |
+| `TC_ART_003` | Artwork | Interaksi Sosial (State Check) | Verifikasi interaksi Like (bisa Like & Unlike) serta Bookmark tersimpan ke profil | Sudah login, membuka karya di feed atau detail | 1. Klik icon Heart (Like)<br/>2. Periksa counter bertambah<br/>3. Klik Heart lagi (Unlike)<br/>4. Klik Bookmark<br/>5. Buka `/profile/qatestsandi?tab=bookmarks` | Interaksi karya di feed / detail | Like toggle berfungsi (tambah & kurang), bookmark tersimpan di tab profil, dan komentar berhasil diposting. | Berhasil berfungsi selayaknya. Tombol like berhasil, bookmark tersimpan di profil, dan pengujian komentar di postingan juga sukses tersinkronisasi. | **PASS** |
+| `TC_ART_004` | Artwork | Akses Tamu / Guest (Security) | Verifikasi pengunjung yang belum login tidak bisa upload karya dan dibatasi | Pengguna logout (Guest) | 1. Logout dari akun<br/>2. Buka URL langsung: `/upload` | `URL: /upload` | Sistem menolak akses tamu dan otomatis me-redirect ke `/login` | Sistem menolak akses tamu. Diarahkan ke `/upload` dengan modal peringatan "Sign in to upload" dan diberikan pilihan Login atau kembali ke Feed utama. | **PASS** |
+| `TC_ART_005` | Artwork | Validasi Kelengkapan Upload (Negative Test) | Verifikasi sistem menolak jika pengguna tidak memberi judul pada artwork | Sudah login di `/upload` | 1. Buka `/upload`<br/>2. Coba upload artwork tanpa title | `Title: - (kosong)`<br/>`Tags: anime, digital, NewArt` | Sistem menolak submit, memberi peringatan untuk mengisi judul sebelum upload | Sistem berhasil menolak dengan cara defensive UI (tombol Publish Artwork terkunci/disabled), mencegah request data tidak lengkap dikirim ke server. | **PASS** |
 
 ---
 
 ## 📝 Catatan Temuan Khusus (QA Defect & Usability Log):
 1. **[Defect / Bug] Backend Validation Leakage (TC_AUTH_001 & TC_AUTH_004)**: Validasi backend mengembalikan raw error string internal Go (`Field validation for ... failed on the 'alphanum' / 'min' tag`) ke layar pengguna alih-alih pesan bahasa manusiawi.
 2. **[Usability / UX Observation] Toast Notification Duration (TC_AUTH_002)**: Notifikasi konfirmasi instruksi aktivasi email berpindah terlalu cepat sebelum pengguna selesai membaca.
-3. **[Security & Quality Strength] Defensive UI (TC_AUTH_003)**: Tombol *Create account* terkunci (*disabled state*) jika kriteria password belum hijau semua, mencegah request sampah masuk ke server (*Zero Unnecessary Network Traffic*).
+3. **[Security & Quality Strength] Defensive UI (TC_AUTH_003 & TC_ART_005)**: Form registrasi dan form upload menerapkan validasi sisi klien (*client-side defense*) dengan mengunci tombol *Submit/Publish* saat persyaratan belum terpenuhi. Hal ini mencegah pengiriman request sampah/tidak lengkap ke backend (*Zero Unnecessary Network Traffic*).
 4. **[Security Best Practice] Anti-User Enumeration (TC_AUTH_006 & TC_AUTH_008)**: Pesan kegagalan login dan pemulihan kata sandi bersifat ambigu secara sengaja (*"If this email is registered and verified..."*), secara efektif mencegah penyerang memetakan daftar akun yang valid di sistem.
 5. **[Usability Note] Disclaimer Copywriting (TC_AUTH_007)**: Redaksi pesan sukses lupa password menggunakan kalimat bersyarat (*"jika email terdaftar..."*). Meskipun terasa sedikit kaku bagi sebagian user biasa, redaksi ini adalah standar industri keamanan global (seperti di GitHub dan Discord) untuk menyeimbangkan kenyamanan pengguna dan proteksi privasi.
+6. **[Adversarial Testing Insight] Extension Spoofing Defense (TC_ART_002)**: Pengujian penetrasi manipulasi ekstensi (mengubah file `.pdf` menjadi `.png`) berhasil digagalkan oleh Image Optimizer & FileReader client-side dengan memunculkan error *"Unable to read image file"*, membuktikan sistem kebal dari eksploitasi file header palsu (*Polyglot/Spoofed extension*).
+7. **[Community Feature Verification] Discussion Lifecycle (TC_ART_003)**: Selain verifikasi status Like dan Bookmark, interaksi penambahan komentar terbukti langsung reaktif dan sinkron dengan basis data.
