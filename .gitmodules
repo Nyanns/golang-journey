@@ -1,0 +1,6 @@
+[submodule "lumiina"]
+	path = lumiina
+	url = git@github.com:Nyanns/lumiina.git
+[submodule "qa-journey"]
+	path = qa-journey
+	url = git@github.com:Nyanns/lumiina-qa-automation.git
