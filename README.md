@@ -45,31 +45,44 @@ flowchart LR
 | 3 | `05-sesi3-gin` | Gin Engine, route grouping, `c.ShouldBindJSON`, middleware | ✅ |
 | 4 | `06-sesi4-structure` | Clean Architecture (Handler-Service-Repository), Dependency Injection | ✅ |
 | 5 | `07-sesi5-config` | 12-Factor App, `.env`, fallback defaults, `joho/godotenv` | ✅ |
-| 6 | `08-sesi6-database` | **MyAnimeTracker**: PostgreSQL, GORM, AutoMigrate, Relational CRUD | ⏳ |
+| 6 | `08-sesi6-database` | **MyAnimeTracker**: PostgreSQL, GORM, AutoMigrate, Relational CRUD | ✅ |
 
-### Fase 2: Lumina 🎨 — Platform Sharing Fan Art Anime
+### Fase 2: Lumiina 🎨 — Platform Sharing Fan Art Anime (Live Production)
 
-> Terinspirasi Pixiv, tapi redesign yang lebih baik dan unik.
-> Setiap sesi menambahkan 1 teknologi baru ke Lumina.
+> **Official Live Application**: [lumiina-art.vercel.app](https://lumiina-art.vercel.app)  
+> Terinspirasi Pixiv, dirancang dengan Clean Architecture Go, PostgreSQL (Supabase), Redis (Upstash), dan React SPA.
 
-| Sesi | Folder | Teknologi | Fitur Lumina |
-| :---: | :--- | :--- | :--- |
-| 7 | `lumina/` | Git Flow, Makefile, Linter | Setup standar industri & relasi database |
-| 8 | `lumina/` | JWT + Bcrypt | Register/Login artist |
-| 9 | `lumina/` | Redis Caching | Cache popular artworks & trending tags |
-| 10 | `lumina/` | Unit Test & Mocking | Test Service & Handler Layer |
-| 11 | `lumina/` | WebSocket | Real-time notifications (like/follow) |
-| 12 | `lumina/` | Goroutines & File Upload | Upload ke Cloudinary + background resize |
-| 13 | `lumina/` | Docker & Compose | Containerize seluruh stack |
-| 14 | `lumina/` | Swagger & CI/CD Pipeline | API docs & GitHub Actions (Auto test) |
-| 15 | `lumina/` | RabbitMQ | Async notification processing |
-| 16 | `lumina/` | gRPC | Internal recommendation service |
-| 17 | — | Polish & Deploy | Frontend (React) + deploy production |
+| Sesi | Folder | Teknologi | Fitur Lumiina | Status |
+| :---: | :--- | :--- | :--- | :---: |
+| 7 | `lumiina/` | Git Flow, Makefile, golang-migrate | Setup arsitektur enterprise, relasi DB, dan pagination | ✅ |
+| 8 | `lumiina/` | JWT + Bcrypt | Autentikasi multi-identitas & otorisasi RBAC | ✅ |
+| 9 | `lumiina/` | Cloudinary v2 SDK + MIME Sniffing | Upload karya seni berkeamanan tinggi & tag management | ✅ |
+| 10 | `lumiina/` | Redis Caching + Rate Limiter | Singleflight, atomic rate limit, komentar, dan email auth | ✅ |
+| 11 | `lumiina/` | Docker & CI/CD Pipeline | Multi-stage Dockerfile, healthchecks, dan Swagger docs | ✅ |
+| 12 | `lumiina/` | Vite + React + TailwindCSS | UI/UX redesign, follow/bookmark system, digital artist studio | ✅ |
+| 13 | `lumiina/` | Cloud Deployment (Supabase + Upstash + Vercel) | Production launch, latency tuning, dan multi-region routing | ✅ |
+
+### Fase 3: QA & SDET Engineering Masterclass 🛡️ (Live Automation Suite)
+
+> **Repositori Pengujian Mandiri**: [`qa-journey/`](file:///home/sandi/Documents/Golang_Learn/qa-journey) (`Nyanns/lumiina-qa-automation`)  
+> **Standar**: IEEE 829, ISTQB Foundation, OWASP API Security Top 10
+
+| Modul | Fokus Pengujian | Tumpukan Alat & Framework | Status |
+| :---: | :--- | :--- | :---: |
+| 1 | QA Fundamentals & Test Mindset | STLC, Test Pyramid, 7 Prinsip ISTQB | ✅ |
+| 2 | Black Box Test Design Techniques | Equivalence Partitioning (EP), BVA, Decision Table | ✅ |
+| 3 | Test Documentation & Matrix | Google Sheets, IEEE 829 Test Matrix (Pass Rate 92.3%) | ✅ |
+| 4 | Defect Lifecycle & Bug Tracking | Jira Software (LUM-5), GitHub Issues (#26) | ✅ |
+| 5 | API Automation Testing | Postman, Chai JS, Newman CLI, HTML Extra Reporter | 🚀 Siap Masuk |
+| 6 | Web UI E2E Automation | Playwright (Chromium/Firefox/WebKit), Page Object Model | ⏳ |
+| 7 | Performance & Stress Testing | Grafana k6, Latency SLA Metrics (p95/p99) | ⏳ |
+| 8 | QA CI/CD Pipeline | GitHub Actions, Automated Workflow, Artifact Publishing | ⏳ |
+| 9 | Portfolio & Interview Mastery | Comprehensive Test Artifacts, Technical Interview Drill | ⏳ |
 
 ### 🎯 Tantangan Mandiri: GoAntri — Smart Queue Management
 
 > Project solo untuk membuktikan kemampuan membangun aplikasi lengkap dari nol secara mandiri.
-> Dikerjakan setelah semua sesi selesai — ujian sejati seorang Mid-Level Dev.
+> Dikerjakan setelah seluruh materi selesai — ujian sejati seorang Mid-Level Dev.
 
 ---
 
@@ -138,7 +151,11 @@ flowchart TD
 | **Auth** | JWT ([golang-jwt](https://github.com/golang-jwt/jwt)) + Bcrypt |
 | **Environment** | [Godotenv](https://github.com/joho/godotenv) |
 | **Docs** | [Swagger/OpenAPI](https://github.com/swaggo/swag) |
-| **Testing** | Go testing + [Testify](https://github.com/stretchr/testify) |
+| **Testing (Unit)** | Go testing + [Testify](https://github.com/stretchr/testify) |
+| **API Automation** | [Postman](https://www.postman.com/) + [Newman CLI](https://github.com/postmanlabs/newman) (Chai JS) |
+| **Web UI E2E** | [Playwright](https://playwright.dev/) (Page Object Model) |
+| **Performance Testing**| [Grafana k6](https://k6.io/) (p95/p99 latency benchmarks) |
+| **Defect Tracking** | [Atlassian Jira](https://www.atlassian.com/software/jira) + GitHub Issues |
 | **Containerization** | [Docker & Docker Compose](https://www.docker.com/) |
 | **Frontend** | [Vite](https://vitejs.dev/) + [React](https://react.dev/) + [TailwindCSS](https://tailwindcss.com/) + [Framer Motion](https://www.framer.com/motion/) |
 
