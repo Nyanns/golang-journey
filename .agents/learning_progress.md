@@ -1,21 +1,23 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-11
+## Terakhir Diupdate: 2026-09-13
 
-## Status: QA & SDET Engineering Masterclass — Modul 3 Sedang Berjalan & Official HD Branding Live 🚀
-- **Official Brand Identity Overhaul (Live Production)**: **SELESAI ✅**
-  - **Navbar Brand Wordmark**: Mengintegrasikan `logo_wordmark.png` HD ultra-crisp horizontal (`13.36.16.png`).
-  - **Badge & Identity Logo**: Mengganti logo huruf "L" tunggal menjadi emblem resmi Bintang + Lumiina (`13.35.08.png`) pada `logo_icon.png`, `logo_icon_transparent.png`, dan `logo.jpg`.
-  - **PWA & Splash App Icon**: Mengintegrasikan squircle app icon bersinar (`13.33.35.png`) ke seluruh ukuran PWA (`pwa-512x512.png`, `pwa-192x192.png`, `maskable-icon-512x512.png`, `apple-touch-icon.png`, `favicon-32x32.png`, `favicon.png`, `favicon.ico?v=3`).
-  - **Auth Entrance Screen (`AuthLayout.jsx`)**: Menampilkan squircle app icon bersinar di atas wordmark resmi, memberikan kesan native app store yang sangat elegan saat masuk ke login/register.
-  - **PWA Install Banner & Footers**: Terhubung langsung ke squircle icon baru.
-  - **Live Production Deployment**: Ter-compile ke dalam Go binary `//go:embed` dan telah live aktif di Singapore region `[sin1]` pada `https://lumiina-art.vercel.app`.
-- **Modul 1 (QA Fundamentals & Test Mindset)**: **SELESAI ✅**
-- **Modul 2 (Black Box Test Design Techniques)**: **SELESAI ✅**
-- **Modul 3 (Dokumentasi QA & Test Case Matrix)**: **SEDANG BERJALAN 📝** (Setup Google Sheets IEEE 829 selesai, siap eksekusi live).
-- **Setup QA Lab & Kurikulum**: **SELESAI ✅**
+## Status: QA & SDET Engineering Masterclass — Modul 1-4 Selesai 100%, Siap Masuk Modul 5 (API Automation Postman)
+- **Modul 1 (QA Fundamentals & Test Mindset)**: **SELESAI**
+- **Modul 2 (Black Box Test Design Techniques - EP, BVA, Decision Table)**: **SELESAI**
+- **Modul 3 (Dokumentasi QA & Test Case Matrix IEEE 829)**: **SELESAI**
+  - Matriks 13 kasus uji tereksekusi di Google Sheets (Pass Rate: 92.3%, 12 Pass, 1 Fail).
+  - Ditemukan defect riil pada validasi alfanumerik username Go backend (TC_AUTH_001).
+- **Modul 4 (Defect Lifecycle & Bug Tracking - Dual System Jira & GitHub)**: **SELESAI**
+  - Laporan bug formal: `qa-journey/02-bug-reports/BUG-001-username-underscore-validation.md`.
+  - Tiket GitHub Issues live: [Nyanns/lumiina#26](https://github.com/Nyanns/lumiina/issues/26).
+  - Tiket Jira Software live: `lumiina.atlassian.net` (Project: LUM, Ticket: LUM-5, Kanban workflow: To Do -> In Progress -> In Review -> Done).
+  - Repositori portofolio mandiri: `Nyanns/lumiina-qa-automation` (Git Submodule).
+  - Gaya dokumentasi: Zero-fluff enterprise standard (tanpa emoji dekoratif).
+- **Official Brand Identity Overhaul (Live Production)**: **SELESAI**
+- **Setup QA Lab & Kurikulum**: **SELESAI**
   - Dibuat folder `qa-journey/` dengan subfolder per modul praktik.
-  - Master Kurikulum: `qa-journey/KURIKULUM_QA.md` (9 modul terstruktur mengacu pada `roadmap.sh/qa` & ISTQB, dari pemula hingga SDET profesional).
+  - Master Kurikulum: `qa-journey/KURIKULUM_QA.md` (9 modul terstruktur).
   - Target Pengujian: **Lumiina Live Production** (`https://lumiina-art.vercel.app`).
 - **Sesi 13 (Cloud Deployment, Database Pooling & Production Launch)**: **SELESAI ✅**
   - **Official Live Domain**: `https://lumiina-art.vercel.app` (100% Free Tier, No Credit Card)
