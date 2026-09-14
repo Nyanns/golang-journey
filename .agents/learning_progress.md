@@ -9,9 +9,11 @@
   - Matriks 13 kasus uji tereksekusi di Google Sheets (Pass Rate: 92.3%, 12 Pass, 1 Fail).
   - Ditemukan defect riil pada validasi alfanumerik username Go backend (TC_AUTH_001).
 - **Modul 4 (Defect Lifecycle & Bug Tracking - Dual System Jira & GitHub)**: **SELESAI**
-  - Laporan bug formal: `qa-journey/02-bug-reports/BUG-001-username-underscore-validation.md`.
-  - Tiket GitHub Issues live: [Nyanns/lumiina#26](https://github.com/Nyanns/lumiina/issues/26).
-  - Tiket Jira Software live: `lumiina.atlassian.net` (Project: LUM, Ticket: LUM-5, Kanban workflow: To Do -> In Progress -> In Review -> Done).
+  - Laporan bug formal:
+    - `qa-journey/02-bug-reports/BUG-001-username-underscore-validation.md` (Jira: LUM-5, GitHub: [#26](https://github.com/Nyanns/lumiina/issues/26))
+    - `qa-journey/02-bug-reports/BUG-002-swagger-pwa-routing-interception.md` (Jira: LUM-6, GitHub: [#27](https://github.com/Nyanns/lumiina/issues/27))
+  - Tiket GitHub Issues live: [Nyanns/lumiina#26](https://github.com/Nyanns/lumiina/issues/26), [Nyanns/lumiina#27](https://github.com/Nyanns/lumiina/issues/27).
+  - Tiket Jira Software live: `lumiina.atlassian.net` (Project: LUM, Tickets: LUM-5, LUM-6, Kanban workflow: To Do -> In Progress -> In Review -> Done).
   - Repositori portofolio mandiri: `Nyanns/lumiina-qa-automation` (Git Submodule).
   - Gaya dokumentasi: Zero-fluff enterprise standard (tanpa emoji dekoratif).
 - **Official Brand Identity Overhaul (Live Production)**: **SELESAI**
@@ -573,6 +575,7 @@
 9. **Murid yang sangat baik** — cepat, tapi mau paham mendalam. Kombinasi langka.
 10. **Anti AI-slop** — menolak glassmorphism karena terlihat AI-generated. Preferensi desain: clean, light theme, human-crafted.
 11. **Mematikan autocomplete saat belajar** — ingin benar-benar menulis sendiri tanpa bantuan IntelliSense.
+12. **Refresh JavaScript & SQL dari Dasar** — Mengingat kembali dan membedah sintaks JavaScript (ES6+, objects, arrays, arrow functions/callbacks, Chai assertions) dan query SQL (SELECT, WHERE, JOIN, agregasi, verifikasi state DB) langkah demi langkah layaknya pemula tanpa mengasumsikan memori lama masih segar.
 
 ---
 
