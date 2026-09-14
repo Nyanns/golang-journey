@@ -530,7 +530,10 @@
   - State Transition Testing — Siklus status legal & pemblokiran jalan pintas ilegal.
   - Error Guessing & Adversarial Testing (XSS, Zero-width space, Magic Bytes).
   - Dokumen artefak tersimpan di: `qa-journey/01-fundamentals-and-test-cases/02-test-design-techniques-notes.md`.
-- [ ] **Modul 3: Dokumentasi QA & Test Case Matrix Standar Industri** 🚀 (SEDANG BERJALAN)
+- [x] **Modul 3: Dokumentasi QA & Test Case Matrix Standar Industri** ✅ (SELESAI)
+- [x] **Modul 4: Defect Lifecycle & Bug Tracking (Dual System Jira & GitHub)** ✅ (SELESAI)
+- [ ] **Modul 5: API Automation Testing (Postman + Newman CLI)** 🚀 (SEDANG BERJALAN)
+- [ ] **🔒 Task Keamanan Pasca-QA (Wajib Diingat)**: Matikan Swagger di Production (`APP_ENV=production`) atau proteksi dengan HTTP Basic Auth setelah seluruh modul QA Masterclass selesai, agar endpoint internal tidak terekspos untuk reconnaissance penyerang luar.
 - [ ] WebSocket (Real-time notifications)
 - [ ] RabbitMQ (Message Queue)
 - [ ] gRPC (Inter-service communication)
