@@ -49,10 +49,12 @@ flowchart LR
 
 ### Fase 2: Lumiina 🎨 — Platform Sharing Fan Art Anime (Live Production)
 
-> **Official Live Application**: [lumiina-art.vercel.app](https://lumiina-art.vercel.app)  
+> **Official Flagship Domain**: [https://www.lumiina.art](https://www.lumiina.art) *(Primary, Anycast Vercel Edge)*  
+> **Edge Deployment Fallback**: [https://lumiina-art.vercel.app](https://lumiina-art.vercel.app)  
+> **Personal Tech Portfolio Domain**: `https://nindhita.xyz` *(Secured via Hostinger DNS)*  
 > Terinspirasi Pixiv, dirancang dengan Clean Architecture Go, PostgreSQL (Supabase), Redis (Upstash), dan React SPA.
 
-| Sesi | Folder | Teknologi | Fitur Lumiina | Status |
+| Sesi | Folder | Teknologi | Fitur & Arsitektur Lumiina | Status |
 | :---: | :--- | :--- | :--- | :---: |
 | 7 | `lumiina/` | Git Flow, Makefile, golang-migrate | Setup arsitektur enterprise, relasi DB, dan pagination | ✅ |
 | 8 | `lumiina/` | JWT + Bcrypt | Autentikasi multi-identitas & otorisasi RBAC | ✅ |
@@ -61,6 +63,9 @@ flowchart LR
 | 11 | `lumiina/` | Docker & CI/CD Pipeline | Multi-stage Dockerfile, healthchecks, dan Swagger docs | ✅ |
 | 12 | `lumiina/` | Vite + React + TailwindCSS | UI/UX redesign, follow/bookmark system, digital artist studio | ✅ |
 | 13 | `lumiina/` | Cloud Deployment (Supabase + Upstash + Vercel) | Production launch, latency tuning, dan multi-region routing | ✅ |
+| 14 | `lumiina/` | API Defense-in-Depth (Vectors 1–7) | Metrics lockdown (404/ConstantTime), Release mode, Opaque health probes, Account lockout, Decompression bomb defense, CSP | ✅ |
+| 15 | `lumiina/` | Technical SEO Engine & Wave-1 Pre-renderer | Dynamic XML sitemap, Google Image extensions, Redis edge cache, bot prerender middleware, GSC domain verification (`URL is on Google`) | ✅ |
+| 16 | `lumiina/` | Official Brand & Character Bible v1.0 | Rebrand maskot tunggal Lumiina, sticker engine (`:lumiina_1:` - `:lumiina_9:`), WebP visual pipeline, human-crafted editorial `/about` | ✅ |
 
 ### Fase 3: QA & SDET Engineering Masterclass 🛡️ (Live Automation Suite)
 
