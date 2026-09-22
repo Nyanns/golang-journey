@@ -1,6 +1,6 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-22
+## Terakhir Diupdate: 2026-09-23
 
 ## Status: QA & SDET Engineering Masterclass — Modul 1-4 Selesai 100%, Siap Masuk Modul 5 (API Automation Postman)
 - **Modul 1 (QA Fundamentals & Test Mindset)**: **SELESAI**
@@ -16,6 +16,11 @@
   - Tiket Jira Software live: `lumiina.atlassian.net` (Project: LUM, Tickets: LUM-5, LUM-6, Kanban workflow: To Do -> In Progress -> In Review -> Done).
   - Repositori portofolio mandiri: `Nyanns/lumiina-qa-automation` (Git Submodule).
   - Gaya dokumentasi: Zero-fluff enterprise standard (tanpa emoji dekoratif).
+- **Google Search Console (GSC) Domain Ownership & Indexing Queue (2026-09-23)**: **SELESAI ✅**
+  - **DNS TXT Verification**: Domain ownership `lumiina.art` terverifikasi 100% via Hostinger DNS TXT record (`google-site-verification=pTTNGD1BqvXXX_80rUXduwGmFSPW5aiRgJBliM8jpvE`).
+  - **Sitemap Submission**: Submisi endpoint `https://www.lumiina.art/sitemap.xml` sukses pada GSC Domain Property (`sc-domain:lumiina.art`).
+  - **Live URL Inspection & Indexing Request**: Live inspection mengonfirmasi `URL is available to Google` (HTTP 200), crawl allowed, page fetch successful. Telah diajukan permintaan prioritas indexing (`Indexing requested`).
+  - **Robots.txt & Canonical**: Memblokir `/metrics` dan `/swagger/`, serta menetapkan referensi sitemap resmi.
 - **Official Brand Identity & Dual Domain Launch (2026-09-22)**: **SELESAI ✅**
   - **Flagship Product Domain**: `https://lumiina.art` (Primary: `www.lumiina.art`, 308 Apex redirect, Fallback: `https://lumiina-art.vercel.app`).
   - **Personal Tech Portfolio Domain**: `nindhita.xyz` (Secured via Hostinger, parked & ready for personal engineer portfolio).
@@ -25,7 +30,7 @@
   - Vercel `APP_BASE_URL` updated to `https://www.lumiina.art` for dynamic email verification & password reset links.
 - **Enterprise Technical SEO Engine & Wave-1 Bot Pre-renderer (2026-09-22)**: **SELESAI ✅**
   - **Dynamic XML Sitemap Engine (`GET /sitemap.xml`)**: Handler Go native (`sitemap_handler.go`) menghasilkan sitemap terindeks otomatis dengan ekstensi Google Image Sitemap (`<image:loc>`, `<image:title>`) untuk seluruh artwork publik dan profil seniman terverifikasi.
-  - **Redis Edge Caching (`seo:sitemap_xml`)**: Cache 30 menit dengan TTL otomatis untuk memproteksi database PostgreSQL dari bot crawl stampedes.
+  - **Redis Edge Caching (`seo:sitemap_xml:v4`)**: Cache 30 menit dengan TTL otomatis untuk memproteksi database PostgreSQL dari bot crawl stampedes.
   - **Wave-1 Bot Pre-rendering Middleware (`bot_prerender.go`)**: Deteksi User-Agent bot (Googlebot, Bingbot, Discordbot, Twitterbot, WhatsApp, Telegram, dll.) secara zero-overhead pada Go `NoRoute` SPA fallback. Menyuntikkan meta tags OpenGraph, Twitter Cards, Title, dan JSON-LD Structured Data sebelum disajikan ke crawler, menyelesaikan masalah "blind JS" pada crawlers media sosial dan Wave-1 Googlebot.
   - **Automated Verification & Unit Tests**: Unit testing komprehensif pada regex crawler user-agents dan string tag injection passing 100%.
 - **Production API Security Hardening Sprint — Vektor 2-7 (2026-09-22)**: **SELESAI ✅**
@@ -38,6 +43,9 @@
     - Redis-backed Account Lockout: 5x gagal login berturut-turut memicu penguncian akun selama 15 menit (`AUTH_ACCOUNT_LOCKED` / HTTP 429).
   - **Vektor 6 (Pixel Flood / Decompression Bomb Defense)**: Inspeksi dimensi dari `image.DecodeConfig`; menolak gambar berdimensi > 10.000 × 10.000 px sebelum alokasi memori buffer uncompressed RGBA dieksekusi.
   - **Vektor 7 (CSP Hardening)**: Menghapus directive `'unsafe-eval'` dari `Content-Security-Policy` di `security_headers.go`.
+- **Public Repositories Secret Audit & .gitignore Hardening (2026-09-23)**: **SELESAI ✅**
+  - Audit komprehensif pada commit history dan working tree `Nyanns/lumiina` serta `Nyanns/golang-journey`: **0 active secrets leaked**.
+  - Pengetatan wildcard `.env.*` dan pengecualian eksplisit `!.env.example`.
 - **Official Character Property — Lumiina Character Bible v1.0 & Interactive Sticker Engine (2026-09-22)**: **SELESAI ✅**
   - **Character Evolution**: Transisi dari duo legacy ("Lumi & Ina") menjadi satu entitas karakter tunggal production-grade: **Lumiina** (nama resmi tunggal, seluruh huruf Jepang `ルミーナ` dihapus secara konsisten di seluruh platform).
   - **Philosophy & Lore**: Lumiina diposisikan sebagai pemandu kreatif (Creative Guide), bukan protagonis platform. Seniman/kreator adalah protagonis utama. Slogan: *"A small light in a big world"* & *"A small light is still a light"*.
@@ -52,6 +60,15 @@
     - **Comment & Community Interaction**: `LumiinaStickerPicker` popover, parser teks ekspresi (`:lumiina_1:` s/d `:lumiina_9:`), serta preview stiker interaktif.
     - **Contextual Empty States**: Thinking Lumiina pada feed & search kosong, Peeking Tablet Lumiina pada kolom komentar kosong, dan Love/Hoshi Lumiina pada koleksi bookmark kosong.
     - **Brand Consistency**: Sinkronisasi global meta tag `og:image` dan `twitter:image` ke `https://lumiina.art/mascot/bg2.png`.
+- **Deep Dives & Technical Insights (Sesi 2026-09-23)**:
+  - **Blackhat Parasite SEO & Subdomain Exploitation Mechanics**:
+    - Anatomi serangan web judol: Eksploitasi Layer 7 CMS (WordPress/Laravel lama), N-Day CVEs via automated scanners (Nuclei, Dorking, Shodan/Censys).
+    - Subdomain Takeover vs Server Takeover: Membedakan *Dangling DNS* (CNAME mengarah ke resource mati seperti Vercel/S3 yang diklaim ulang—akses server 0%) vs Web Shell Low-Priv (`www-data` terisolasi di folder vhost/cPanel) vs Full Root Access (harga mahal, jarang dijual murah).
+    - Ekonomi Akses Bawah Tanah (*Initial Access Broker*): Mengapa akses web dijual murah (Rp 50rb - 100rb) di Telegram—bukan karena hacker jenius, melainkan sistem "komoditas curah/grosir" dari mass scanning otomatis ribuan target abandonware/proyek tender yang tidak dirawat (*defensive debt*).
+  - **Digital Forensics & Myth of Anonymity**:
+    - Mengapa hacking dari laptop rumah pasti bocor: Log ISP (RADIUS/AAA, CGNAT port allocation down to millisecond), Traffic Analysis & Timing Correlation Attack pada VPN/Tor, Hardware/OS Fingerprinting (NIC MAC probe requests, SMBIOS UUID).
+    - Deconstructing Hollywood Myth (*Mr. Robot*): Realitas forensic tracking vs fiksi film, kebocoran OPSEC terbesar (*The Money Trail* — QRIS/E-Wallet KYC, Centralized Crypto Exchange off-ramps).
+    - Red Teaming & Professional Security Ethics: Perbedaan legal testing (Rules of Engagement / RoE, whitelisted IPs) vs illegal hacking paranoia.
 - **Deep Dives & Technical Insights (Sesi 2026-09-22)**:
   - **DNS Mechanics**: Anatomi A-Record vs CNAME (Analogi Buku Kontak Telepon), Host Headers pada Anycast IP Vercel.
   - **Edge vs VPS Networking**: Mengapa Vercel tidak butuh Cloudflare (risiko double proxy & redirect loop) vs mengapa VPS wajib Cloudflare (origin IP shielding & anti-DDoS).
