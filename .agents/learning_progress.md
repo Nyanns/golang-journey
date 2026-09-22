@@ -23,6 +23,16 @@
   - Automated Let's Encrypt TLS/SSL certificate verified & active via Vercel Edge (`sin1`).
   - ICANN registrant verification completed.
   - Vercel `APP_BASE_URL` updated to `https://www.lumiina.art` for dynamic email verification & password reset links.
+- **Production API Security Hardening Sprint — Vektor 2-7 (2026-09-22)**: **SELESAI ✅**
+  - **Vektor 2 (Prometheus Metrics)**: `MetricsAuthMiddleware` aktif; bypass localhost loopback (`127.0.0.1`, `::1`), otentikasi konstan `crypto/subtle.ConstantTimeCompare` untuk Bearer token/`X-Metrics-Token`, dan return 404 pada production untuk menyembunyikan endpoint dari scanner.
+  - **Vektor 3 (Gin Framework Mode)**: `gin.SetMode(gin.ReleaseMode)` aktif otomatis saat `APP_ENV=production`, beralih ke `gin.New()` + `gin.Recovery()` untuk menghentikan banner verbose dan kebocoran stack trace.
+  - **Vektor 4 (Opaque Health Probes)**: `/readyz` mengembalikan response buram `{"status":"ready"}` di production tanpa membocorkan nama komponen infra (`database`, `redis`).
+  - **Vektor 5 (Granular Rate Limiting & Account Lockout)**:
+    - Auth limiter ketat (15 req/menit) pada `/auth/login` dan `/auth/register`.
+    - Upload limiter ketat (10 upload/menit) pada `POST /artworks`, `/users/avatar`, dan `/users/banner` untuk memproteksi storage Cloudinary & DB dari bot flooding.
+    - Redis-backed Account Lockout: 5x gagal login berturut-turut memicu penguncian akun selama 15 menit (`AUTH_ACCOUNT_LOCKED` / HTTP 429).
+  - **Vektor 6 (Pixel Flood / Decompression Bomb Defense)**: Inspeksi dimensi dari `image.DecodeConfig`; menolak gambar berdimensi > 10.000 × 10.000 px sebelum alokasi memori buffer uncompressed RGBA dieksekusi.
+  - **Vektor 7 (CSP Hardening)**: Menghapus directive `'unsafe-eval'` dari `Content-Security-Policy` di `security_headers.go`.
 - **Official Character Property — Lumiina Character Bible v1.0 & Interactive Sticker Engine (2026-09-22)**: **SELESAI ✅**
   - **Character Evolution**: Transisi dari duo legacy ("Lumi & Ina") menjadi satu entitas karakter tunggal production-grade: **Lumiina** (nama resmi tunggal, seluruh huruf Jepang `ルミーナ` dihapus secara konsisten di seluruh platform).
   - **Philosophy & Lore**: Lumiina diposisikan sebagai pemandu kreatif (Creative Guide), bukan protagonis platform. Seniman/kreator adalah protagonis utama. Slogan: *"A small light in a big world"* & *"A small light is still a light"*.
