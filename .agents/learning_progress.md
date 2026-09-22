@@ -1,6 +1,6 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-13
+## Terakhir Diupdate: 2026-09-22
 
 ## Status: QA & SDET Engineering Masterclass — Modul 1-4 Selesai 100%, Siap Masuk Modul 5 (API Automation Postman)
 - **Modul 1 (QA Fundamentals & Test Mindset)**: **SELESAI**
@@ -16,13 +16,39 @@
   - Tiket Jira Software live: `lumiina.atlassian.net` (Project: LUM, Tickets: LUM-5, LUM-6, Kanban workflow: To Do -> In Progress -> In Review -> Done).
   - Repositori portofolio mandiri: `Nyanns/lumiina-qa-automation` (Git Submodule).
   - Gaya dokumentasi: Zero-fluff enterprise standard (tanpa emoji dekoratif).
-- **Official Brand Identity Overhaul (Live Production)**: **SELESAI**
+- **Official Brand Identity & Dual Domain Launch (2026-09-22)**: **SELESAI ✅**
+  - **Flagship Product Domain**: `https://lumiina.art` (Primary: `www.lumiina.art`, 308 Apex redirect, Fallback: `https://lumiina-art.vercel.app`).
+  - **Personal Tech Portfolio Domain**: `nindhita.xyz` (Secured via Hostinger, parked & ready for personal engineer portfolio).
+  - DNS Architecture via Hostinger: A-Record `@` -> `76.76.21.21` (Vercel Anycast), CNAME `www` -> `cname.vercel-dns.com`.
+  - Automated Let's Encrypt TLS/SSL certificate verified & active via Vercel Edge (`sin1`).
+  - ICANN registrant verification completed.
+  - Vercel `APP_BASE_URL` updated to `https://www.lumiina.art` for dynamic email verification & password reset links.
+- **Official Character Property — Lumiina Character Bible v1.0 & Interactive Sticker Engine (2026-09-22)**: **SELESAI ✅**
+  - **Character Evolution**: Transisi dari duo legacy ("Lumi & Ina") menjadi satu entitas karakter tunggal production-grade: **Lumiina** (nama resmi tunggal, seluruh huruf Jepang `ルミーナ` dihapus secara konsisten di seluruh platform).
+  - **Philosophy & Lore**: Lumiina diposisikan sebagai pemandu kreatif (Creative Guide), bukan protagonis platform. Seniman/kreator adalah protagonis utama. Slogan: *"A small light in a big world"* & *"A small light is still a light"*.
+  - **Editorial About Page Redesign (Anti-AI Slop)**: Halaman `/about` dirombak total bergaya editorial human-crafted (terinspirasi Linear, Cara, Pixiv, Figma) tanpa efek glassmorphism murahan/slop, tanpa emoji dekoratif berlebihan, kartu solid (`bg-white dark:bg-[#141820]`), grid icon Lucide semantik, dan tipografi rapi.
+  - **High-Performance Visual Pipeline**:
+    - Web background `bg2.webp` (281 KB, 90% bandwidth saving dari master PNG 2.46 MB) dengan fallback `bg2.png`.
+    - 9 Official Expressions (`1.png`-`9.png`): Pembersihan alpha channel pada raw RGB black background (`4.png` & `5.png`) dan kompresi WebP thumbnails (~30 KB per sticker).
+    - Workbox PWA caching: `globIgnores` pada raw PNG 2.5MB master sheets untuk instant Service Worker install, dilengkapi runtime caching `mascot-assets-cache` (CacheFirst, 60 days).
+  - **Ecosystem Integration**:
+    - **Auth Layout**: Background resmi `bg2.webp` dan badge atribusi creator guide.
+    - **Documentation Hub (`/about`)**: Character Profile Matrix (158cm, 7 Juli, ISTP/INTP vibe), Visual DNA (✦ + ●), master turnaround sheet dengan interactive Lightbox modal, Signature Props breakdown, dan 9-Expression Library dengan one-click shortcode copy.
+    - **Comment & Community Interaction**: `LumiinaStickerPicker` popover, parser teks ekspresi (`:lumiina_1:` s/d `:lumiina_9:`), serta preview stiker interaktif.
+    - **Contextual Empty States**: Thinking Lumiina pada feed & search kosong, Peeking Tablet Lumiina pada kolom komentar kosong, dan Love/Hoshi Lumiina pada koleksi bookmark kosong.
+    - **Brand Consistency**: Sinkronisasi global meta tag `og:image` dan `twitter:image` ke `https://lumiina.art/mascot/bg2.png`.
+- **Deep Dives & Technical Insights (Sesi 2026-09-22)**:
+  - **DNS Mechanics**: Anatomi A-Record vs CNAME (Analogi Buku Kontak Telepon), Host Headers pada Anycast IP Vercel.
+  - **Edge vs VPS Networking**: Mengapa Vercel tidak butuh Cloudflare (risiko double proxy & redirect loop) vs mengapa VPS wajib Cloudflare (origin IP shielding & anti-DDoS).
+  - **OSINT & Mass Scanning**: Cara kerja Censys/Shodan/ZMap menembus Cloudflare via TLS Handshake certificates, historical DNS, dan favicon hashes.
+  - **Technical SEO Fundamentals**: Wave 1 vs Wave 2 indexing (keunggulan static HTML/CSS murni untuk Googlebot crawl budget), canonical tags, microdata, sitemaps, dan Google Search Console.
+  - **Survival Career Strategy**: Strategi "Batu Loncatan" (3-6 bulan), disiplin OpSec (isolasi VM/user, zero personal accounts/cards), dan menjaga fokus utama pada Lumiina & Go Backend.
 - **Setup QA Lab & Kurikulum**: **SELESAI**
   - Dibuat folder `qa-journey/` dengan subfolder per modul praktik.
   - Master Kurikulum: `qa-journey/KURIKULUM_QA.md` (9 modul terstruktur).
-  - Target Pengujian: **Lumiina Live Production** (`https://lumiina-art.vercel.app`).
+  - Target Pengujian: **Lumiina Live Production** (`https://lumiina.art` / `https://lumiina-art.vercel.app`).
 - **Sesi 13 (Cloud Deployment, Database Pooling & Production Launch)**: **SELESAI ✅**
-  - **Official Live Domain**: `https://lumiina-art.vercel.app` (100% Free Tier, No Credit Card)
+  - **Official Live Domain**: `https://lumiina.art` (Custom Domain TLD `.art` + Vercel Edge Anycast)
   - **Cloud Database (Supabase PostgreSQL - Singapore)**: Connected via IPv4 Supavisor Pooler (`aws-0-ap-southeast-1.pooler.supabase.com:6543`), all 10 SQL migrations applied cleanly.
   - **Cloud Cache & Rate Limiting (Upstash Redis - Singapore)**: Connected via TLS (`REDIS_USE_TLS=true`).
   - **Single Fullstack Executable (`//go:embed`)**: Production React + Vite + PWA build baked directly into the Go binary. Instant memory serving, zero disk I/O, robust SPA client fallback.
