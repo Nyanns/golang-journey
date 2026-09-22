@@ -23,6 +23,11 @@
   - Automated Let's Encrypt TLS/SSL certificate verified & active via Vercel Edge (`sin1`).
   - ICANN registrant verification completed.
   - Vercel `APP_BASE_URL` updated to `https://www.lumiina.art` for dynamic email verification & password reset links.
+- **Enterprise Technical SEO Engine & Wave-1 Bot Pre-renderer (2026-09-22)**: **SELESAI ✅**
+  - **Dynamic XML Sitemap Engine (`GET /sitemap.xml`)**: Handler Go native (`sitemap_handler.go`) menghasilkan sitemap terindeks otomatis dengan ekstensi Google Image Sitemap (`<image:loc>`, `<image:title>`) untuk seluruh artwork publik dan profil seniman terverifikasi.
+  - **Redis Edge Caching (`seo:sitemap_xml`)**: Cache 30 menit dengan TTL otomatis untuk memproteksi database PostgreSQL dari bot crawl stampedes.
+  - **Wave-1 Bot Pre-rendering Middleware (`bot_prerender.go`)**: Deteksi User-Agent bot (Googlebot, Bingbot, Discordbot, Twitterbot, WhatsApp, Telegram, dll.) secara zero-overhead pada Go `NoRoute` SPA fallback. Menyuntikkan meta tags OpenGraph, Twitter Cards, Title, dan JSON-LD Structured Data sebelum disajikan ke crawler, menyelesaikan masalah "blind JS" pada crawlers media sosial dan Wave-1 Googlebot.
+  - **Automated Verification & Unit Tests**: Unit testing komprehensif pada regex crawler user-agents dan string tag injection passing 100%.
 - **Production API Security Hardening Sprint — Vektor 2-7 (2026-09-22)**: **SELESAI ✅**
   - **Vektor 2 (Prometheus Metrics)**: `MetricsAuthMiddleware` aktif; bypass localhost loopback (`127.0.0.1`, `::1`), otentikasi konstan `crypto/subtle.ConstantTimeCompare` untuk Bearer token/`X-Metrics-Token`, dan return 404 pada production untuk menyembunyikan endpoint dari scanner.
   - **Vektor 3 (Gin Framework Mode)**: `gin.SetMode(gin.ReleaseMode)` aktif otomatis saat `APP_ENV=production`, beralih ke `gin.New()` + `gin.Recovery()` untuk menghentikan banner verbose dan kebocoran stack trace.
