@@ -1,18 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
-// ── Interactive Cosmic Sparkle & Ambient Stardust Engine ──
+// ── Interactive Cosmic Sparkle & Stardust Trail Engine ──
 // High-performance canvas effect:
-// 1. Interactive 4-pointed sparkle stars on mouse move, drag, and click burst.
-// 2. Slow, ethereal ambient stardust & subtle aurora breathing in the background.
-// 3. GPU-friendly, pooled particle memory (zero allocations in RAF loop).
-// 4. Automatically suspends when disabled or tab is hidden.
+// 1. Vibrant, glowing 4-pointed sparkle stars (✨) on mouse move, drag, and click.
+// 2. High z-index (z-50) + pointer-events-none so sparkles float gracefully ABOVE all cards without blocking clicks.
+// 3. Robust event listeners on `document` (mousemove, mousedown, touchmove, touchstart).
+// 4. Zero-allocation particle pool for 60fps butter-smooth rendering.
 
-const MAX_PARTICLES = 160;
-const AMBIENT_COUNT = 35;
+const MAX_PARTICLES = 180;
+const AMBIENT_COUNT = 40;
 
 export const BackgroundEffect = () => {
-  const { bgEffect, theme } = useTheme();
+  const { bgEffect, theme, accent } = useTheme();
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -27,50 +27,59 @@ export const BackgroundEffect = () => {
     let W = (canvas.width = window.innerWidth);
     let H = (canvas.height = window.innerHeight);
 
-    // Track mouse state
-    let mouse = { x: -9999, y: -9999, px: -9999, py: -9999, down: false };
-    let isMoving = false;
-    let moveTimeout = null;
+    // Track mouse & drag state
+    let isDown = false;
+    let lastX = -9999;
+    let lastY = -9999;
 
-    // Fixed particle pool for zero-allocation performance
-    // Types: 'sparkle' (4-pt star), 'ember' (tiny circle), 'ambient' (slow background star)
+    // Fixed particle pool
     const pool = [];
     for (let i = 0; i < MAX_PARTICLES; i++) {
       pool.push({
         active: false,
-        type: 'sparkle',
+        type: 'sparkle', // 'sparkle' | 'ember' | 'ring'
         x: 0,
         y: 0,
         vx: 0,
         vy: 0,
         size: 0,
-        maxSize: 0,
         rotation: 0,
         vr: 0,
         alpha: 0,
         decay: 0,
         color: '#ffffff',
+        glowColor: '#89dceb',
       });
     }
 
-    // Initialize ambient stars
+    // Ambient background stars
     const ambientStars = Array.from({ length: AMBIENT_COUNT }, () => ({
       x: Math.random() * W,
       y: Math.random() * H,
-      r: Math.random() * 1.2 + 0.3,
-      alpha: Math.random() * 0.4 + 0.1,
-      speed: Math.random() * 0.004 + 0.002,
+      r: Math.random() * 1.5 + 0.4,
+      alpha: Math.random() * 0.45 + 0.15,
+      speed: Math.random() * 0.005 + 0.002,
       phase: Math.random() * Math.PI * 2,
-      vx: (Math.random() - 0.5) * 0.06,
-      vy: (Math.random() - 0.5) * 0.06,
+      vx: (Math.random() - 0.5) * 0.08,
+      vy: (Math.random() - 0.5) * 0.08,
     }));
 
-    // Spawn helper from pool
-    const spawnParticle = (type, x, y, vx, vy, size, decay, color, vr = 0) => {
-      // Find inactive particle
+    // Color palette getter: includes current theme accent + radiant highlights
+    const getPalette = () => {
+      try {
+        const computed = getComputedStyle(document.documentElement);
+        const curAccent = computed.getPropertyValue('--ctp-accent').trim();
+        if (curAccent) {
+          return [curAccent, '#ffffff', '#89dceb', '#f5c2e7', '#f9e2af'];
+        }
+      } catch (e) {}
+      return ['#89b4fa', '#ffffff', '#cba6f7', '#f5c2e7', '#89dceb', '#fab387'];
+    };
+
+    const spawn = (type, x, y, vx, vy, size, decay, color, glowColor, vr = 0) => {
       let p = pool.find((item) => !item.active);
       if (!p) {
-        // If all active, steal the oldest (lowest alpha)
+        // Reuse particle with lowest alpha
         p = pool.reduce((min, cur) => (cur.alpha < min.alpha ? cur : min), pool[0]);
       }
       p.active = true;
@@ -80,39 +89,30 @@ export const BackgroundEffect = () => {
       p.vx = vx;
       p.vy = vy;
       p.size = size;
-      p.maxSize = size;
       p.rotation = Math.random() * Math.PI * 2;
       p.vr = vr;
       p.alpha = 1.0;
       p.decay = decay;
       p.color = color;
+      p.glowColor = glowColor || color;
     };
 
-    // Helper: get current theme accent color or vibrant fallback
-    const getAccentColors = () => {
-      try {
-        const computed = getComputedStyle(document.documentElement);
-        const accent = computed.getPropertyValue('--ctp-accent').trim();
-        if (accent && accent.startsWith('#')) {
-          return [accent, '#ffffff', '#89dceb', '#f5c2e7'];
-        }
-      } catch (e) {}
-      // Palette fallback: iridescent cyan, star white, lilac, gold
-      return ['#89dceb', '#ffffff', '#cba6f7', '#fab387', '#007efc'];
-    };
-
-    // Draw 4-pointed diamond sparkle star
-    const drawStar = (x, y, r, rotation, alpha, color) => {
-      if (r <= 0.1 || alpha <= 0.01) return;
+    // Draw 4-pointed glowing diamond sparkle star
+    const drawSparkle = (x, y, r, rotation, alpha, color, glowColor) => {
+      if (r <= 0.2 || alpha <= 0.02) return;
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(rotation);
       ctx.globalAlpha = alpha;
-      ctx.fillStyle = color;
 
+      // Outer luminous glow
+      ctx.shadowBlur = 10;
+      ctx.shadowColor = glowColor;
+
+      // 4-pointed star path
       ctx.beginPath();
       const r2 = r;
-      const r1 = r * 0.22;
+      const r1 = r * 0.20;
       for (let i = 0; i < 8; i++) {
         const angle = (i * Math.PI) / 4;
         const radius = i % 2 === 0 ? r2 : r1;
@@ -122,9 +122,11 @@ export const BackgroundEffect = () => {
         else ctx.lineTo(px, py);
       }
       ctx.closePath();
+      ctx.fillStyle = color;
       ctx.fill();
 
-      // Soft center light core
+      // Bright center core
+      ctx.shadowBlur = 0;
       ctx.beginPath();
       ctx.arc(0, 0, r * 0.28, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
@@ -133,148 +135,121 @@ export const BackgroundEffect = () => {
       ctx.restore();
     };
 
-    // Draw round stardust ember
+    // Draw circular ember dot
     const drawEmber = (x, y, r, alpha, color) => {
-      if (r <= 0.1 || alpha <= 0.01) return;
+      if (r <= 0.2 || alpha <= 0.02) return;
       ctx.save();
       ctx.globalAlpha = alpha;
       ctx.fillStyle = color;
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = color;
       ctx.beginPath();
       ctx.arc(x, y, r, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
     };
 
-    // Resize handler
-    const onResize = () => {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    };
-
-    // Mouse/Touch pointer move
-    const onPointerMove = (e) => {
-      const x = e.clientX;
-      const y = e.clientY;
-      const dx = mouse.px !== -9999 ? x - mouse.px : 0;
-      const dy = mouse.py !== -9999 ? y - mouse.py : 0;
+    // Handle mouse move & drag
+    const handleMove = (x, y) => {
+      const dx = lastX !== -9999 ? x - lastX : 0;
+      const dy = lastY !== -9999 ? y - lastY : 0;
       const dist = Math.hypot(dx, dy);
 
-      mouse.x = x;
-      mouse.y = y;
-      mouse.px = x;
-      mouse.py = y;
-      isMoving = true;
-      clearTimeout(moveTimeout);
-      moveTimeout = setTimeout(() => {
-        isMoving = false;
-      }, 100);
+      lastX = x;
+      lastY = y;
 
-      // Spawn on drag or significant movement
-      const colors = getAccentColors();
-      const threshold = mouse.down ? 4 : 12;
+      const palette = getPalette();
+      // On drag: spawn more particles with higher velocity
+      const threshold = isDown ? 3 : 8;
 
       if (dist > threshold) {
-        const count = mouse.down ? 3 : 1;
+        const count = isDown ? 3 : 1;
         for (let i = 0; i < count; i++) {
-          const jitterX = x + (Math.random() - 0.5) * 8;
-          const jitterY = y + (Math.random() - 0.5) * 8;
-          const speed = Math.random() * 0.9 + 0.3;
           const angle = Math.random() * Math.PI * 2;
-          const vx = Math.cos(angle) * speed + dx * 0.06;
-          const vy = Math.sin(angle) * speed + dy * 0.06 - 0.2; // slight upward float
-          const size = Math.random() * 4.5 + 2.5;
-          const decay = Math.random() * 0.025 + 0.018;
-          const color = colors[Math.floor(Math.random() * colors.length)];
-          const vr = (Math.random() - 0.5) * 0.08;
+          const speed = Math.random() * 1.4 + 0.4;
+          const vx = Math.cos(angle) * speed + dx * 0.08;
+          const vy = Math.sin(angle) * speed + dy * 0.08 - 0.25; // float gently upward
+          const size = Math.random() * 7 + 4.5;
+          const decay = Math.random() * 0.022 + 0.015;
+          const color = palette[Math.floor(Math.random() * palette.length)];
+          const vr = (Math.random() - 0.5) * 0.12;
 
-          spawnParticle('sparkle', jitterX, jitterY, vx, vy, size, decay, color, vr);
+          spawn('sparkle', x + (Math.random() - 0.5) * 10, y + (Math.random() - 0.5) * 10, vx, vy, size, decay, color, color, vr);
 
-          // Add a tiny trailing ember
-          if (Math.random() > 0.4) {
-            spawnParticle(
-              'ember',
-              jitterX + (Math.random() - 0.5) * 6,
-              jitterY + (Math.random() - 0.5) * 6,
-              vx * 0.5,
-              vy * 0.5,
-              Math.random() * 1.6 + 0.6,
-              decay * 1.3,
-              color
-            );
+          if (Math.random() > 0.3) {
+            spawn('ember', x + (Math.random() - 0.5) * 8, y + (Math.random() - 0.5) * 8, vx * 0.6, vy * 0.6, Math.random() * 2.2 + 0.8, decay * 1.1, color, color);
           }
         }
       }
     };
 
-    // Click burst: radiate 12-16 sparkling stars outward
-    const onPointerDown = (e) => {
-      mouse.down = true;
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+    // Handle click burst
+    const handleDown = (x, y) => {
+      isDown = true;
+      lastX = x;
+      lastY = y;
 
-      const colors = getAccentColors();
-      const burstCount = 14;
+      const palette = getPalette();
+      const burstCount = 18; // radiant 18-particle starburst
 
       for (let i = 0; i < burstCount; i++) {
-        const angle = (i / burstCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
-        const speed = Math.random() * 2.8 + 1.2;
+        const angle = (i / burstCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.35;
+        const speed = Math.random() * 3.6 + 1.4;
         const vx = Math.cos(angle) * speed;
-        const vy = Math.sin(angle) * speed - 0.3;
-        const size = Math.random() * 6.5 + 3.5;
-        const decay = Math.random() * 0.02 + 0.016;
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const vr = (Math.random() - 0.5) * 0.12;
+        const vy = Math.sin(angle) * speed - 0.4;
+        const size = Math.random() * 9 + 5.5; // prominent sparkle size
+        const decay = Math.random() * 0.018 + 0.012; // lingers ~1.5s
+        const color = palette[Math.floor(Math.random() * palette.length)];
+        const vr = (Math.random() - 0.5) * 0.16;
 
-        spawnParticle('sparkle', e.clientX, e.clientY, vx, vy, size, decay, color, vr);
+        spawn('sparkle', x, y, vx, vy, size, decay, color, color, vr);
 
-        // Sub-ember burst
-        spawnParticle(
-          'ember',
-          e.clientX,
-          e.clientY,
-          vx * 0.6 + (Math.random() - 0.5),
-          vy * 0.6 + (Math.random() - 0.5),
-          Math.random() * 2.0 + 0.8,
-          decay * 1.2,
-          '#ffffff'
-        );
+        // Radiant trailing embers
+        spawn('ember', x, y, vx * 0.65, vy * 0.65, Math.random() * 2.5 + 1.0, decay * 1.2, '#ffffff', color);
       }
     };
 
-    const onPointerUp = () => {
-      mouse.down = false;
+    const handleUp = () => {
+      isDown = false;
     };
 
+    // Event listeners on `document` to guarantee capturing events everywhere
+    const onMouseMove = (e) => handleMove(e.clientX, e.clientY);
+    const onMouseDown = (e) => handleDown(e.clientX, e.clientY);
+    const onMouseUp = () => handleUp();
+
+    const onTouchMove = (e) => {
+      if (e.touches && e.touches[0]) {
+        handleMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+    const onTouchStart = (e) => {
+      if (e.touches && e.touches[0]) {
+        handleDown(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    };
+    const onTouchEnd = () => handleUp();
+
+    const onResize = () => {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    };
+
+    document.addEventListener('mousemove', onMouseMove, { passive: true });
+    document.addEventListener('mousedown', onMouseDown, { passive: true });
+    document.addEventListener('mouseup', onMouseUp, { passive: true });
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    document.addEventListener('touchstart', onTouchStart, { passive: true });
+    document.addEventListener('touchend', onTouchEnd, { passive: true });
     window.addEventListener('resize', onResize, { passive: true });
-    window.addEventListener('pointermove', onPointerMove, { passive: true });
-    window.addEventListener('pointerdown', onPointerDown, { passive: true });
-    window.addEventListener('pointerup', onPointerUp, { passive: true });
 
     let t = 0;
 
-    // Main animation loop
+    // Render loop
     const render = () => {
       ctx.clearRect(0, 0, W, H);
 
-      // ── 1. Subtle, slow ambient background aura (2 soft blobs) ──
-      const isLight = theme === 'latte';
-      const auraAlpha = isLight ? 0.05 : 0.11;
-
-      // Primary blob
-      const g1 = ctx.createRadialGradient(W * 0.2, H * 0.25, 0, W * 0.2, H * 0.25, W * 0.45);
-      g1.addColorStop(0, `rgba(137, 180, 250, ${auraAlpha})`);
-      g1.addColorStop(1, 'rgba(137, 180, 250, 0)');
-      ctx.fillStyle = g1;
-      ctx.fillRect(0, 0, W, H);
-
-      // Secondary blob
-      const g2 = ctx.createRadialGradient(W * 0.82, H * 0.65, 0, W * 0.82, H * 0.65, W * 0.42);
-      g2.addColorStop(0, `rgba(203, 166, 247, ${auraAlpha * 0.85})`);
-      g2.addColorStop(1, 'rgba(203, 166, 247, 0)');
-      ctx.fillStyle = g2;
-      ctx.fillRect(0, 0, W, H);
-
-      // ── 2. Ambient drifting stars ──
+      // ── 1. Ambient Background Twinkling Dust ──
       for (let i = 0; i < AMBIENT_COUNT; i++) {
         const s = ambientStars[i];
         s.x += s.vx;
@@ -284,32 +259,32 @@ export const BackgroundEffect = () => {
         if (s.y < 0) s.y = H;
         if (s.y > H) s.y = 0;
 
-        const twinkle = s.alpha + Math.sin(t * s.speed + s.phase) * 0.18;
-        const curAlpha = Math.max(0.04, Math.min(0.65, twinkle));
+        const twinkle = s.alpha + Math.sin(t * s.speed + s.phase) * 0.2;
+        const curAlpha = Math.max(0.05, Math.min(0.7, twinkle));
         drawEmber(s.x, s.y, s.r, curAlpha, '#cdd6f4');
       }
 
-      // ── 3. Interactive Sparkles & Embers ──
+      // ── 2. Interactive Sparkles & Embers ──
       for (let i = 0; i < MAX_PARTICLES; i++) {
         const p = pool[i];
         if (!p.active) continue;
 
-        // Physics update
+        // Physics
         p.x += p.vx;
         p.y += p.vy;
         p.rotation += p.vr;
         p.alpha -= p.decay;
-        p.size *= 0.985; // gently shrink
-        p.vx *= 0.97; // air friction
-        p.vy *= 0.97;
+        p.size *= 0.982; // gentle shrink
+        p.vx *= 0.965; // air drag
+        p.vy *= 0.965;
 
-        if (p.alpha <= 0.02 || p.size <= 0.3) {
+        if (p.alpha <= 0.02 || p.size <= 0.4) {
           p.active = false;
           continue;
         }
 
         if (p.type === 'sparkle') {
-          drawStar(p.x, p.y, p.size, p.rotation, p.alpha, p.color);
+          drawSparkle(p.x, p.y, p.size, p.rotation, p.alpha, p.color, p.glowColor);
         } else {
           drawEmber(p.x, p.y, p.size, p.alpha, p.color);
         }
@@ -321,7 +296,6 @@ export const BackgroundEffect = () => {
 
     animId = requestAnimationFrame(render);
 
-    // Pause when tab hidden to save CPU/battery
     const handleVisibility = () => {
       if (document.hidden) {
         cancelAnimationFrame(animId);
@@ -333,14 +307,16 @@ export const BackgroundEffect = () => {
 
     return () => {
       cancelAnimationFrame(animId);
-      clearTimeout(moveTimeout);
       document.removeEventListener('visibilitychange', handleVisibility);
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mousedown', onMouseDown);
+      document.removeEventListener('mouseup', onMouseUp);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchstart', onTouchStart);
+      document.removeEventListener('touchend', onTouchEnd);
       window.removeEventListener('resize', onResize);
-      window.removeEventListener('pointermove', onPointerMove);
-      window.removeEventListener('pointerdown', onPointerDown);
-      window.removeEventListener('pointerup', onPointerUp);
     };
-  }, [bgEffect, theme]);
+  }, [bgEffect, theme, accent]);
 
   if (!bgEffect) return null;
 
@@ -348,7 +324,7 @@ export const BackgroundEffect = () => {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10"
+      className="pointer-events-none fixed inset-0 z-50"
       style={{
         width: '100vw',
         height: '100vh',
