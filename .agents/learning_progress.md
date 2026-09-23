@@ -2,14 +2,29 @@
 
 ## Terakhir Diupdate: 2026-09-23
 
-## Status: Menyiapkan Web Portofolio Personal (nindhita.xyz) & QA Masterclass Modul 5
-- **Next Milestone**: **Pembuatan Web Portofolio Personal Sandi (`https://nindhita.xyz`)**
-  - Website portofolio profesional untuk Sandi (S1 Informatika, Go Backend Developer, HTB Level 10 Cybersecurity, SDET).
-  - Showcases:
-    - **Lumiina Flagship Platform** (`https://lumiina.art`): Clean Architecture Go, Gin, PostgreSQL, Redis, Cloudinary, Wave-1 Bot Pre-renderer, Defense-in-Depth API Security, React 19 Frontend.
-    - **Cybersecurity & Hardening**: HTB Level 10, constant-time comparisons, token revocation epochs, zero-leakage security posture.
-    - **QA & SDET Engineering**: IEEE 829 test matrices, Jira + GitHub bug lifecycle, API automation suite.
-  - Visual & Architecture: Human-crafted, anti-AI slop, light/dark mode, tactile borders, sub-second LCP.
+## Status: Web Portofolio Personal (nindhita.xyz) Siap Deploy & Persiapan QA Masterclass Modul 5
+- **Next Milestone**: **Final Deployment Portofolio Personal Sandi (`https://nindhita.xyz`) & Masuk QA Masterclass Modul 5 (Playwright/Automation)**
+  - Website portofolio personal (`portfolio/`) telah selesai di-redesign penuh terinspirasi gaya minimalis editorial Catppuccin (`jasoncameron.dev`):
+    - **Header & Navbar**: Breadcrumb dinamis (`~ / [cursor]`), navigasi anchor (`Projects`, `Stack`, `Activity`, `Experience`), tautan Resume PDF, dan tombol quick-toggle Light (Latte) / Dark (Mocha).
+    - **Personal Intro**: Menyajikan positioning autentik sebagai Backend Engineer & QA Automation Engineer (SDET) dengan fondasi Cybersecurity (Google Certified & HTB Level 10).
+    - **Featured Projects (2 Proyek Utama)**:
+      - **Lumiina** (Flagship Production Platform): Dilengkapi preview visual aspect-video, tombol langsung **Live Demo** (`lumiina.art`) dan **GitHub** (`Nyanns/lumiina`), serta badge stack teknologi.
+      - **Lumiina QA & Automation Suite** (Test Engineering & CI/CD): Dilengkapi banner visual matriks terminal IEEE 829 (Newman CLI + Chai + Playwright), tombol **GitHub** (`Nyanns/lumiina-qa-automation`), serta badge teknologi testing formal.
+    - **Skills & Technologies (6 Kategori Komprehensif)**:
+      - Backend & Concurrency (Go 1.24+, Gin, Clean Architecture, GORM, Concurrency, Sqids).
+      - QA & Automated Testing (SDET) (Playwright, Cypress, Postman, Newman, IEEE 829, BVA, Testify).
+      - Defensive Security & Cryptography (Canary hashes, Session revocation, Redis Lua rate limiting, OWASP API Top 10, HTB).
+      - Data & Storage Systems (PostgreSQL 16 GIN/B-Tree, Redis 7 Singleflight, EXPLAIN ANALYZE).
+      - Technical SEO & Search Intelligence (Wave-1 Bot Pre-rendering, Dynamic Sitemap RFC 8288, JSON-LD Schema, Core Web Vitals, GEO).
+      - DevOps, Infra & CI/CD (Docker multi-stage ~19MB, GitHub Actions, Vercel Edge).
+    - **Interactive Dashboard (6 Kartu Interaktif)**:
+      - Theme selector (4 Catppuccin flavors: Latte, Frappe, Macchiato, Mocha, 14 palet warna aksen, on/off background mesh ambient).
+      - Let's Connect (1-klik salin email dengan feedback taktil).
+      - Currently Based In (Visual peta Yogyakarta + jam live WIB Asia/Jakarta dengan indikator matahari/bulan).
+      - Global Click Counter (Tombol *CLICK ME* interaktif dengan animasi bounce dan persistence `localStorage`).
+      - Recent Commits (Fetch live GitHub API dari `Nyanns/golang-journey` & `Nyanns/lumiina` dengan diff +/- baris dan rasio bahasa Go 56%).
+      - Latest Posts & Credentials (Artikel Medium & LinkedIn + tautan lencana HackTheBox, LeetCode, Google Cybersecurity, Stanford ML).
+    - **Experience & Footer**: Riwayat karier BKN RI & Bangkit Academy, status layanan nominal, live uptime clock, dan commit sha tracker.
 - **Enterprise Documentation & Frontend Guide Revamp (2026-09-23)**: **SELESAI ✅**
   - `web/README.md`: Ditulis ulang menyeluruh (200+ baris) merinci seluruh fitur studio, kuantisasi palet warna, placard eksibisi canvas, navigasi keyboard, arsitektur Context state, dan optimasi Core Web Vitals.
   - `lumiina/README.md` & `docs/DEPLOYMENT.md`: Sinkronisasi versi React 19 / Vite 8 / TailwindCSS v4, penambahan tabel endpoint SEO & health probes, Vercel Edge anycast configuration, Hostinger DNS records, dan resep curl verifikasi bot pre-render.
@@ -754,3 +769,31 @@ Platform sharing fan art anime (terinspirasi Pixiv, tapi redesign yang lebih bai
 - Backend Go API (100% sendiri)
 - Frontend (boleh pakai AI assist)
 - Full deployment
+
+---
+
+## 🌐 FLAGSHIP PORTFOLIO: Personal Tech Portfolio Website (`https://nindhita.xyz`) ✅ (SELESAI)
+
+> **Inspirasi & Desain**: Mengadopsi arsitektur Bento Grid dan sistem tema Catppuccin dari **jasoncameron.dev**, disesuaikan secara human-crafted untuk profil **Satria Nindhita** (Go Backend Engineer · HTB Level 10 · QA/SDET Automation).
+
+### Fitur Lengkap & Paritas Sistem
+1. **Catppuccin 4-Flavors System & Dynamic 14-Accent Engine**:
+   - Pilihan 4 palet Catppuccin autentik: `Latte` (Light), `Frappe`, `Macchiato`, `Mocha` (Darkest).
+   - 14 pilihan warna aksen dinamis (`--ctp-accent`): *Rosewater, Flamingo, Pink, Mauve, Red, Maroon, Peach, Yellow, Green, Teal, Sky, Sapphire, Blue, Lavender*.
+   - Mengubah seluruh aksen situs secara real-time (Navbar breadcrumb, nama hero, link hover, active indicator ring, tag, tombol).
+   - Terintegrasi dengan `ThemeContext` dan script inline `index.html` untuk 100% bebas FOUC (Flash of Unstyled Content).
+2. **Interactive Bento Dashboard Grid**:
+   - **Theme Card**: 4-way switcher + 14 accent dots + checkbox toggle *Background effect (on/off)*.
+   - **Background Effect**: Floating ambient gradient mesh orbs yang beranimasi halus di belakang konten dengan warna aksen dinamis.
+   - **Let's Connect Card**: Deskripsi kolaborasi + tombol `Copy Email` dengan clipboard feedback state.
+   - **Currently Based In Card**: Stylized dark vector map Yogyakarta dengan watermark kota dan radar pin marker berkedip + real-time digital clock WIB (Asia/Jakarta) dengan indikator matahari ☀️ / bulan 🌙.
+   - **Click Me Counter Card**: Tombol interaktif `CLICK ME` dengan animasi bounce taktil + tooltip penjelasan + counter klik tersimpan di `localStorage`.
+   - **Recent Commits Card (2 Columns)**: Fetch data commit real-time dari GitHub API (`Nyanns/golang-journey` & `Nyanns/lumiina`) + visual penambahan `+` hijau dan pengurangan `-` merah + Language breakdown progress bar (Go 56%, JS, Python, HTML, CSS, Shell).
+   - **Latest Posts Card (2 Columns)**: Menampilkan artikel teknis Medium dan postingan artikel teknis LinkedIn dengan badge platform dan tanggal rilis.
+3. **Rich System Footer**:
+   - Left: Copyright `© 2026 Satria Nindhita` + Live status indicator dengan pulsing green dot (`All Services Nominal`).
+   - Right: Real-time session timer `⏱ 00:02:14` (menghitung durasi kunjungan) + site views counter + latest commit hash `⊙ 70dfc8c` + SVG social icons row (GitHub, LinkedIn, Medium, HackTheBox, LeetCode).
+4. **Performance & Build**:
+   - React 19 + Vite 8 + TailwindCSS v4 + Framer Motion.
+   - Production bundle clean: 268 kB JS (80 kB gzip), build time ~560ms. Zero errors.
+
