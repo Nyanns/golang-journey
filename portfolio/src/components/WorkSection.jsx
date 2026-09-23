@@ -206,18 +206,6 @@ export const WorkSection = () => {
                 <p className="text-xs leading-relaxed md:text-sm" style={{ color: 'var(--ctp-subtext0)' }}>
                   {project.description}
                 </p>
-
-                {/* Architecture Highlights */}
-                {project.highlights && (
-                  <ul className="mt-2 space-y-1.5 border-t pt-2.5 text-xs" style={{ borderColor: 'var(--ctp-surface0)', color: 'var(--ctp-subtext0)' }}>
-                    {project.highlights.map((h, i) => (
-                      <li key={i} className="flex items-start gap-1.5">
-                        <span className="text-accent mt-0.5 font-bold">›</span>
-                        <span className="leading-relaxed">{h}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
               </div>
 
               {/* Tech Tags with Tag Icon */}
