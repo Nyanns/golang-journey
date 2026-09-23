@@ -1,31 +1,27 @@
 import React from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
-import { FlagshipShowcase } from './components/FlagshipShowcase';
-import { TechMatrix } from './components/TechMatrix';
-import { SignalsSection } from './components/SignalsSection';
-import { WritingSection } from './components/WritingSection';
+import { WorkSection } from './components/WorkSection';
+import { StackSection } from './components/StackSection';
+import { SignalsWritingSection } from './components/SignalsWritingSection';
 import { ExperienceSection } from './components/ExperienceSection';
 import { Footer } from './components/Footer';
 
 export const App = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#fafbfc] dark:bg-[#080b10] text-slate-800 dark:text-slate-200 antialiased">
-      {/* Sticky Minimal Navigation */}
+    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#080b10] text-zinc-800 dark:text-zinc-200 antialiased selection:bg-sky-500/20 selection:text-sky-700 dark:selection:text-sky-300">
+      {/* Minimal Sticky Header */}
       <Navbar />
 
-      {/* Main Content Flow */}
-      <main className="flex-1">
+      {/* Main Single-Document Reading Flow */}
+      <main className="max-w-2xl mx-auto px-5">
         <HeroSection />
-        <FlagshipShowcase />
-        <TechMatrix />
-        <SignalsSection />
-        <WritingSection />
+        <WorkSection />
+        <StackSection />
+        <SignalsWritingSection />
         <ExperienceSection />
+        <Footer />
       </main>
-
-      {/* Colophon & Contact Footer */}
-      <Footer />
     </div>
   );
 };
