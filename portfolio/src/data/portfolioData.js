@@ -168,11 +168,11 @@ export const portfolioData = {
   recentCommits: [
     {
       repo: "golang-journey",
-      message: "feat(portfolio): add interactive starburst sparkle and stardust particle engine",
-      additions: 316,
-      deletions: 94,
-      sha: "ac0027d",
-      url: "https://github.com/Nyanns/golang-journey/commit/ac0027d",
+      message: "chore(portfolio): finalize pre-hosting optimizations (SEO meta, sitemap, llms.txt, vercel.json, a11y)",
+      additions: 116,
+      deletions: 11,
+      sha: "4b88a42",
+      url: "https://github.com/Nyanns/golang-journey/commit/4b88a42",
       date: "Sep 24, 2026",
     },
     {
