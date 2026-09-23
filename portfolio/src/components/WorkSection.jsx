@@ -106,8 +106,11 @@ export const WorkSection = () => {
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="max-h-24 max-w-[60%] object-contain opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+                    width="240"
+                    height="96"
                     loading="lazy"
+                    decoding="async"
+                    className="max-h-24 max-w-[60%] object-contain opacity-90 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
                   />
                   {/* Subtle decorative bg text */}
                   <div
@@ -127,8 +130,11 @@ export const WorkSection = () => {
                   <img
                     src={project.image}
                     alt={project.title}
+                    width="600"
+                    height="338"
+                    fetchPriority="high"
+                    decoding="async"
                     className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
-                    loading="lazy"
                   />
                 </div>
               )}

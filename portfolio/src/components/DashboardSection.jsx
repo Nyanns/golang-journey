@@ -379,6 +379,7 @@ const RecentCommitsCard = () => {
             href="https://github.com/Nyanns?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="View all repositories on GitHub"
             className="text-accent/80 hover:text-accent font-mono text-xs transition-colors"
           >
             [info]
@@ -503,6 +504,7 @@ const LatestPostsCard = () => {
             href={portfolioData.personal.links.medium}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="Read all posts on Medium"
             className="text-accent/80 hover:text-accent font-mono text-xs transition-colors"
             title="Read all posts on Medium"
           >

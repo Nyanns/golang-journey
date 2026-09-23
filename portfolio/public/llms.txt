@@ -1,0 +1,30 @@
+# Satria Nindhita (nindhita.xyz)
+> Software Engineer — Go Backend Engineering, QA Automation (SDET), & Defensive Cybersecurity
+
+## Summary
+Satria Nindhita (Sandi) is an Informatika computer science graduate and software engineer specializing in high-concurrency Go (Golang) microservices, formal automated QA pipelines (IEEE 829, Newman, Playwright), and defensive API security engineering. Creator and lead architect of Lumiina (https://lumiina.art), an authentic anime fan art illustration platform.
+
+## Key Architectures & Flagship Projects
+- **Lumiina (Production Platform)**: https://lumiina.art
+  - High-concurrency Go 1.24+ backend with Gin, PostgreSQL 16, Redis 7, Cloudinary, and React 19 client.
+  - Defense-in-depth API security: Constant-time canary tokens, timing-attack mitigation, session epoch revocation, Redis Lua sliding-window rate limiting.
+  - Search intelligence & technical SEO: Dynamic sitemap RFC 8288, IndexNow automation, Wave-1 Bot pre-rendering engine, Schema.org @graph.
+- **Lumiina QA & Automation Suite**: https://github.com/Nyanns/lumiina-qa-automation
+  - Formal test automation suite engineered according to IEEE 829 standards.
+  - Comprehensive automated test execution via Newman CLI, Chai assertions, and Playwright E2E.
+  - Dual-system defect management syncing across Jira Software and GitHub Issues.
+
+## Core Technical Competencies
+- **Backend & Distributed Systems**: Go (Golang 1.21+), Gin-Gonic, GORM, database/sql, PostgreSQL 16 (composite B-Tree, GIN, EXPLAIN ANALYZE), Redis 7 (Singleflight, Lua scripts), Clean Layered Architecture, Concurrency patterns.
+- **QA Automation & SDET**: Playwright E2E, Postman / Newman CLI, Chai assertions, IEEE 829 Test Plans, Equivalence Partitioning, Boundary Value Analysis, Testify mocking.
+- **Defensive Cybersecurity**: HackTheBox (Level 10), OWASP API Top 10 mitigation, token timing-attack resilience, CSP/HSTS defensive headers, HashID/Sqids entity obfuscation.
+- **DevOps & Infra**: Docker multi-stage scratch builds (~19MB), Docker Compose, GitHub Actions CI/CD pipelines, Vercel Edge.
+
+## Links & Socials
+- Website: https://nindhita.xyz
+- GitHub: https://github.com/Nyanns
+- LinkedIn: https://www.linkedin.com/in/satrianindhita/
+- Medium Technical Articles: https://level13.medium.com/
+- HackTheBox: https://app.hackthebox.com/users/3743544
+- LeetCode: https://leetcode.com/u/Nyanns/
+- Email: mailto:sandi.nindhita@gmail.com

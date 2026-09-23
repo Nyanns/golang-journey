@@ -179,9 +179,10 @@ export const Footer = () => {
 
           {/* Deployment Git Commit */}
           <a
-            href="https://github.com/Nyanns/golang-journey/commit/70dfc8c"
+            href={portfolioData.recentCommits[0]?.url || 'https://github.com/Nyanns/golang-journey'}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="View latest deployment commit on GitHub"
             className="group flex items-center gap-1 font-mono text-xs transition-colors hover:text-accent"
             style={{ color: 'var(--ctp-subtext1)' }}
             title="View latest deployment commit"
@@ -200,7 +201,7 @@ export const Footer = () => {
               <path d="M12 3l0 6" />
               <path d="M12 15l0 6" />
             </svg>
-            <span>70dfc8c</span>
+            <span>{portfolioData.recentCommits[0]?.sha || 'main'}</span>
           </a>
 
           <span className="hidden sm:inline" style={{ color: 'var(--ctp-surface1)' }}>

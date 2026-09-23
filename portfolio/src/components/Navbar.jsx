@@ -135,6 +135,7 @@ export const Navbar = () => {
           {/* Quick Theme Toggle */}
           <button
             onClick={toggleTheme}
+            aria-label="Toggle light or dark theme"
             className="ml-2 cursor-pointer rounded px-3 py-1.5 text-xs font-medium transition-all duration-200 hover:border-accent hover:text-accent"
             style={{
               color: 'var(--ctp-subtext0)',
