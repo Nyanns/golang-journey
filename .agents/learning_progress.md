@@ -20,7 +20,8 @@
   - **DNS TXT Verification**: Domain ownership `lumiina.art` terverifikasi 100% via Hostinger DNS TXT record (`google-site-verification=pTTNGD1BqvXXX_80rUXduwGmFSPW5aiRgJBliM8jpvE`).
   - **Sitemap Submission**: Submisi endpoint `https://www.lumiina.art/sitemap.xml` sukses pada GSC Domain Property (`sc-domain:lumiina.art`).
   - **Live URL Inspection & Indexing Request**: Live inspection mengonfirmasi `URL is available to Google` (HTTP 200), crawl allowed, page fetch successful. Telah diajukan permintaan prioritas indexing (`Indexing requested`).
-  - **Robots.txt & Canonical**: Memblokir `/metrics` dan `/swagger/`, serta menetapkan referensi sitemap resmi.
+  - **Robots.txt & Canonical**: Memblokir `/metrics` dan `/swagger/`, mengizinkan public discovery endpoints (`/api/v1/artworks`, `/api/v1/tags/popular`, `/api/v1/users/`) untuk client-side SPA rendering oleh Googlebot/AI bots, meng-allowlist Service Worker PWA (`/registerSW.js`, `/sw.js`), memblokir auth forms dengan exact match (`Disallow: /register$`), serta menetapkan sitemap kanonikal.
+  - **Static Routes Pre-rendering**: Memperluas `bot_prerender.go` untuk menyuntikkan title dan meta description dinamis pada rute statis (`/about`, `/guidelines`, `/terms`, `/privacy`, `/explore`, `/trending`) saat di-crawl search bot dan media sosial preview.
 - **Official Brand Identity & Dual Domain Launch (2026-09-22)**: **SELESAI ✅**
   - **Flagship Product Domain**: `https://lumiina.art` (Primary: `www.lumiina.art`, 308 Apex redirect, Fallback: `https://lumiina-art.vercel.app`).
   - **Personal Tech Portfolio Domain**: `nindhita.xyz` (Secured via Hostinger, parked & ready for personal engineer portfolio).
