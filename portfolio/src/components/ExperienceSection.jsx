@@ -5,43 +5,55 @@ export const ExperienceSection = () => {
   const { experience } = portfolioData;
 
   return (
-    <section id="experience" className="py-12 sm:py-16 border-b border-zinc-200/80 dark:border-zinc-800/60">
-      <div className="space-y-8">
-        
-        {/* Section Heading */}
-        <div className="space-y-1">
-          <h2 className="text-xs font-mono font-semibold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
-            Background
-          </h2>
-          <p className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
-            Experience & Cohorts
-          </p>
-        </div>
+    <section id="experience" className="px-4 py-8 md:px-0">
+      <div className="mb-8">
+        <h2 className="flex items-center gap-3 text-2xl font-semibold md:text-3xl">
+          <svg
+            width="28" height="28" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+            className="text-accent"
+          >
+            <path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z" />
+            <path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" />
+            <path d="M12 12l0 .01" />
+            <path d="M3 13a20 20 0 0 0 18 0" />
+          </svg>
+          <span style={{ color: 'var(--ctp-text)' }}>Experience</span>
+        </h2>
+      </div>
 
-        {/* Timeline Items */}
-        <div className="space-y-8">
-          {experience.map((item) => (
-            <div key={item.organization} className="space-y-1.5">
-              <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100">
+      <div className="space-y-6">
+        {experience.map((item) => (
+          <div
+            key={item.company}
+            className="rounded-xl p-5 transition-colors"
+            style={{
+              border: '1px solid var(--ctp-surface0)',
+              backgroundColor: 'var(--ctp-base)',
+            }}
+          >
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
+              <div>
+                <h3 className="text-base font-semibold" style={{ color: 'var(--ctp-text)' }}>
                   {item.role}
                 </h3>
-                <span className="text-[11px] font-mono text-zinc-400">
-                  {item.period}
-                </span>
+                <p className="text-xs font-medium text-accent">
+                  {item.company}
+                </p>
               </div>
-
-              <p className="text-xs font-mono text-sky-600 dark:text-sky-400">
-                {item.organization}
-              </p>
-
-              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed pt-1">
-                {item.summary}
-              </p>
+              <span className="font-mono text-xs" style={{ color: 'var(--ctp-overlay1)' }}>
+                {item.period}
+              </span>
             </div>
-          ))}
-        </div>
 
+            <p
+              className="mt-3 text-sm leading-relaxed"
+              style={{ color: 'var(--ctp-subtext0)' }}
+            >
+              {item.description}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   );

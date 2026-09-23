@@ -1,28 +1,39 @@
 import React from 'react';
+import { ThemeProvider } from './context/ThemeContext';
+import { BackgroundEffect } from './components/BackgroundEffect';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { WorkSection } from './components/WorkSection';
 import { StackSection } from './components/StackSection';
-import { SignalsWritingSection } from './components/SignalsWritingSection';
+import { DashboardSection } from './components/DashboardSection';
 import { ExperienceSection } from './components/ExperienceSection';
 import { Footer } from './components/Footer';
 
 export const App = () => {
   return (
-    <div className="min-h-screen bg-[#fafbfc] dark:bg-[#080b10] text-zinc-800 dark:text-zinc-200 antialiased selection:bg-sky-500/20 selection:text-sky-700 dark:selection:text-sky-300">
-      {/* Minimal Sticky Header */}
-      <Navbar />
+    <ThemeProvider>
+      <div
+        className="relative min-h-screen font-sans antialiased"
+        style={{ backgroundColor: 'var(--ctp-base)', color: 'var(--ctp-text)' }}
+      >
+        {/* Dynamic Colorful Ambient Background Orbs */}
+        <BackgroundEffect />
 
-      {/* Main Single-Document Reading Flow */}
-      <main className="max-w-2xl mx-auto px-5">
-        <HeroSection />
-        <WorkSection />
-        <StackSection />
-        <SignalsWritingSection />
-        <ExperienceSection />
-        <Footer />
-      </main>
-    </div>
+        <div className="mx-auto flex min-h-screen max-w-[92%] flex-col md:max-w-[82%]">
+          <Navbar />
+          <main className="flex-1 px-0 py-4 md:px-4">
+            <div className="mx-auto max-w-6xl space-y-8 px-0 py-3 md:space-y-10 md:px-4 md:py-4">
+              <HeroSection />
+              <WorkSection />
+              <StackSection />
+              <DashboardSection />
+              <ExperienceSection />
+            </div>
+          </main>
+          <Footer />
+        </div>
+      </div>
+    </ThemeProvider>
   );
 };
 
