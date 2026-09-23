@@ -63,3 +63,12 @@ Each entry uses a 3-part failure signature (Verifier Cause → Causal Status →
 - **Fix Applied**: Added `onError={() => setIsLoaded(true)}` to transition out of the loading placeholder gracefully on broken/blocked image URLs.
 - **Prevention Rule**: Image elements with loading skeletons must always pair `onLoad` with `onError` to guarantee layout stabilization.
 - **Files Affected**: `web/src/components/ArtworkCard.jsx`
+
+### [2026-09-23] [Category: RUNTIME_REFERENCE_ERROR]
+- **Context**: Double-click heart burst pop animation on `ArtworkDetailPage.jsx`.
+- **Error**: `Uncaught ReferenceError: AnimatePresence is not defined at A (ArtworkDetailPage-aaMBFmcM.js:1:29557)`.
+- **Root Cause**: Component utilized `<AnimatePresence>` and `<motion.div>` from Framer Motion in JSX without an explicit import statement at the top of the file. Vite's production JSX transform did not catch undefined JSX component identifiers at compile-time when nested in conditional blocks, causing a fatal render crash at runtime.
+- **Fix Applied**: Added `import { motion, AnimatePresence } from 'framer-motion';` to `ArtworkDetailPage.jsx`.
+- **Prevention Rule**: Always verify that every JSX tag identifier (`<AnimatePresence>`, `<motion.*>`, `<Dialog>`, etc.) has an explicit import declaration in the file. Run `npm run lint` (`oxlint`) before every production build and commit.
+- **Files Affected**: `web/src/pages/ArtworkDetailPage.jsx`
+

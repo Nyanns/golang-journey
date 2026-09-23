@@ -2,20 +2,23 @@
 
 ## Terakhir Diupdate: 2026-09-23
 
-## Status: QA & SDET Engineering Masterclass — Modul 1-4 Selesai 100%, Siap Masuk Modul 5 (API Automation Postman)
-- **Modul 1 (QA Fundamentals & Test Mindset)**: **SELESAI**
-- **Modul 2 (Black Box Test Design Techniques - EP, BVA, Decision Table)**: **SELESAI**
-- **Modul 3 (Dokumentasi QA & Test Case Matrix IEEE 829)**: **SELESAI**
-  - Matriks 13 kasus uji tereksekusi di Google Sheets (Pass Rate: 92.3%, 12 Pass, 1 Fail).
-  - Ditemukan defect riil pada validasi alfanumerik username Go backend (TC_AUTH_001).
-- **Modul 4 (Defect Lifecycle & Bug Tracking - Dual System Jira & GitHub)**: **SELESAI**
-  - Laporan bug formal:
-    - `qa-journey/02-bug-reports/BUG-001-username-underscore-validation.md` (Jira: LUM-5, GitHub: [#26](https://github.com/Nyanns/lumiina/issues/26))
-    - `qa-journey/02-bug-reports/BUG-002-swagger-pwa-routing-interception.md` (Jira: LUM-6, GitHub: [#27](https://github.com/Nyanns/lumiina/issues/27))
-  - Tiket GitHub Issues live: [Nyanns/lumiina#26](https://github.com/Nyanns/lumiina/issues/26), [Nyanns/lumiina#27](https://github.com/Nyanns/lumiina/issues/27).
-  - Tiket Jira Software live: `lumiina.atlassian.net` (Project: LUM, Tickets: LUM-5, LUM-6, Kanban workflow: To Do -> In Progress -> In Review -> Done).
-  - Repositori portofolio mandiri: `Nyanns/lumiina-qa-automation` (Git Submodule).
-  - Gaya dokumentasi: Zero-fluff enterprise standard (tanpa emoji dekoratif).
+## Status: Menyiapkan Web Portofolio Personal (nindhita.xyz) & QA Masterclass Modul 5
+- **Next Milestone**: **Pembuatan Web Portofolio Personal Sandi (`https://nindhita.xyz`)**
+  - Website portofolio profesional untuk Sandi (S1 Informatika, Go Backend Developer, HTB Level 10 Cybersecurity, SDET).
+  - Showcases:
+    - **Lumiina Flagship Platform** (`https://lumiina.art`): Clean Architecture Go, Gin, PostgreSQL, Redis, Cloudinary, Wave-1 Bot Pre-renderer, Defense-in-Depth API Security, React 19 Frontend.
+    - **Cybersecurity & Hardening**: HTB Level 10, constant-time comparisons, token revocation epochs, zero-leakage security posture.
+    - **QA & SDET Engineering**: IEEE 829 test matrices, Jira + GitHub bug lifecycle, API automation suite.
+  - Visual & Architecture: Human-crafted, anti-AI slop, light/dark mode, tactile borders, sub-second LCP.
+- **Enterprise Documentation & Frontend Guide Revamp (2026-09-23)**: **SELESAI ✅**
+  - `web/README.md`: Ditulis ulang menyeluruh (200+ baris) merinci seluruh fitur studio, kuantisasi palet warna, placard eksibisi canvas, navigasi keyboard, arsitektur Context state, dan optimasi Core Web Vitals.
+  - `lumiina/README.md` & `docs/DEPLOYMENT.md`: Sinkronisasi versi React 19 / Vite 8 / TailwindCSS v4, penambahan tabel endpoint SEO & health probes, Vercel Edge anycast configuration, Hostinger DNS records, dan resep curl verifikasi bot pre-render.
+  - `docs/LUMIINA_PROJECT_DOCUMENTATION.md`: Sinkronisasi maskot Lumiina Character Bible v1.0 dan status fitur inovasi.
+  - **Zero-Leakage Security Verification**: Audit menyeluruh mengonfirmasi IP `76.76.21.21` adalah IP Anycast Publik resmi milik Vercel (bukan IP pribadi/VPS), semua kredensial di dokumentasi adalah dummy, dan token verifikasi GSC disamarkan (`...`).
+- **Runtime ReferenceError Hotfix (`ArtworkDetailPage.jsx`) (2026-09-23)**: **SELESAI ✅**
+  - Mengatasi crash `Uncaught ReferenceError: AnimatePresence is not defined` dengan mengimpor `motion, AnimatePresence` dari `framer-motion`. Rebuild bundle produksi Vite dan deploy ke Vercel Edge live.
+- **Modul 1-4 QA & SDET Engineering Masterclass**: **SELESAI 100%**
+  - Modul 1 (Fundamentals), Modul 2 (Black Box Test Design), Modul 3 (Test Case Matrix IEEE 829), Modul 4 (Defect Lifecycle Jira & GitHub).
 - **Lumiina Power-User Suite & Viral Growth Studio Launch (2026-09-23)**: **SELESAI ✅**
   - **Art Showcase Card Studio (`ShareCardModal.jsx`)**: Engine rendering canvas HTML5 untuk kartu kolektor anime beresolusi tinggi (rasio 4:5 standar sosial) dilengkapi artwork, judul, avatar kreator, badge tag, dan watermark resmi `✦ LUMIINA.ART`. Mendukung unduh PNG instan, salin gambar langsung ke clipboard (`ClipboardItem`), dan share tweet intent.
   - **Dominant Color Palette Studio (`PaletteStudio.jsx` & `colorExtractor.js`)**: Ekstraksi palet warna dominan client-side sub-5ms menggunakan kuantisasi warna Euclidean kanvas, menampilkan 6 swatch warna harmonis dengan salin HEX 1-klik dan toast umpan balik taktil.

@@ -1,12 +1,13 @@
 # User Preferences & Roadmap
 The user is following a Go Backend Developer roadmap ("Menuju Mid-Level Go Backend Developer").
-Main project: **Lumiina** — Platform sharing fan art anime (Pixiv-like, redesigned). Mascots: Lumi & Ina.
-GoAntri (Smart Queue Management) is a future personal challenge project to be built independently.
+Main project: **Lumiina** — Platform sharing fan art anime (Pixiv-like, redesigned). Official Mascot: Lumiina (Character Bible v1.0).
+Upcoming Projects:
+- **Personal Tech Portfolio Website** (`https://nindhita.xyz`): Ultra-fast, human-crafted developer portfolio showcasing Go Backend mastery, HTB Level 10 Cybersecurity, QA/SDET automation, and Lumiina flagship architecture.
+- **GoAntri** (Smart Queue Management): Future personal challenge project to be built independently.
 
 ## Learning Progress
 - **ALWAYS read `.agents/learning_progress.md` first** when starting a new conversation to recall what has been learned, what's next, and the user's learning style.
-- Current status: Sesi 12 SEDANG BERJALAN (Lumiina — Backend Hardening A+ Selesai; Menunggu UI/UX Redesign & Polish bersama Sandi)
-- Sesi 7-17: Lumiina (1 sesi = 1 teknologi)
+- Current status: Lumiina Sesi 7-17 SELESAI (Production Live di `lumiina.art`); QA Masterclass Modul 1-4 SELESAI; Menuju pembuatan **Personal Portfolio Website** (`nindhita.xyz`) & QA Modul 5.
 - The user prefers to **write code themselves** with step-by-step guidance, NOT copy-paste from AI.
 
 ## User Background
