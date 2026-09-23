@@ -66,6 +66,7 @@ flowchart LR
 | 14 | `lumiina/` | API Defense-in-Depth (Vectors 1–7) | Metrics lockdown (404/ConstantTime), Release mode, Opaque health probes, Account lockout, Decompression bomb defense, CSP | ✅ |
 | 15 | `lumiina/` | Technical SEO Engine & Wave-1 Pre-renderer | Dynamic XML sitemap, Google Image extensions, Redis edge cache, bot prerender middleware, GSC domain verification (`URL is on Google`) | ✅ |
 | 16 | `lumiina/` | Official Brand & Character Bible v1.0 | Rebrand maskot tunggal Lumiina, sticker engine (`:lumiina_1:` - `:lumiina_9:`), WebP visual pipeline, human-crafted editorial `/about` | ✅ |
+| 17 | `lumiina/` | Viral Studio, Palette & Power Ergonomics | Showcase Card Studio (Canvas 4:5), Dominant Palette Studio (<5ms), Command Palette (`⌘K`), Shortcuts (`?`), Zen Cinema Mode | ✅ |
 
 ### Fase 3: QA & SDET Engineering Masterclass 🛡️ (Live Automation Suite)
 
