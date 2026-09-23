@@ -1,5 +1,5 @@
 import React from 'react';
-import { portfolioData } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 
 const tagColors = {
   go: 'var(--ctp-sapphire)',
@@ -34,7 +34,8 @@ const getTagColor = (tag) => {
 };
 
 export const WorkSection = () => {
-  const { projects } = portfolioData;
+  const { data, t } = useLanguage();
+  const { projects } = data;
 
   return (
     <section id="projects" className="px-4 py-8 md:px-0">
@@ -54,15 +55,15 @@ export const WorkSection = () => {
           >
             <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873l-6.158 -3.245" />
           </svg>
-          <span style={{ color: 'var(--ctp-text)' }}>Featured Projects</span>
+          <span style={{ color: 'var(--ctp-text)' }}>{t('work.featured')}</span>
         </h2>
         <a
-          href={portfolioData.personal.links.github}
+          href={data.personal.links.github}
           target="_blank"
           rel="noopener noreferrer"
           className="group hidden items-center gap-1 font-mono text-sm text-accent transition-colors hover:underline sm:inline-flex"
         >
-          <span>All repositories</span>
+          <span>{t('work.allRepos')}</span>
           <svg
             width="14"
             height="14"
@@ -170,7 +171,7 @@ export const WorkSection = () => {
                           color: 'var(--ctp-base)',
                         }}
                       >
-                        <span>Live Demo</span>
+                        <span>{t('work.liveDemo')}</span>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
                           <path d="M11 13l9 -9" />
@@ -205,6 +206,18 @@ export const WorkSection = () => {
                 <p className="text-xs leading-relaxed md:text-sm" style={{ color: 'var(--ctp-subtext0)' }}>
                   {project.description}
                 </p>
+
+                {/* Architecture Highlights */}
+                {project.highlights && (
+                  <ul className="mt-2 space-y-1.5 border-t pt-2.5 text-xs" style={{ borderColor: 'var(--ctp-surface0)', color: 'var(--ctp-subtext0)' }}>
+                    {project.highlights.map((h, i) => (
+                      <li key={i} className="flex items-start gap-1.5">
+                        <span className="text-accent mt-0.5 font-bold">›</span>
+                        <span className="leading-relaxed">{h}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
 
               {/* Tech Tags with Tag Icon */}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { portfolioData } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 
 const SocialLink = ({ href, icon, label }) => (
   <a
@@ -20,7 +20,8 @@ const Separator = () => (
 
 export const HeroSection = () => {
   const [copied, setCopied] = useState(false);
-  const { personal } = portfolioData;
+  const { data, t } = useLanguage();
+  const { personal } = data;
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personal.email);

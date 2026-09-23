@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { BackgroundEffect } from './components/BackgroundEffect';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
@@ -12,10 +13,11 @@ import { Footer } from './components/Footer';
 export const App = () => {
   return (
     <ThemeProvider>
-      <div
-        className="relative min-h-screen font-sans antialiased"
-        style={{ backgroundColor: 'var(--ctp-base)', color: 'var(--ctp-text)' }}
-      >
+      <LanguageProvider>
+        <div
+          className="relative min-h-screen font-sans antialiased"
+          style={{ backgroundColor: 'var(--ctp-base)', color: 'var(--ctp-text)' }}
+        >
         {/* Dynamic Colorful Ambient Background Orbs */}
         <BackgroundEffect />
 
@@ -33,6 +35,7 @@ export const App = () => {
           <Footer />
         </div>
       </div>
+      </LanguageProvider>
     </ThemeProvider>
   );
 };

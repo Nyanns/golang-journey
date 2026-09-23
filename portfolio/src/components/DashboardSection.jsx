@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { portfolioData } from '../data/portfolioData';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import { MapCardVisual } from './MapCardVisual';
 
 // ─── 1. Theme Card ───
 const ThemeCard = () => {
   const { theme, setTheme, accent, setAccent, bgEffect, setBgEffect, accents, themes } = useTheme();
+  const { lang, toggleLang, t } = useLanguage();
 
   return (
     <div
@@ -33,7 +34,7 @@ const ThemeCard = () => {
             <path d="M11.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
             <path d="M15.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
           </svg>
-          Theme
+          {t('dash.themeTitle')}
         </h3>
 
         {/* 4-way Theme Selector: Latte, Frappe, Macchiato, Mocha */}
@@ -41,12 +42,12 @@ const ThemeCard = () => {
           className="relative mb-3.5 grid gap-1 rounded-md p-1"
           style={{ border: '1px solid var(--ctp-surface0)', gridTemplateColumns: 'repeat(4,1fr)' }}
         >
-          {themes.map((t) => {
-            const isActive = theme === t;
+          {themes.map((tName) => {
+            const isActive = theme === tName;
             return (
               <button
-                key={t}
-                onClick={() => setTheme(t)}
+                key={tName}
+                onClick={() => setTheme(tName)}
                 className={`min-w-0 cursor-pointer overflow-hidden truncate rounded-[5px] py-1.5 text-center text-[10px] font-semibold tracking-tight transition-all duration-200 ${
                   isActive
                     ? 'shadow-sm'
@@ -58,7 +59,7 @@ const ThemeCard = () => {
                   boxShadow: isActive ? `0 0 0 1px var(--ctp-accent)` : 'none',
                 }}
               >
-                {t.charAt(0).toUpperCase() + t.slice(1)}
+                {tName.charAt(0).toUpperCase() + tName.slice(1)}
               </button>
             );
           })}
@@ -90,8 +91,8 @@ const ThemeCard = () => {
         </div>
       </div>
 
-      {/* Background Effect Toggle Checkbox */}
-      <div className="mt-4 pt-2" style={{ borderTop: '1px solid var(--ctp-surface0)' }}>
+      {/* Background Effect & Language Controls */}
+      <div className="mt-4 flex flex-col gap-2 pt-2.5" style={{ borderTop: '1px solid var(--ctp-surface0)' }}>
         <label className="flex cursor-pointer items-center select-none text-xs">
           <input
             type="checkbox"
@@ -101,9 +102,28 @@ const ThemeCard = () => {
             style={{ accentColor: 'var(--ctp-accent)' }}
           />
           <span className="ml-2 text-xs" style={{ color: 'var(--ctp-subtext0)' }}>
-            Background effect: <span className="font-semibold text-accent">{bgEffect ? 'on' : 'off'}</span>
+            {t('dash.bgTitle')}: <span className="font-semibold text-accent">{bgEffect ? t('dash.bgOn') : t('dash.bgOff')}</span>
           </span>
         </label>
+
+        {/* Interactive Language Selector */}
+        <div className="flex items-center justify-between text-xs pt-1">
+          <span style={{ color: 'var(--ctp-subtext0)' }}>{t('dash.langTitle')}:</span>
+          <button
+            onClick={toggleLang}
+            aria-label={t('nav.switchLang')}
+            className="flex items-center gap-1 cursor-pointer rounded px-2 py-0.5 font-mono text-[11px] font-semibold transition-all hover:border-accent"
+            style={{
+              backgroundColor: 'var(--ctp-surface0)',
+              color: 'var(--ctp-text)',
+              border: '1px solid var(--ctp-surface1)',
+            }}
+          >
+            <span className={lang === 'en' ? 'text-accent font-bold' : 'opacity-50'}>EN</span>
+            <span style={{ color: 'var(--ctp-surface2)' }}>/</span>
+            <span className={lang === 'id' ? 'text-accent font-bold' : 'opacity-50'}>ID</span>
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -112,7 +132,8 @@ const ThemeCard = () => {
 // ─── 2. Let's Connect Card ───
 const ConnectCard = () => {
   const [copied, setCopied] = useState(false);
-  const { personal } = portfolioData;
+  const { data, t } = useLanguage();
+  const { personal } = data;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(personal.email);
@@ -147,10 +168,10 @@ const ConnectCard = () => {
             <path d="M4 11l16 0" />
             <path d="M8 15h2v2h-2l0 -2" />
           </svg>
-          Let's Connect
+          {t('dash.connectTitle')}
         </h3>
         <p className="text-xs leading-relaxed" style={{ color: 'var(--ctp-subtext0)' }}>
-          Always open to interesting projects, security discussions, and Go engineering.
+          {t('dash.connectDesc')}
         </p>
       </div>
 
@@ -168,7 +189,7 @@ const ConnectCard = () => {
             <path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z" />
             <path d="M3 7l9 6l9 -6" />
           </svg>
-          Send Email
+          {t('dash.sendEmail')}
         </a>
         <button
           onClick={handleCopy}
@@ -178,9 +199,9 @@ const ConnectCard = () => {
             color: 'var(--ctp-text)',
             backgroundColor: 'var(--ctp-surface0)',
           }}
-          title="Copy email to clipboard"
+          title={t('hero.copyEmail')}
         >
-          {copied ? 'Copied!' : 'Copy'}
+          {copied ? t('dash.copied') : t('dash.copy')}
         </button>
       </div>
     </div>
@@ -191,6 +212,7 @@ const ConnectCard = () => {
 const CurrentlyBasedInCard = () => {
   const [timeStr, setTimeStr] = useState('');
   const [isDay, setIsDay] = useState(true);
+  const { data, t } = useLanguage();
 
   useEffect(() => {
     const updateTime = () => {
@@ -239,7 +261,7 @@ const CurrentlyBasedInCard = () => {
             <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
             <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
           </svg>
-          Currently Based In 📍
+          {t('dash.basedTitle')}
         </h3>
 
         {/* Map Vector Graphic */}
@@ -248,7 +270,7 @@ const CurrentlyBasedInCard = () => {
 
       {/* Location label & Live Local Time */}
       <div className="mt-3 flex items-center justify-between text-xs font-mono">
-        <span style={{ color: 'var(--ctp-subtext0)' }}>{portfolioData.location.label}</span>
+        <span style={{ color: 'var(--ctp-subtext0)' }}>{data.location.label}</span>
         <span className="flex items-center gap-1 font-semibold" style={{ color: 'var(--ctp-subtext1)' }}>
           <span>{isDay ? '☀️' : '🌙'}</span>
           <span className="text-accent">{timeStr || '22:15:00'}</span>
@@ -261,6 +283,7 @@ const CurrentlyBasedInCard = () => {
 // ─── 4. Click Me Counter Card ───
 const ClickCounterCard = () => {
   const BASE_GLOBAL_CLICKS = 832661;
+  const { t } = useLanguage();
   const [userClicks, setUserClicks] = useState(() => {
     if (typeof window !== 'undefined') {
       return parseInt(localStorage.getItem('nindhita_user_clicks') || '0', 10);
@@ -309,10 +332,10 @@ const ClickCounterCard = () => {
           }}
         >
           <p className="mb-1">
-            An interactive counter tracking clicks from everyone visiting this site.
+            {t('dash.counterTooltip')}
           </p>
           <p className="text-[10px]" style={{ color: 'var(--ctp-subtext1)' }}>
-            Client persisted · Built in React 19
+            {t('dash.counterFooter')}
           </p>
         </div>
       </div>
@@ -334,11 +357,11 @@ const ClickCounterCard = () => {
             color: 'var(--ctp-base)',
           }}
         >
-          CLICK ME
+          {t('dash.clickMe')}
         </button>
 
         <p className="mt-4 text-center text-xs" style={{ color: 'var(--ctp-subtext1)' }}>
-          you've clicked {userClicks} {userClicks === 1 ? 'time' : 'times'}
+          {t('dash.clickedTimes').replace('{n}', userClicks).replace('{unit}', userClicks === 1 ? t('dash.unitSingular') : t('dash.unitPlural'))}
         </p>
       </div>
     </div>
@@ -347,7 +370,8 @@ const ClickCounterCard = () => {
 
 // ─── 5. Recent Commits Card (spans 2 columns) ───
 const RecentCommitsCard = () => {
-  const commits = portfolioData.recentCommits;
+  const { data, t } = useLanguage();
+  const commits = data.recentCommits;
 
   return (
     <div
@@ -373,7 +397,7 @@ const RecentCommitsCard = () => {
             >
               <path d="M3 12h4l3 8l4 -16l3 8h4" />
             </svg>
-            Recent Commits
+            {t('dash.commitsTitle')}
           </h3>
           <a
             href="https://github.com/Nyanns?tab=repositories"
@@ -425,7 +449,7 @@ const RecentCommitsCard = () => {
           rel="noopener noreferrer"
           className="group inline-flex items-center gap-1 text-xs font-medium text-accent transition-colors hover:underline"
         >
-          <span>View on GitHub</span>
+          <span>{t('dash.viewGitHub')}</span>
           <svg
             width="13"
             height="13"
@@ -446,19 +470,19 @@ const RecentCommitsCard = () => {
         {/* GitHub Language Breakdown Bar */}
         <div className="flex flex-1 items-center justify-end gap-1.5 sm:max-w-xs" title="GitHub Language Breakdown">
           <div className="flex h-2 w-full max-w-[200px] overflow-hidden rounded-full" style={{ backgroundColor: 'var(--ctp-surface0)' }}>
-            {portfolioData.languages.map((lang) => (
+            {data.languages.map((langItem) => (
               <div
-                key={lang.name}
+                key={langItem.name}
                 style={{
-                  width: `${lang.percentage}%`,
-                  backgroundColor: lang.color,
+                  width: `${langItem.percentage}%`,
+                  backgroundColor: langItem.color,
                 }}
-                title={`${lang.name}: ${lang.percentage}%`}
+                title={`${langItem.name}: ${langItem.percentage}%`}
               />
             ))}
           </div>
           <span className="font-mono text-[10px]" style={{ color: 'var(--ctp-subtext1)' }}>
-            Go 56%
+            Go 58%
           </span>
         </div>
       </div>
@@ -468,7 +492,8 @@ const RecentCommitsCard = () => {
 
 // ─── 6. Latest Posts Card (spans 2 columns) ───
 const LatestPostsCard = () => {
-  const { writing } = portfolioData;
+  const { data, t } = useLanguage();
+  const { writing, signals } = data;
 
   return (
     <div
@@ -498,15 +523,15 @@ const LatestPostsCard = () => {
               <path d="M9 13l6 0" />
               <path d="M9 17l6 0" />
             </svg>
-            Latest Posts
+            {t('dash.postsTitle')}
           </h3>
           <a
-            href={portfolioData.personal.links.medium}
+            href={data.personal.links.medium}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Read all posts on Medium"
+            aria-label={t('dash.readAllMedium')}
             className="text-accent/80 hover:text-accent font-mono text-xs transition-colors"
-            title="Read all posts on Medium"
+            title={t('dash.readAllMedium')}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
@@ -557,9 +582,9 @@ const LatestPostsCard = () => {
         style={{ borderTop: '1px solid var(--ctp-surface0)' }}
       >
         <span className="font-mono text-[11px] font-semibold" style={{ color: 'var(--ctp-subtext1)' }}>
-          Credentials:
+          {t('dash.credentials')}
         </span>
-        {portfolioData.signals.map((sig) => (
+        {signals.map((sig) => (
           <a
             key={sig.name}
             href={sig.url}

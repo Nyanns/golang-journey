@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { portfolioData } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 
 export const Footer = () => {
-  const { personal } = portfolioData;
+  const { data, t } = useLanguage();
+  const { personal, recentCommits } = data;
 
   // Session timer: tracks how long user has been on site
   const [seconds, setSeconds] = useState(0);
@@ -92,7 +93,7 @@ export const Footer = () => {
             color: 'var(--ctp-subtext1)',
           }}
         >
-          <span style={{ color: 'var(--ctp-overlay1)' }}>Network:</span>
+          <span style={{ color: 'var(--ctp-overlay1)' }}>{t('footer.network')}</span>
           <a
             href="https://www.lumiina.art"
             target="_blank"
@@ -122,7 +123,7 @@ export const Footer = () => {
           <span className="hidden sm:inline" style={{ color: 'var(--ctp-surface1)' }}>
             ·
           </span>
-          <div className="flex items-center gap-1.5 whitespace-nowrap" title="Service Status: All systems normal">
+          <div className="flex items-center gap-1.5 whitespace-nowrap" title={t('footer.nominal')}>
             <span className="relative flex h-2.5 w-2.5">
               <span
                 className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"
@@ -134,7 +135,7 @@ export const Footer = () => {
               />
             </span>
             <span className="text-xs font-medium" style={{ color: 'var(--ctp-subtext1)' }}>
-              All Services Nominal
+              {t('footer.nominal')}
             </span>
           </div>
         </div>
@@ -142,7 +143,7 @@ export const Footer = () => {
         {/* Right: Session Timer, Views, Git Commit, Social Icons */}
         <div className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 md:justify-end">
           {/* Session Timer */}
-          <div className="flex items-center gap-1" title="How long you have been surfing my site">
+          <div className="flex items-center gap-1" title={t('footer.timerTooltip')}>
             <svg
               width="13"
               height="13"
@@ -170,7 +171,7 @@ export const Footer = () => {
             style={{ color: 'var(--ctp-subtext1)' }}
             title="Site Impressions"
           >
-            14,892 views
+            14,892 {t('footer.views')}
           </span>
 
           <span className="hidden sm:inline" style={{ color: 'var(--ctp-surface1)' }}>
@@ -179,13 +180,13 @@ export const Footer = () => {
 
           {/* Deployment Git Commit */}
           <a
-            href={portfolioData.recentCommits[0]?.url || 'https://github.com/Nyanns/golang-journey'}
+            href={recentCommits[0]?.url || 'https://github.com/Nyanns/golang-journey'}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="View latest deployment commit on GitHub"
             className="group flex items-center gap-1 font-mono text-xs transition-colors hover:text-accent"
             style={{ color: 'var(--ctp-subtext1)' }}
-            title="View latest deployment commit"
+            title={t('footer.latestCommit')}
           >
             <svg
               width="14"
@@ -201,7 +202,7 @@ export const Footer = () => {
               <path d="M12 3l0 6" />
               <path d="M12 15l0 6" />
             </svg>
-            <span>{portfolioData.recentCommits[0]?.sha || 'main'}</span>
+            <span>{recentCommits[0]?.sha || 'main'}</span>
           </a>
 
           <span className="hidden sm:inline" style={{ color: 'var(--ctp-surface1)' }}>

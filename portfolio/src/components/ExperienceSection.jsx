@@ -1,8 +1,9 @@
 import React from 'react';
-import { portfolioData } from '../data/portfolioData';
+import { useLanguage } from '../context/LanguageContext';
 
 export const ExperienceSection = () => {
-  const { experience } = portfolioData;
+  const { data, t } = useLanguage();
+  const { experience } = data;
 
   return (
     <section id="experience" className="px-4 py-8 md:px-0">
@@ -18,7 +19,7 @@ export const ExperienceSection = () => {
             <path d="M12 12l0 .01" />
             <path d="M3 13a20 20 0 0 0 18 0" />
           </svg>
-          <span style={{ color: 'var(--ctp-text)' }}>Experience</span>
+          <span style={{ color: 'var(--ctp-text)' }}>{t('exp.title')}</span>
         </h2>
       </div>
 

@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { portfolioData } from '../data/portfolioData';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 
 // ── Typewriter hook — dipakai di navbar kiri atas ──
 const useTypewriter = (phrases, typingSpeed = 150, deletingSpeed = 75, pauseMs = 2600) => {
   const [displayed, setDisplayed] = useState('');
-  const [phraseIdx, setPhraseIdx] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
   const stateRef = useRef({ displayed: '', phraseIdx: 0, isDeleting: false });
   const timerRef = useRef(null);
 
   useEffect(() => {
+    stateRef.current = { displayed: '', phraseIdx: 0, isDeleting: false };
+    setDisplayed('');
+
     const tick = () => {
       const { phraseIdx, isDeleting } = stateRef.current;
-      const current = phrases[phraseIdx];
+      const current = phrases[phraseIdx % phrases.length];
       const prev = stateRef.current.displayed;
 
       if (!isDeleting) {
@@ -40,19 +41,20 @@ const useTypewriter = (phrases, typingSpeed = 150, deletingSpeed = 75, pauseMs =
       }
     };
 
-    timerRef.current = setTimeout(tick, 600);
+    timerRef.current = setTimeout(tick, 400);
     return () => clearTimeout(timerRef.current);
-  }, []);
+  }, [phrases]);
 
   return displayed;
 };
 
 export const Navbar = () => {
   const { theme, setTheme } = useTheme();
+  const { lang, toggleLang, t, data } = useLanguage();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // Looping phrases in the top-left terminal prompt
-  const phrases = ['nindhita.xyz', 'backend engineer', 'go developer', 'qa automation', 'cybersecurity'];
+  // Looping phrases in the top-left terminal prompt (localized)
+  const phrases = t('nav.typewriter');
   const typed = useTypewriter(phrases);
 
   const toggleTheme = () => {
@@ -61,10 +63,10 @@ export const Navbar = () => {
   };
 
   const navLinks = [
-    { label: 'Projects', href: '#projects' },
-    { label: 'Stack', href: '#stack' },
-    { label: 'Activity', href: '#activity' },
-    { label: 'Experience', href: '#experience' },
+    { label: t('nav.projects'), href: '#projects' },
+    { label: t('nav.stack'), href: '#stack' },
+    { label: t('nav.activity'), href: '#activity' },
+    { label: t('nav.experience'), href: '#experience' },
   ];
 
   return (
@@ -123,19 +125,19 @@ export const Navbar = () => {
             </a>
           ))}
           <a
-            href={portfolioData.personal.links.resume}
+            href={data.personal.links.resume}
             target="_blank"
             rel="noopener noreferrer"
             className="rounded px-3 py-2 text-sm font-medium transition-colors duration-150 hover:text-accent"
             style={{ color: 'var(--ctp-text)' }}
           >
-            Resume
+            {t('nav.resume')}
           </a>
 
           {/* Quick Theme Toggle */}
           <button
             onClick={toggleTheme}
-            aria-label="Toggle light or dark theme"
+            aria-label={t('nav.toggleTheme')}
             className="ml-2 cursor-pointer rounded px-3 py-1.5 text-xs font-medium transition-all duration-200 hover:border-accent hover:text-accent"
             style={{
               color: 'var(--ctp-subtext0)',
@@ -143,6 +145,22 @@ export const Navbar = () => {
             }}
           >
             {theme === 'latte' ? '☾ Dark' : '☀ Light'}
+          </button>
+
+          {/* Language Toggle: EN / ID */}
+          <button
+            onClick={toggleLang}
+            aria-label={t('nav.switchLang')}
+            title={t('nav.switchLang')}
+            className="ml-1.5 flex items-center gap-1 cursor-pointer rounded px-2.5 py-1.5 text-xs font-mono font-medium transition-all duration-200 hover:border-accent hover:text-accent"
+            style={{
+              color: 'var(--ctp-subtext0)',
+              border: '1px solid var(--ctp-surface0)',
+            }}
+          >
+            <span className={lang === 'en' ? 'font-bold text-accent' : 'opacity-50'}>EN</span>
+            <span style={{ color: 'var(--ctp-surface2)' }}>/</span>
+            <span className={lang === 'id' ? 'font-bold text-accent' : 'opacity-50'}>ID</span>
           </button>
         </nav>
       </header>
@@ -198,13 +216,13 @@ export const Navbar = () => {
                 </li>
                 <li>
                   <a
-                    href={portfolioData.personal.links.resume}
+                    href={data.personal.links.resume}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block rounded p-2 text-sm transition-colors hover:text-accent"
                     style={{ color: 'var(--ctp-text)' }}
                   >
-                    Resume
+                    {t('nav.resume')}
                   </a>
                 </li>
                 <li>
@@ -214,6 +232,18 @@ export const Navbar = () => {
                     style={{ color: 'var(--ctp-text)' }}
                   >
                     Theme: {theme === 'latte' ? '☾ Switch to Dark' : '☀ Switch to Light'}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={toggleLang}
+                    className="flex w-full items-center justify-between cursor-pointer rounded p-2 text-left text-sm transition-colors hover:text-accent"
+                    style={{ color: 'var(--ctp-text)' }}
+                  >
+                    <span>Language / Bahasa:</span>
+                    <span className="font-mono text-xs font-bold text-accent">
+                      {lang === 'en' ? 'English (EN)' : 'Indonesia (ID)'}
+                    </span>
                   </button>
                 </li>
               </ul>
