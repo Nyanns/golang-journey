@@ -1,30 +1,28 @@
 # 📚 Learning Progress - Sandi's Go Backend Journey
 
-## Terakhir Diupdate: 2026-09-23
+## Terakhir Diupdate: 2026-09-24
 
-## Status: Web Portofolio Personal (nindhita.xyz) Siap Deploy & Persiapan QA Masterclass Modul 5
-- **Next Milestone**: **Final Deployment Portofolio Personal Sandi (`https://nindhita.xyz`) & Masuk QA Masterclass Modul 5 (Playwright/Automation)**
-  - Website portofolio personal (`portfolio/`) telah selesai di-redesign penuh terinspirasi gaya minimalis editorial Catppuccin (`jasoncameron.dev`):
-    - **Header & Navbar**: Breadcrumb dinamis (`~ / [cursor]`), navigasi anchor (`Projects`, `Stack`, `Activity`, `Experience`), tautan Resume PDF, dan tombol quick-toggle Light (Latte) / Dark (Mocha).
-    - **Personal Intro**: Menyajikan positioning autentik sebagai Backend Engineer & QA Automation Engineer (SDET) dengan fondasi Cybersecurity (Google Certified & HTB Level 10).
-    - **Featured Projects (2 Proyek Utama)**:
-      - **Lumiina** (Flagship Production Platform): Dilengkapi preview visual aspect-video, tombol langsung **Live Demo** (`lumiina.art`) dan **GitHub** (`Nyanns/lumiina`), serta badge stack teknologi.
-      - **Lumiina QA & Automation Suite** (Test Engineering & CI/CD): Dilengkapi banner visual matriks terminal IEEE 829 (Newman CLI + Chai + Playwright), tombol **GitHub** (`Nyanns/lumiina-qa-automation`), serta badge teknologi testing formal.
-    - **Skills & Technologies (6 Kategori Komprehensif)**:
-      - Backend & Concurrency (Go 1.24+, Gin, Clean Architecture, GORM, Concurrency, Sqids).
-      - QA & Automated Testing (SDET) (Playwright, Cypress, Postman, Newman, IEEE 829, BVA, Testify).
-      - Defensive Security & Cryptography (Canary hashes, Session revocation, Redis Lua rate limiting, OWASP API Top 10, HTB).
-      - Data & Storage Systems (PostgreSQL 16 GIN/B-Tree, Redis 7 Singleflight, EXPLAIN ANALYZE).
-      - Technical SEO & Search Intelligence (Wave-1 Bot Pre-rendering, Dynamic Sitemap RFC 8288, JSON-LD Schema, Core Web Vitals, GEO).
-      - DevOps, Infra & CI/CD (Docker multi-stage ~19MB, GitHub Actions, Vercel Edge).
-    - **Interactive Dashboard (6 Kartu Interaktif)**:
-      - Theme selector (4 Catppuccin flavors: Latte, Frappe, Macchiato, Mocha, 14 palet warna aksen, on/off background mesh ambient).
-      - Let's Connect (1-klik salin email dengan feedback taktil).
-      - Currently Based In (Visual peta Yogyakarta + jam live WIB Asia/Jakarta dengan indikator matahari/bulan).
-      - Global Click Counter (Tombol *CLICK ME* interaktif dengan animasi bounce dan persistence `localStorage`).
-      - Recent Commits (Fetch live GitHub API dari `Nyanns/golang-journey` & `Nyanns/lumiina` dengan diff +/- baris dan rasio bahasa Go 56%).
-      - Latest Posts & Credentials (Artikel Medium & LinkedIn + tautan lencana HackTheBox, LeetCode, Google Cybersecurity, Stanford ML).
-    - **Experience & Footer**: Riwayat karier BKN RI & Bangkit Academy, status layanan nominal, live uptime clock, dan commit sha tracker.
+## Status: Web Portofolio Personal (nindhita.xyz) Production Live & GSC Verified ✅ — Persiapan QA Masterclass Modul 5
+- **Next Milestone**: **QA Masterclass Modul 5: E2E Test Automation dengan Playwright untuk Lumiina Live**
+- **Web Portofolio Personal Sandi (`https://nindhita.xyz`) — LIVE PRODUCTION & GSC VERIFIED (2026-09-24)**: **SELESAI 100% 🚀**
+  - **Live Production URLs**: `https://nindhita.xyz` & `https://www.nindhita.xyz` (Vercel Edge Anycast + Hostinger DNS A-Record & CNAME, SSL/TLS Let's Encrypt aktif).
+  - **Ultra-Fast Performance & CWV Optimization**:
+    - Vite 8 (Rolldown engine) + TailwindCSS v4: Initial JS bundle **86.7 KB gzipped**, CSS **6.8 KB gzipped** (total < 95 KB).
+    - Hero Project Banner WebP preloaded di `<head>` dengan `fetchPriority="high"`, `decoding="async"`, ukuran terkompresi ~100 KB (pangkas 85% dari master PNG).
+    - Edge Security Headers di `vercel.json` (`nosniff`, `DENY`, `X-XSS-Protection`, `Permissions-Policy`, 1-year immutable cache pada hashed assets).
+  - **Bilingual Engine (English Default & Bahasa Indonesia)**:
+    - Context-driven `LanguageContext.jsx` dengan hook `useLanguage()`, sinkronisasi atribut `<html lang="...">`, dan persistensi `localStorage`.
+    - Navigasi switcher `EN / ID` di Navbar (desktop & mobile drawer) dan kartu Dashboard Preferences.
+    - Dataset dual-language lengkap di `portfolioData.js` (`portfolioDataEN` & `portfolioDataID`) mencakup hero, project description, stack detail, experience, dan live stats.
+  - **Editorial Minimalist Redesign (Catppuccin Theme System)**:
+    - 4 Catppuccin flavors (Latte, Frappe, Macchiato, Mocha) dan 14 accent color tokens dengan ambient mesh toggle.
+    - Breadcrumb terminal dinamis (`~ / [cursor]`), interactive clock WIB, live GitHub API stats, and Click counter.
+    - Project cards rapi & bersih tanpa bullet points berlebih.
+  - **Technical SEO, GEO & Google Search Console**:
+    - JSON-LD `@graph` (`Person`, `WebSite`, `SoftwareApplication`), OpenGraph, Twitter Cards (`1200x630px`), dan `robots.txt` + `llms.txt` (llmstxt.org GEO standard).
+    - XML Sitemap dengan Google Image Sitemap extension (`xmlns:image`).
+    - Verifikasi kepemilikan GSC 100% berhasil via DNS TXT record (`google-site-verification=ztf5IMlmtmo5s0DIrwTsjhpuvTrmxweH7yKycgXTU04`) dan meta tag HTML fallback.
+    - Sitemap `https://www.nindhita.xyz/sitemap.xml` sukses disubmit ke Google Search Console.
 - **Enterprise Documentation & Frontend Guide Revamp (2026-09-23)**: **SELESAI ✅**
   - `web/README.md`: Ditulis ulang menyeluruh (200+ baris) merinci seluruh fitur studio, kuantisasi palet warna, placard eksibisi canvas, navigasi keyboard, arsitektur Context state, dan optimasi Core Web Vitals.
   - `lumiina/README.md` & `docs/DEPLOYMENT.md`: Sinkronisasi versi React 19 / Vite 8 / TailwindCSS v4, penambahan tabel endpoint SEO & health probes, Vercel Edge anycast configuration, Hostinger DNS records, dan resep curl verifikasi bot pre-render.
