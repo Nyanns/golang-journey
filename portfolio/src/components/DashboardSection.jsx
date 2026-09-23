@@ -347,61 +347,7 @@ const ClickCounterCard = () => {
 
 // ─── 5. Recent Commits Card (spans 2 columns) ───
 const RecentCommitsCard = () => {
-  const [commits, setCommits] = useState(portfolioData.recentCommits);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    // Attempt live fetch from GitHub API for Nyanns
-    const fetchCommits = async () => {
-      try {
-        setLoading(true);
-        const [resJourney, resLumiina] = await Promise.allSettled([
-          fetch('https://api.github.com/repos/Nyanns/golang-journey/commits?per_page=2'),
-          fetch('https://api.github.com/repos/Nyanns/lumiina/commits?per_page=2'),
-        ]);
-
-        const fetchedCommits = [];
-
-        if (resJourney.status === 'fulfilled' && resJourney.value.ok) {
-          const data = await resJourney.value.json();
-          data.forEach((c) => {
-            fetchedCommits.push({
-              repo: 'golang-journey',
-              message: c.commit.message.split('\n')[0],
-              sha: c.sha.slice(0, 7),
-              url: `https://github.com/Nyanns/golang-journey/commit/${c.sha}`,
-              additions: Math.floor(Math.random() * 80) + 10,
-              deletions: Math.floor(Math.random() * 20) + 2,
-            });
-          });
-        }
-
-        if (resLumiina.status === 'fulfilled' && resLumiina.value.ok) {
-          const data = await resLumiina.value.json();
-          data.forEach((c) => {
-            fetchedCommits.push({
-              repo: 'lumiina',
-              message: c.commit.message.split('\n')[0],
-              sha: c.sha.slice(0, 7),
-              url: `https://github.com/Nyanns/lumiina/commit/${c.sha}`,
-              additions: Math.floor(Math.random() * 60) + 5,
-              deletions: Math.floor(Math.random() * 15) + 1,
-            });
-          });
-        }
-
-        if (fetchedCommits.length > 0) {
-          setCommits(fetchedCommits.slice(0, 4));
-        }
-      } catch (err) {
-        // Fallback already pre-set to portfolioData.recentCommits
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCommits();
-  }, []);
+  const commits = portfolioData.recentCommits;
 
   return (
     <div
