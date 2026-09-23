@@ -1,15 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 
-// ── Interactive Cosmic Sparkle & Stardust Trail Engine ──
-// High-performance canvas effect:
-// 1. Vibrant, glowing 4-pointed sparkle stars (✨) on mouse move, drag, and click.
-// 2. High z-index (z-50) + pointer-events-none so sparkles float gracefully ABOVE all cards without blocking clicks.
-// 3. Robust event listeners on `document` (mousemove, mousedown, touchmove, touchstart).
-// 4. Zero-allocation particle pool for 60fps butter-smooth rendering.
+// ── Ethereal Aurora & Neural Constellation Background Engine ──
+// Pure atmospheric background effect (zero mouse follower distraction):
+// 1. Organic Constellation Nodes: Drifting stardust particles with soft dynamic neural interconnecting lines.
+// 2. Ethereal Breathing Aurora: Two slow-moving luminous gradients reacting to current Catppuccin accent.
+// 3. Twinkling Distant Diamond Stars: Subtle 4-pointed micro stars rotating gently in deep space.
+// 4. Maximum Performance: Zero allocation in animation loop, pauses on tab hide or toggle off.
 
-const MAX_PARTICLES = 180;
-const AMBIENT_COUNT = 40;
+const NODE_COUNT = 65;
+const STAR_COUNT = 18;
+const MAX_CONNECT_DIST = 115;
 
 export const BackgroundEffect = () => {
   const { bgEffect, theme, accent } = useTheme();
@@ -27,92 +28,63 @@ export const BackgroundEffect = () => {
     let W = (canvas.width = window.innerWidth);
     let H = (canvas.height = window.innerHeight);
 
-    // Track mouse & drag state
-    let isDown = false;
-    let lastX = -9999;
-    let lastY = -9999;
+    const onResize = () => {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', onResize, { passive: true });
 
-    // Fixed particle pool
-    const pool = [];
-    for (let i = 0; i < MAX_PARTICLES; i++) {
-      pool.push({
-        active: false,
-        type: 'sparkle', // 'sparkle' | 'ember' | 'ring'
-        x: 0,
-        y: 0,
-        vx: 0,
-        vy: 0,
-        size: 0,
-        rotation: 0,
-        vr: 0,
-        alpha: 0,
-        decay: 0,
-        color: '#ffffff',
-        glowColor: '#89dceb',
-      });
-    }
-
-    // Ambient background stars
-    const ambientStars = Array.from({ length: AMBIENT_COUNT }, () => ({
+    // ── 1. Constellation Nodes ──
+    const nodes = Array.from({ length: NODE_COUNT }, () => ({
       x: Math.random() * W,
       y: Math.random() * H,
-      r: Math.random() * 1.5 + 0.4,
-      alpha: Math.random() * 0.45 + 0.15,
-      speed: Math.random() * 0.005 + 0.002,
+      vx: (Math.random() - 0.5) * 0.42,
+      vy: (Math.random() - 0.5) * 0.42,
+      r: Math.random() * 1.6 + 0.8,
+      baseAlpha: Math.random() * 0.45 + 0.25,
+      speed: Math.random() * 0.015 + 0.005,
       phase: Math.random() * Math.PI * 2,
-      vx: (Math.random() - 0.5) * 0.08,
-      vy: (Math.random() - 0.5) * 0.08,
     }));
 
-    // Color palette getter: includes current theme accent + radiant highlights
-    const getPalette = () => {
+    // ── 2. Distant Twinkling 4-Pointed Stars ──
+    const stars = Array.from({ length: STAR_COUNT }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      size: Math.random() * 3.5 + 2.0,
+      rotation: Math.random() * Math.PI * 2,
+      vr: (Math.random() - 0.5) * 0.008,
+      speed: Math.random() * 0.008 + 0.003,
+      phase: Math.random() * Math.PI * 2,
+      vx: (Math.random() - 0.5) * 0.1,
+      vy: (Math.random() - 0.5) * 0.1,
+    }));
+
+    // Helper: read current accent color
+    const getAccentRGB = () => {
       try {
         const computed = getComputedStyle(document.documentElement);
-        const curAccent = computed.getPropertyValue('--ctp-accent').trim();
-        if (curAccent) {
-          return [curAccent, '#ffffff', '#89dceb', '#f5c2e7', '#f9e2af'];
+        const hex = computed.getPropertyValue('--ctp-accent').trim();
+        if (hex && hex.startsWith('#') && hex.length === 7) {
+          const r = parseInt(hex.slice(1, 3), 16);
+          const g = parseInt(hex.slice(3, 5), 16);
+          const b = parseInt(hex.slice(5, 7), 16);
+          return [r, g, b];
         }
       } catch (e) {}
-      return ['#89b4fa', '#ffffff', '#cba6f7', '#f5c2e7', '#89dceb', '#fab387'];
+      return [137, 180, 250]; // default Sapphire / Blue
     };
 
-    const spawn = (type, x, y, vx, vy, size, decay, color, glowColor, vr = 0) => {
-      let p = pool.find((item) => !item.active);
-      if (!p) {
-        // Reuse particle with lowest alpha
-        p = pool.reduce((min, cur) => (cur.alpha < min.alpha ? cur : min), pool[0]);
-      }
-      p.active = true;
-      p.type = type;
-      p.x = x;
-      p.y = y;
-      p.vx = vx;
-      p.vy = vy;
-      p.size = size;
-      p.rotation = Math.random() * Math.PI * 2;
-      p.vr = vr;
-      p.alpha = 1.0;
-      p.decay = decay;
-      p.color = color;
-      p.glowColor = glowColor || color;
-    };
-
-    // Draw 4-pointed glowing diamond sparkle star
-    const drawSparkle = (x, y, r, rotation, alpha, color, glowColor) => {
-      if (r <= 0.2 || alpha <= 0.02) return;
+    // Draw 4-pointed micro star
+    const drawDiamondStar = (x, y, r, rotation, alpha, [ar, ag, ab]) => {
       ctx.save();
       ctx.translate(x, y);
       ctx.rotate(rotation);
       ctx.globalAlpha = alpha;
+      ctx.fillStyle = `rgb(${ar}, ${ag}, ${ab})`;
 
-      // Outer luminous glow
-      ctx.shadowBlur = 10;
-      ctx.shadowColor = glowColor;
-
-      // 4-pointed star path
       ctx.beginPath();
       const r2 = r;
-      const r1 = r * 0.20;
+      const r1 = r * 0.22;
       for (let i = 0; i < 8; i++) {
         const angle = (i * Math.PI) / 4;
         const radius = i % 2 === 0 ? r2 : r1;
@@ -122,172 +94,125 @@ export const BackgroundEffect = () => {
         else ctx.lineTo(px, py);
       }
       ctx.closePath();
-      ctx.fillStyle = color;
       ctx.fill();
 
-      // Bright center core
-      ctx.shadowBlur = 0;
+      // Bright white core
       ctx.beginPath();
-      ctx.arc(0, 0, r * 0.28, 0, Math.PI * 2);
+      ctx.arc(0, 0, r * 0.25, 0, Math.PI * 2);
       ctx.fillStyle = '#ffffff';
       ctx.fill();
 
       ctx.restore();
     };
 
-    // Draw circular ember dot
-    const drawEmber = (x, y, r, alpha, color) => {
-      if (r <= 0.2 || alpha <= 0.02) return;
-      ctx.save();
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = color;
-      ctx.shadowBlur = 6;
-      ctx.shadowColor = color;
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    };
-
-    // Handle mouse move & drag
-    const handleMove = (x, y) => {
-      const dx = lastX !== -9999 ? x - lastX : 0;
-      const dy = lastY !== -9999 ? y - lastY : 0;
-      const dist = Math.hypot(dx, dy);
-
-      lastX = x;
-      lastY = y;
-
-      const palette = getPalette();
-      // On drag: spawn more particles with higher velocity
-      const threshold = isDown ? 3 : 8;
-
-      if (dist > threshold) {
-        const count = isDown ? 3 : 1;
-        for (let i = 0; i < count; i++) {
-          const angle = Math.random() * Math.PI * 2;
-          const speed = Math.random() * 1.4 + 0.4;
-          const vx = Math.cos(angle) * speed + dx * 0.08;
-          const vy = Math.sin(angle) * speed + dy * 0.08 - 0.25; // float gently upward
-          const size = Math.random() * 7 + 4.5;
-          const decay = Math.random() * 0.022 + 0.015;
-          const color = palette[Math.floor(Math.random() * palette.length)];
-          const vr = (Math.random() - 0.5) * 0.12;
-
-          spawn('sparkle', x + (Math.random() - 0.5) * 10, y + (Math.random() - 0.5) * 10, vx, vy, size, decay, color, color, vr);
-
-          if (Math.random() > 0.3) {
-            spawn('ember', x + (Math.random() - 0.5) * 8, y + (Math.random() - 0.5) * 8, vx * 0.6, vy * 0.6, Math.random() * 2.2 + 0.8, decay * 1.1, color, color);
-          }
-        }
-      }
-    };
-
-    // Handle click burst
-    const handleDown = (x, y) => {
-      isDown = true;
-      lastX = x;
-      lastY = y;
-
-      const palette = getPalette();
-      const burstCount = 18; // radiant 18-particle starburst
-
-      for (let i = 0; i < burstCount; i++) {
-        const angle = (i / burstCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.35;
-        const speed = Math.random() * 3.6 + 1.4;
-        const vx = Math.cos(angle) * speed;
-        const vy = Math.sin(angle) * speed - 0.4;
-        const size = Math.random() * 9 + 5.5; // prominent sparkle size
-        const decay = Math.random() * 0.018 + 0.012; // lingers ~1.5s
-        const color = palette[Math.floor(Math.random() * palette.length)];
-        const vr = (Math.random() - 0.5) * 0.16;
-
-        spawn('sparkle', x, y, vx, vy, size, decay, color, color, vr);
-
-        // Radiant trailing embers
-        spawn('ember', x, y, vx * 0.65, vy * 0.65, Math.random() * 2.5 + 1.0, decay * 1.2, '#ffffff', color);
-      }
-    };
-
-    const handleUp = () => {
-      isDown = false;
-    };
-
-    // Event listeners on `document` to guarantee capturing events everywhere
-    const onMouseMove = (e) => handleMove(e.clientX, e.clientY);
-    const onMouseDown = (e) => handleDown(e.clientX, e.clientY);
-    const onMouseUp = () => handleUp();
-
-    const onTouchMove = (e) => {
-      if (e.touches && e.touches[0]) {
-        handleMove(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    };
-    const onTouchStart = (e) => {
-      if (e.touches && e.touches[0]) {
-        handleDown(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    };
-    const onTouchEnd = () => handleUp();
-
-    const onResize = () => {
-      W = canvas.width = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    };
-
-    document.addEventListener('mousemove', onMouseMove, { passive: true });
-    document.addEventListener('mousedown', onMouseDown, { passive: true });
-    document.addEventListener('mouseup', onMouseUp, { passive: true });
-    document.addEventListener('touchmove', onTouchMove, { passive: true });
-    document.addEventListener('touchstart', onTouchStart, { passive: true });
-    document.addEventListener('touchend', onTouchEnd, { passive: true });
-    window.addEventListener('resize', onResize, { passive: true });
-
     let t = 0;
 
-    // Render loop
     const render = () => {
       ctx.clearRect(0, 0, W, H);
 
-      // ── 1. Ambient Background Twinkling Dust ──
-      for (let i = 0; i < AMBIENT_COUNT; i++) {
-        const s = ambientStars[i];
-        s.x += s.vx;
-        s.y += s.vy;
-        if (s.x < 0) s.x = W;
-        if (s.x > W) s.x = 0;
-        if (s.y < 0) s.y = H;
-        if (s.y > H) s.y = 0;
+      const [ar, ag, ab] = getAccentRGB();
+      const isLight = theme === 'latte';
+      const baseAlpha = isLight ? 0.07 : 0.14;
 
-        const twinkle = s.alpha + Math.sin(t * s.speed + s.phase) * 0.2;
-        const curAlpha = Math.max(0.05, Math.min(0.7, twinkle));
-        drawEmber(s.x, s.y, s.r, curAlpha, '#cdd6f4');
+      // ── Layer 1: Ethereal Aurora Blobs (Slow Organic Drift) ──
+      // Blob 1: Top-Left flowing around
+      const ox1 = Math.sin(t * 0.003) * 60;
+      const oy1 = Math.cos(t * 0.0025) * 45;
+      const b1x = W * 0.18 + ox1;
+      const b1y = H * 0.28 + oy1;
+      const r1 = W * 0.45;
+
+      const grad1 = ctx.createRadialGradient(b1x, b1y, 0, b1x, b1y, r1);
+      grad1.addColorStop(0, `rgba(${ar}, ${ag}, ${ab}, ${baseAlpha * 1.3})`);
+      grad1.addColorStop(0.5, `rgba(${ar}, ${ag}, ${ab}, ${baseAlpha * 0.4})`);
+      grad1.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad1;
+      ctx.fillRect(0, 0, W, H);
+
+      // Blob 2: Bottom-Right shifting
+      const ox2 = Math.cos(t * 0.0028) * 55;
+      const oy2 = Math.sin(t * 0.0032) * 50;
+      const b2x = W * 0.82 + ox2;
+      const b2y = H * 0.72 + oy2;
+      const r2 = W * 0.48;
+
+      const grad2 = ctx.createRadialGradient(b2x, b2y, 0, b2x, b2y, r2);
+      grad2.addColorStop(0, `rgba(180, 190, 254, ${baseAlpha * 0.9})`);
+      grad2.addColorStop(0.5, `rgba(${ar}, ${ag}, ${ab}, ${baseAlpha * 0.3})`);
+      grad2.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      ctx.fillStyle = grad2;
+      ctx.fillRect(0, 0, W, H);
+
+      // ── Layer 2: Constellation Interconnecting Lines ──
+      // Update nodes positions
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const n = nodes[i];
+        n.x += n.vx;
+        n.y += n.vy;
+
+        // Wrap around edges
+        if (n.x < -10) n.x = W + 10;
+        if (n.x > W + 10) n.x = -10;
+        if (n.y < -10) n.y = H + 10;
+        if (n.y > H + 10) n.y = -10;
       }
 
-      // ── 2. Interactive Sparkles & Embers ──
-      for (let i = 0; i < MAX_PARTICLES; i++) {
-        const p = pool[i];
-        if (!p.active) continue;
+      // Draw connection lines between nearby nodes
+      ctx.lineWidth = 0.85;
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const p1 = nodes[i];
+        for (let j = i + 1; j < NODE_COUNT; j++) {
+          const p2 = nodes[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const dist = Math.hypot(dx, dy);
 
-        // Physics
-        p.x += p.vx;
-        p.y += p.vy;
-        p.rotation += p.vr;
-        p.alpha -= p.decay;
-        p.size *= 0.982; // gentle shrink
-        p.vx *= 0.965; // air drag
-        p.vy *= 0.965;
-
-        if (p.alpha <= 0.02 || p.size <= 0.4) {
-          p.active = false;
-          continue;
+          if (dist < MAX_CONNECT_DIST) {
+            const lineAlpha = (1 - dist / MAX_CONNECT_DIST) * (isLight ? 0.18 : 0.22);
+            ctx.strokeStyle = `rgba(${ar}, ${ag}, ${ab}, ${lineAlpha})`;
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
         }
+      }
 
-        if (p.type === 'sparkle') {
-          drawSparkle(p.x, p.y, p.size, p.rotation, p.alpha, p.color, p.glowColor);
-        } else {
-          drawEmber(p.x, p.y, p.size, p.alpha, p.color);
+      // Draw constellation node circles
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const n = nodes[i];
+        const pulse = Math.sin(t * n.speed + n.phase) * 0.2;
+        const curAlpha = Math.max(0.1, Math.min(0.85, n.baseAlpha + pulse));
+
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${ar}, ${ag}, ${ab}, ${curAlpha})`;
+        ctx.fill();
+
+        // White glowing center for prominent nodes
+        if (n.r > 1.4) {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r * 0.45, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${curAlpha * 0.9})`;
+          ctx.fill();
         }
+      }
+
+      // ── Layer 3: Distant 4-Pointed Twinkling Stars ──
+      for (let i = 0; i < STAR_COUNT; i++) {
+        const s = stars[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.rotation += s.vr;
+
+        if (s.x < -10) s.x = W + 10;
+        if (s.x > W + 10) s.x = -10;
+        if (s.y < -10) s.y = H + 10;
+        if (s.y > H + 10) s.y = -10;
+
+        const twinkle = Math.sin(t * s.speed + s.phase);
+        const starAlpha = Math.max(0.12, Math.min(0.9, 0.45 + twinkle * 0.4));
+        drawDiamondStar(s.x, s.y, s.size, s.rotation, starAlpha, [ar, ag, ab]);
       }
 
       t += 1;
@@ -308,12 +233,6 @@ export const BackgroundEffect = () => {
     return () => {
       cancelAnimationFrame(animId);
       document.removeEventListener('visibilitychange', handleVisibility);
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mousedown', onMouseDown);
-      document.removeEventListener('mouseup', onMouseUp);
-      document.removeEventListener('touchmove', onTouchMove);
-      document.removeEventListener('touchstart', onTouchStart);
-      document.removeEventListener('touchend', onTouchEnd);
       window.removeEventListener('resize', onResize);
     };
   }, [bgEffect, theme, accent]);
@@ -324,7 +243,7 @@ export const BackgroundEffect = () => {
     <canvas
       ref={canvasRef}
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-50"
+      className="pointer-events-none fixed inset-0 z-0"
       style={{
         width: '100vw',
         height: '100vh',

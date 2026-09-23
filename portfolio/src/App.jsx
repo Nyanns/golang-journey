@@ -19,7 +19,7 @@ export const App = () => {
         {/* Dynamic Colorful Ambient Background Orbs */}
         <BackgroundEffect />
 
-        <div className="mx-auto flex min-h-screen max-w-[92%] flex-col md:max-w-[82%]">
+        <div className="relative z-10 mx-auto flex min-h-screen max-w-[92%] flex-col md:max-w-[82%]">
           <Navbar />
           <main className="flex-1 px-0 py-4 md:px-4">
             <div className="mx-auto max-w-6xl space-y-8 px-0 py-3 md:space-y-10 md:px-4 md:py-4">
