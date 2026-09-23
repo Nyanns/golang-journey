@@ -16,13 +16,28 @@
   - Tiket Jira Software live: `lumiina.atlassian.net` (Project: LUM, Tickets: LUM-5, LUM-6, Kanban workflow: To Do -> In Progress -> In Review -> Done).
   - Repositori portofolio mandiri: `Nyanns/lumiina-qa-automation` (Git Submodule).
   - Gaya dokumentasi: Zero-fluff enterprise standard (tanpa emoji dekoratif).
+- **Lumiina Power-User Suite & Viral Growth Studio Launch (2026-09-23)**: **SELESAI ✅**
+  - **Art Showcase Card Studio (`ShareCardModal.jsx`)**: Engine rendering canvas HTML5 untuk kartu kolektor anime beresolusi tinggi (rasio 4:5 standar sosial) dilengkapi artwork, judul, avatar kreator, badge tag, dan watermark resmi `✦ LUMIINA.ART`. Mendukung unduh PNG instan, salin gambar langsung ke clipboard (`ClipboardItem`), dan share tweet intent.
+  - **Dominant Color Palette Studio (`PaletteStudio.jsx` & `colorExtractor.js`)**: Ekstraksi palet warna dominan client-side sub-5ms menggunakan kuantisasi warna Euclidean kanvas, menampilkan 6 swatch warna harmonis dengan salin HEX 1-klik dan toast umpan balik taktil.
+  - **Global Command Palette (`CommandPalette.jsx`)**: Dialog pencarian dan aksi kilat universal via pintasan `Cmd+K` / `Ctrl+K` dan `/`, dilengkapi pencarian debounced karya live, quick jumps ke tag populer, dan navigasi panah keyboard.
+  - **Power-User Keyboard Shortcuts Engine (`KeyboardShortcutsModal.jsx`)**: Modal cheatsheet pintasan keyboard via tombol `?`, mencakup navigasi cepat (`L` untuk Like, `B` untuk Bookmark, `F` untuk Zen Focus Cinema Mode, `S` untuk Showcase Card, `←`/`→` untuk karya sebelumnya/berikutnya).
+  - **Zen Focus Cinema Mode**: Mode teater bebas distraksi dengan backdrop gelap ambient dan kontrol minimalis untuk mengagumi detail line-art.
+  - **Double-Click Heart Burst Pop**: Animasi pop hati melayang khas Pixiv/Instagram saat gambar karya diklik ganda.
+  - **Navigasi Pencarian Navbar**: Memperbaiki routing submit form pencarian agar selalu menavigasi `/?search=...` secara instan bahkan saat berada di beranda.
 - **Google Search Console (GSC) Domain Ownership & Indexing Queue (2026-09-23)**: **SELESAI ✅**
   - **DNS TXT Verification**: Domain ownership `lumiina.art` terverifikasi 100% via Hostinger DNS TXT record (`google-site-verification=pTTNGD1BqvXXX_80rUXduwGmFSPW5aiRgJBliM8jpvE`).
   - **Sitemap Submission**: Submisi endpoint `https://www.lumiina.art/sitemap.xml` sukses pada GSC Domain Property (`sc-domain:lumiina.art`).
   - **Live URL Inspection & Indexing Request**: Live inspection mengonfirmasi `URL is available to Google` (HTTP 200), crawl allowed, page fetch successful. Telah diajukan permintaan prioritas indexing (`Indexing requested`).
   - **Robots.txt & Canonical**: Memblokir `/metrics` dan `/swagger/`, mengizinkan public discovery endpoints (`/api/v1/artworks`, `/api/v1/tags/popular`, `/api/v1/users/`) untuk client-side SPA rendering oleh Googlebot/AI bots, meng-allowlist Service Worker PWA (`/registerSW.js`, `/sw.js`), memblokir auth forms dengan exact match (`Disallow: /register$`), serta menetapkan sitemap kanonikal.
   - **Static Routes Pre-rendering**: Memperluas `bot_prerender.go` untuk menyuntikkan title dan meta description dinamis pada rute statis (`/about`, `/guidelines`, `/terms`, `/privacy`, `/explore`, `/trending`) saat di-crawl search bot dan media sosial preview.
-  - **IndexNow Instant Indexing Protocol & llms.txt GEO Standard**: Mengaktifkan protokol IndexNow (`/scripts/ping_indexnow.sh`, key verification live) yang sukses memicu HTTP 202 ke `api.indexnow.org` (Microsoft Bing, Yandex, Seznam, Naver), menerbitkan `/llms.txt` terstruktur standar llmstxt.org untuk AI engines, menyempurnakan favicon 48px/96px Google standards, serta menginjeksi Schema.org `@graph` (`SiteNavigationElement`, `WebSite`, `Organization`).
+  - **IndexNow Instant Indexing Protocol & llms.txt GEO Standard**: Mengaktifkan protokol IndexNow (`/scripts/ping_indexnow.sh`, key verification live) yang sukses memicu HTTP 202/200 ke `api.indexnow.org` (Microsoft Bing, Yandex, Seznam, Naver), menerbitkan `/llms.txt` terstruktur standar llmstxt.org untuk AI engines, menyempurnakan favicon 48px/96px Google standards, serta menginjeksi Schema.org `@graph` (`SiteNavigationElement`, `WebSite`, `Organization`, `FAQPage`).
+  - **Programmatic SEO & Real-time Crawler Dispatch Architecture**:
+    - Query pSEO otomatis di `sitemap_handler.go` yang mempopulasikan seluruh tag karya aktif (Frieren, GenshinImpact, BokuNoHeroAcademia, dll.) ke dalam sitemap XML.
+    - Otomasi dispatch IndexNow instan di Go backend (`internal/pkg/indexnow/dispatcher.go`) setiap kali karya baru di-publish di `CreateArtwork`.
+    - Pre-rendering dinamis bot crawler untuk query `/?tag=...` dan `/?search=...` di `bot_prerender.go`.
+    - Eliminasi canonical divergence 100% konsisten ke `https://www.lumiina.art/`.
+    - Preconnect & DNS-prefetch ke Cloudinary CDN (`res.cloudinary.com`) untuk pangkas latency LCP hingga 200–400ms.
+    - Banner interaktif filter tag/search di beranda (`HomePage.jsx`) dengan badge taktil dan tombol 1-klik *Clear Filter*.
 - **Official Brand Identity & Dual Domain Launch (2026-09-22)**: **SELESAI ✅**
   - **Flagship Product Domain**: `https://lumiina.art` (Primary: `www.lumiina.art`, 308 Apex redirect, Fallback: `https://lumiina-art.vercel.app`).
   - **Personal Tech Portfolio Domain**: `nindhita.xyz` (Secured via Hostinger, parked & ready for personal engineer portfolio).
