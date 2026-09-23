@@ -1,39 +1,105 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth dark">
+<html lang="en" class="scroll-smooth mocha">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Satria Nindhita — Backend Engineer & Cybersecurity</title>
-    
-    <!-- Primary Meta Tags -->
-    <meta name="title" content="Satria Nindhita — Backend Engineer & Cybersecurity" />
-    <meta name="description" content="Personal portfolio of Satria Nindhita. Backend Systems Engineer, Cybersecurity Practitioner (Google Certified, HTB), and QA Automation Engineer." />
+    <title>Satria Nindhita</title>
+
+    <!-- ── Primary SEO ── -->
+    <meta name="title" content="Satria Nindhita — Backend Engineer, QA Automation & Cybersecurity" />
+    <meta name="description" content="Personal portfolio of Satria Nindhita. Go Backend Engineer, SDET (QA Automation), and Cybersecurity Practitioner (Google Certified & HTB Level 10). Creator of Lumiina — a production anime illustration platform." />
     <meta name="author" content="Satria Nindhita" />
-    <meta name="keywords" content="Satria Nindhita, Go, Golang, Backend Engineer, Cybersecurity, Hack The Box, QA Automation, SDET, Lumiina, PostgreSQL, Redis" />
-    
-    <!-- Open Graph / Facebook -->
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords" content="Satria Nindhita, Go Golang Backend Engineer, QA Automation SDET, Cybersecurity HTB, Lumiina, PostgreSQL, Redis, Postman Newman Playwright, IEEE 829, nindhita.xyz" />
+    <link rel="canonical" href="https://nindhita.xyz/" />
+
+    <!-- ── Open Graph ── -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://nindhita.xyz/" />
-    <meta property="og:title" content="Satria Nindhita — Backend Engineer & Cybersecurity" />
-    <meta property="og:description" content="Personal portfolio of Satria Nindhita. High-concurrency Go microservices, defense-in-depth API security, and automated QA engineering." />
+    <meta property="og:title" content="Satria Nindhita — Backend Engineer, QA Automation & Cybersecurity" />
+    <meta property="og:description" content="Go Backend Engineer, SDET, and Cybersecurity Practitioner. Building production-grade microservices and automated testing pipelines." />
     <meta property="og:site_name" content="nindhita.xyz" />
-    
-    <!-- Twitter -->
+    <meta property="og:locale" content="en_US" />
+
+    <!-- ── Twitter Cards ── -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://nindhita.xyz/" />
-    <meta property="twitter:title" content="Satria Nindhita — Backend Engineer & Cybersecurity" />
-    <meta property="twitter:description" content="Personal portfolio of Satria Nindhita. High-concurrency Go microservices, defense-in-depth API security, and automated QA engineering." />
+    <meta property="twitter:title" content="Satria Nindhita — Backend Engineer, QA Automation & Cybersecurity" />
+    <meta property="twitter:description" content="Go Backend Engineer, SDET, and Cybersecurity Practitioner. Building production-grade microservices and automated testing pipelines." />
+    <meta name="twitter:creator" content="@satrianindhita" />
 
-    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <!-- ── JSON-LD Structured Data ── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Person",
+          "@id": "https://nindhita.xyz/#person",
+          "name": "Satria Nindhita",
+          "url": "https://nindhita.xyz",
+          "jobTitle": "Backend Engineer & QA Automation Engineer (SDET)",
+          "description": "Go Backend Engineer, SDET, and Cybersecurity Practitioner based in Yogyakarta, Indonesia.",
+          "sameAs": [
+            "https://github.com/Nyanns",
+            "https://www.linkedin.com/in/satrianindhita/",
+            "https://level13.medium.com/",
+            "https://app.hackthebox.com/users/3743544"
+          ],
+          "knowsAbout": ["Go", "Golang", "Backend Engineering", "QA Automation", "SDET", "Cybersecurity", "PostgreSQL", "Redis", "Docker", "Playwright", "Postman"]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://nindhita.xyz/#website",
+          "url": "https://nindhita.xyz",
+          "name": "Satria Nindhita — Portfolio",
+          "publisher": { "@id": "https://nindhita.xyz/#person" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "name": "Lumiina",
+          "url": "https://www.lumiina.art",
+          "applicationCategory": "Multimedia",
+          "description": "Production anime illustration sharing platform built with Go, Gin, PostgreSQL, Redis, and React 19.",
+          "author": { "@id": "https://nindhita.xyz/#person" }
+        }
+      ]
+    }
+    </script>
+
+    <!-- ── Theme init: prevent FOUC ── -->
+    <script>
+      (() => {
+        try {
+          const stored = localStorage.getItem('nindhita_theme');
+          const theme = stored || 'mocha';
+          document.documentElement.classList.remove('mocha', 'macchiato', 'frappe', 'latte');
+          document.documentElement.classList.add(theme);
+          const storedAccent = localStorage.getItem('nindhita_accent') || 'peach';
+          document.documentElement.style.setProperty('--ctp-accent', `var(--ctp-${storedAccent})`);
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- ── Google Fonts: swap prevents render-blocking ── -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- ── Official Lumiina Brand Favicons ── -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=lumiina2" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=lumiina2" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=lumiina2" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=lumiina2" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=lumiina2" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=lumiina2" />
+
+    <!-- ── Preload critical project images for LCP ── -->
+    <link rel="preload" as="image" href="/projects/lumiina-ui.webp" type="image/webp" />
   </head>
-  <body class="bg-[#fafbfc] dark:bg-[#080b10] text-slate-800 dark:text-slate-200 font-sans antialiased selection:bg-sky-500/20 selection:text-sky-700 dark:selection:text-sky-300">
+  <body class="font-sans antialiased">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
+

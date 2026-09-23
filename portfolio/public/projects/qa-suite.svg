@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#181825" />
+      <stop offset="50%" stop-color="#1e1e2e" />
+      <stop offset="100%" stop-color="#11111b" />
+    </linearGradient>
+    <linearGradient id="glow-teal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a6e3a1" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#94e2d5" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bg-grad)" />
+  <circle cx="950" cy="200" r="350" fill="url(#glow-teal)" />
+
+  <!-- Terminal Window -->
+  <rect x="80" y="60" width="1040" height="555" rx="16" fill="#11111b" stroke="#313244" stroke-width="2" />
+  
+  <!-- Terminal Header -->
+  <path d="M 80 76 A 16 16 0 0 1 96 60 L 1104 60 A 16 16 0 0 1 1120 76 L 1120 115 L 80 115 Z" fill="#181825" />
+  <line x1="80" y1="115" x2="1120" y2="115" stroke="#313244" stroke-width="1.5" />
+  
+  <!-- Window Controls -->
+  <circle cx="115" cy="88" r="7" fill="#f38ba8" />
+  <circle cx="138" cy="88" r="7" fill="#f9e2af" />
+  <circle cx="161" cy="88" r="7" fill="#a6e3a1" />
+
+  <!-- Title Tab -->
+  <text x="600" y="93" fill="#a6adc8" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="600" text-anchor="middle">
+    newman run lumiina_v1_regression.json --reporters cli,junit
+  </text>
+
+  <!-- Terminal Output Lines -->
+  <!-- Suite Banner -->
+  <text x="120" y="160" fill="#fab387" font-family="'JetBrains Mono', monospace" font-size="16" font-weight="700">
+    → LUMIINA PRODUCTION TEST AUTOMATION SUITE (IEEE 829 FORMAT)
+  </text>
+  <text x="120" y="185" fill="#6c7086" font-family="'JetBrains Mono', monospace" font-size="13">
+    Target: https://api.lumiina.art/v1 · Runner: Newman CLI v6.2.0 · Assertion Library: Chai JS
+  </text>
+
+  <!-- Test Matrix Rows -->
+  <g transform="translate(120, 220)">
+    <!-- Case 1 -->
+    <rect x="0" y="0" width="960" height="42" rx="6" fill="#1e1e2e" stroke="#313244" stroke-width="1" />
+    <text x="20" y="26" fill="#a6e3a1" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700">✓ PASS</text>
+    <text x="100" y="26" fill="#cdd6f4" font-family="'JetBrains Mono', monospace" font-size="13">[TC-AUTH-01] Equivalence Partitioning: Register Valid Creator Profile with Bcrypt Timing Resilience</text>
+    <text x="880" y="26" fill="#89dceb" font-family="'JetBrains Mono', monospace" font-size="13" text-anchor="end">42ms</text>
+
+    <!-- Case 2 -->
+    <rect x="0" y="52" width="960" height="42" rx="6" fill="#1e1e2e" stroke="#313244" stroke-width="1" />
+    <text x="20" y="78" fill="#a6e3a1" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700">✓ PASS</text>
+    <text x="100" y="78" fill="#cdd6f4" font-family="'JetBrains Mono', monospace" font-size="13">[TC-AUTH-04] Security Gate: Constant-Time Canary Hash Prevents Username Enumeration</text>
+    <text x="880" y="78" fill="#89dceb" font-family="'JetBrains Mono', monospace" font-size="13" text-anchor="end">128ms</text>
+
+    <!-- Case 3 -->
+    <rect x="0" y="104" width="960" height="42" rx="6" fill="#1e1e2e" stroke="#313244" stroke-width="1" />
+    <text x="20" y="130" fill="#a6e3a1" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700">✓ PASS</text>
+    <text x="100" y="130" fill="#cdd6f4" font-family="'JetBrains Mono', monospace" font-size="13">[TC-POST-02] Boundary Value Analysis: Art Payload UTF-8 Max Constraints &amp; WebP Downsampling</text>
+    <text x="880" y="130" fill="#89dceb" font-family="'JetBrains Mono', monospace" font-size="13" text-anchor="end">64ms</text>
+
+    <!-- Case 4 -->
+    <rect x="0" y="156" width="960" height="42" rx="6" fill="#1e1e2e" stroke="#313244" stroke-width="1" />
+    <text x="20" y="182" fill="#a6e3a1" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700">✓ PASS</text>
+    <text x="100" y="182" fill="#cdd6f4" font-family="'JetBrains Mono', monospace" font-size="13">[TC-RATE-01] Distributed Resilience: Redis Lua Sliding Window 30 req/min Rate Limiter Lockdown</text>
+    <text x="880" y="182" fill="#89dceb" font-family="'JetBrains Mono', monospace" font-size="13" text-anchor="end">18ms</text>
+
+    <!-- Case 5 -->
+    <rect x="0" y="208" width="960" height="42" rx="6" fill="#1e1e2e" stroke="#313244" stroke-width="1" />
+    <text x="20" y="234" fill="#a6e3a1" font-family="'JetBrains Mono', monospace" font-size="14" font-weight="700">✓ PASS</text>
+    <text x="100" y="234" fill="#cdd6f4" font-family="'JetBrains Mono', monospace" font-size="13">[TC-DEFT-05] Defect Triage: Dual Track Jira (LUM-5) &amp; GitHub (#26) Regression Verification</text>
+    <text x="880" y="234" fill="#89dceb" font-family="'JetBrains Mono', monospace" font-size="13" text-anchor="end">31ms</text>
+  </g>
+
+  <!-- Summary Footer -->
+  <g transform="translate(120, 505)">
+    <text x="0" y="20" fill="#a6adc8" font-family="'JetBrains Mono', monospace" font-size="13">
+      Total Iterations: <tspan fill="#cdd6f4" font-weight="700">1</tspan> · Executed Assertions: <tspan fill="#cdd6f4" font-weight="700">39</tspan> · Total Requests: <tspan fill="#cdd6f4" font-weight="700">13</tspan> · Status: <tspan fill="#a6e3a1" font-weight="700">92.3% PASS</tspan>
+    </text>
+    <text x="960" y="20" fill="#fab387" font-family="'JetBrains Mono', monospace" font-size="13" font-weight="600" text-anchor="end">
+      CI Pipeline: GitHub Actions #104
+    </text>
+  </g>
+</svg>

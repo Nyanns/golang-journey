@@ -1,85 +1,225 @@
-import React, { useState, useEffect } from 'react';
-import { Sun, Moon, ArrowUpRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
 import { portfolioData } from '../data/portfolioData';
+import { useTheme } from '../context/ThemeContext';
 
-export const Navbar = () => {
-  const [isDark, setIsDark] = useState(true);
+// ── Typewriter hook — dipakai di navbar kiri atas ──
+const useTypewriter = (phrases, typingSpeed = 150, deletingSpeed = 75, pauseMs = 2600) => {
+  const [displayed, setDisplayed] = useState('');
+  const [phraseIdx, setPhraseIdx] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const stateRef = useRef({ displayed: '', phraseIdx: 0, isDeleting: false });
+  const timerRef = useRef(null);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('nindhita_theme');
-    if (savedTheme === 'light') {
-      setIsDark(false);
-      document.documentElement.classList.remove('dark');
-    } else {
-      setIsDark(true);
-      document.documentElement.classList.add('dark');
-    }
+    const tick = () => {
+      const { phraseIdx, isDeleting } = stateRef.current;
+      const current = phrases[phraseIdx];
+      const prev = stateRef.current.displayed;
+
+      if (!isDeleting) {
+        const next = current.slice(0, prev.length + 1);
+        stateRef.current.displayed = next;
+        setDisplayed(next);
+        if (next === current) {
+          stateRef.current.isDeleting = true;
+          timerRef.current = setTimeout(tick, pauseMs);
+        } else {
+          timerRef.current = setTimeout(tick, typingSpeed + Math.random() * 40);
+        }
+      } else {
+        const next = prev.slice(0, -1);
+        stateRef.current.displayed = next;
+        setDisplayed(next);
+        if (next === '') {
+          stateRef.current.isDeleting = false;
+          stateRef.current.phraseIdx = (phraseIdx + 1) % phrases.length;
+          timerRef.current = setTimeout(tick, 400);
+        } else {
+          timerRef.current = setTimeout(tick, deletingSpeed);
+        }
+      }
+    };
+
+    timerRef.current = setTimeout(tick, 600);
+    return () => clearTimeout(timerRef.current);
   }, []);
 
+  return displayed;
+};
+
+export const Navbar = () => {
+  const { theme, setTheme } = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Looping phrases in the top-left terminal prompt
+  const phrases = ['nindhita.xyz', 'backend engineer', 'go developer', 'qa automation', 'cybersecurity'];
+  const typed = useTypewriter(phrases);
+
   const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('nindhita_theme', 'light');
-      setIsDark(false);
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('nindhita_theme', 'dark');
-      setIsDark(true);
-    }
+    const next = theme === 'latte' ? 'mocha' : 'latte';
+    setTheme(next);
   };
 
+  const navLinks = [
+    { label: 'Projects', href: '#projects' },
+    { label: 'Stack', href: '#stack' },
+    { label: 'Activity', href: '#activity' },
+    { label: 'Experience', href: '#experience' },
+  ];
+
   return (
-    <header className="sticky top-0 z-50 bg-[#fafbfc]/90 dark:bg-[#080b10]/90 backdrop-blur-md border-b border-zinc-200/80 dark:border-zinc-800/60 transition-colors">
-      <div className="max-w-2xl mx-auto px-5 h-14 flex items-center justify-between">
-        
-        {/* Brand */}
+    <>
+      <header
+        className="sticky top-0 z-30 flex h-16 items-center justify-between px-4 select-none backdrop-blur-md md:h-20 md:px-4"
+        style={{
+          backgroundColor: 'color-mix(in srgb, var(--ctp-base) 88%, transparent)',
+          borderBottom: '1px solid var(--ctp-surface0)',
+        }}
+      >
+        {/* ── Kiri atas: terminal typing prompt ── */}
         <a
           href="#"
-          className="font-mono text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-100 hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
+          className="flex items-center gap-1 font-mono text-sm font-medium"
+          style={{ color: 'var(--ctp-subtext1)', textDecoration: 'none', minWidth: '180px' }}
+          aria-label="Home"
         >
-          {portfolioData.personal.brand}
+          <span style={{ color: 'var(--ctp-green)' }}>~/</span>
+          <span style={{ color: 'var(--ctp-accent)' }} className="font-semibold">
+            {typed}
+          </span>
+          <span
+            className="animate-cursor-blink inline-block"
+            style={{ color: 'var(--ctp-accent)', marginLeft: '1px' }}
+            aria-hidden="true"
+          >
+            ▋
+          </span>
         </a>
 
-        {/* Navigation & Actions */}
-        <nav className="flex items-center gap-5">
-          <a
-            href="#projects"
-            className="text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-          >
-            Work
-          </a>
-          <a
-            href="#stack"
-            className="text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-          >
-            Stack
-          </a>
-          <a
-            href="#writing"
-            className="text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
-          >
-            Writing
-          </a>
+        {/* Mobile hamburger */}
+        <button
+          className="rounded p-2 transition-colors md:hidden"
+          style={{ color: 'var(--ctp-text)' }}
+          aria-label="Open navigation menu"
+          onClick={() => setMobileOpen(true)}
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 6l16 0" />
+            <path d="M4 12l16 0" />
+            <path d="M4 18l16 0" />
+          </svg>
+        </button>
+
+        {/* Desktop nav */}
+        <nav className="hidden items-center space-x-1 md:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="rounded px-3 py-2 text-sm font-medium transition-colors duration-150 hover:text-accent"
+              style={{ color: 'var(--ctp-text)' }}
+            >
+              {link.label}
+            </a>
+          ))}
           <a
             href={portfolioData.personal.links.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-0.5 text-xs font-mono font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors"
+            className="rounded px-3 py-2 text-sm font-medium transition-colors duration-150 hover:text-accent"
+            style={{ color: 'var(--ctp-text)' }}
           >
-            <span>Resume</span>
-            <ArrowUpRight className="w-3 h-3 opacity-60" />
+            Resume
           </a>
 
+          {/* Quick Theme Toggle */}
           <button
             onClick={toggleTheme}
-            aria-label="Toggle theme"
-            className="p-1.5 rounded-md text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors cursor-pointer"
+            className="ml-2 cursor-pointer rounded px-3 py-1.5 text-xs font-medium transition-all duration-200 hover:border-accent hover:text-accent"
+            style={{
+              color: 'var(--ctp-subtext0)',
+              border: '1px solid var(--ctp-surface0)',
+            }}
           >
-            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-zinc-600" />}
+            {theme === 'latte' ? '☾ Dark' : '☀ Light'}
           </button>
         </nav>
+      </header>
 
-      </div>
-    </header>
+      {/* Mobile sidebar overlay */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-40" onClick={() => setMobileOpen(false)}>
+          <div className="absolute inset-0 bg-black/40" />
+          <aside
+            className="absolute inset-y-0 right-0 flex w-64 flex-col shadow-xl"
+            style={{
+              backgroundColor: 'var(--ctp-mantle)',
+              borderLeft: '1px solid var(--ctp-surface0)',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div
+              className="flex h-16 items-center justify-between border-b p-4"
+              style={{ borderColor: 'var(--ctp-surface0)' }}
+            >
+              <span className="font-mono text-sm font-semibold text-accent">
+                ~/&nbsp;nindhita.xyz
+              </span>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="rounded hover:text-accent"
+                style={{ color: 'var(--ctp-subtext1)' }}
+                aria-label="Close navigation menu"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6l-12 12" />
+                  <path d="M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto p-4">
+              <ul className="space-y-2">
+                {navLinks.map((link) => (
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      onClick={() => setMobileOpen(false)}
+                      className="block rounded p-2 text-sm transition-colors duration-150 hover:text-accent"
+                      style={{ color: 'var(--ctp-text)' }}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+                <li>
+                  <hr style={{ borderColor: 'var(--ctp-surface1)' }} className="my-2" />
+                </li>
+                <li>
+                  <a
+                    href={portfolioData.personal.links.resume}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block rounded p-2 text-sm transition-colors hover:text-accent"
+                    style={{ color: 'var(--ctp-text)' }}
+                  >
+                    Resume
+                  </a>
+                </li>
+                <li>
+                  <button
+                    onClick={toggleTheme}
+                    className="w-full cursor-pointer rounded p-2 text-left text-sm transition-colors hover:text-accent"
+                    style={{ color: 'var(--ctp-text)' }}
+                  >
+                    Theme: {theme === 'latte' ? '☾ Switch to Dark' : '☀ Switch to Light'}
+                  </button>
+                </li>
+              </ul>
+            </nav>
+          </aside>
+        </div>
+      )}
+    </>
   );
 };
