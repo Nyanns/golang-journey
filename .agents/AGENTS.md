@@ -2,12 +2,12 @@
 The user is following a Go Backend Developer roadmap ("Menuju Mid-Level Go Backend Developer").
 Main project: **Lumiina** — Platform sharing fan art anime (Pixiv-like, redesigned). Official Mascot: Lumiina (Character Bible v1.0).
 Upcoming Projects:
-- **Personal Tech Portfolio Website** (`https://nindhita.xyz`): Ultra-fast, human-crafted developer portfolio showcasing Go Backend mastery, HTB Level 10 Cybersecurity, QA/SDET automation, and Lumiina flagship architecture.
+- **Personal Tech Portfolio Website** (`https://nindhita.xyz` & `https://www.nindhita.xyz`): **SELESAI & LIVE PRODUCTION** ✅. Ultra-fast, human-crafted developer portfolio showcasing Go Backend mastery, HTB Level 10 Cybersecurity, QA/SDET automation, and Lumiina flagship architecture. Bilingual (EN/ID), Catppuccin theme, GSC verified.
 - **GoAntri** (Smart Queue Management): Future personal challenge project to be built independently.
 
 ## Learning Progress
 - **ALWAYS read `.agents/learning_progress.md` first** when starting a new conversation to recall what has been learned, what's next, and the user's learning style.
-- Current status: Lumiina Sesi 7-17 SELESAI (Production Live di `lumiina.art`); QA Masterclass Modul 1-4 SELESAI; Menuju pembuatan **Personal Portfolio Website** (`nindhita.xyz`) & QA Modul 5.
+- Current status: Lumiina Sesi 7-17 SELESAI (Production Live di `lumiina.art`); Personal Portfolio Website SELESAI (Production Live di `nindhita.xyz` & GSC verified); QA Masterclass Modul 1-4 SELESAI; Menuju **QA Masterclass Modul 5 (Playwright E2E Automation untuk Lumiina Live)**.
 - The user prefers to **write code themselves** with step-by-step guidance, NOT copy-paste from AI.
 
 ## User Background
@@ -43,6 +43,8 @@ Upcoming Projects:
 - `sre-observability-resilience`: RED method, OpenTelemetry tracing, `slog` correlation IDs, `/livez` & `/readyz` probes.
 - `anti-slop`: Anti-AI slop standards for backend code, UI, and domain data.
 - `frontend-design`: Modern UI/UX system (light mode, Pixiv blue accents, Framer Motion).
+- `seo-ai-search-optimization`: Technical SEO, XML Image Sitemaps, Wave-1 bot pre-rendering, GEO standards (`llms.txt`), Favicon crawler lifecycle, GSC dual-verification.
+- `portfolio-showcase-architecture`: Developer portfolio engineering, Vite 8/Tailwind v4 performance, Catppuccin design tokens, bilingual context engine, Hostinger/Vercel DNS, anti-slop developer proof-of-work.
 
 ## Additional Topics (Wajib Dipelajari)
 - Swagger/OpenAPI docs (swaggo/swag) — dokumentasi API profesional

@@ -72,3 +72,11 @@ Each entry uses a 3-part failure signature (Verifier Cause → Causal Status →
 - **Prevention Rule**: Always verify that every JSX tag identifier (`<AnimatePresence>`, `<motion.*>`, `<Dialog>`, etc.) has an explicit import declaration in the file. Run `npm run lint` (`oxlint`) before every production build and commit.
 - **Files Affected**: `web/src/pages/ArtworkDetailPage.jsx`
 
+### [2026-09-24] [Category: INFRA_DNS_PROPAGATION]
+- **Context**: Verifying custom domain ownership in Google Search Console immediately after adding DNS TXT record in registrar/DNS provider (Hostinger).
+- **Error**: GSC returned "Ownership verification failed: We couldn't find your verification token in your domain's TXT records."
+- **Root Cause**: DNS negative-caching and resolver propagation latency. Even though authoritative nameservers update quickly, recursive resolvers (Google `8.8.8.8`, Cloudflare `1.1.1.1`) cache negative responses for several minutes depending on SOA minimum TTL.
+- **Fix Applied**: Verified propagation status using `dig +short TXT <domain> @8.8.8.8` until the record answered, and injected `<meta name="google-site-verification" content="..." />` into `index.html` as an instant edge-cached fallback.
+- **Prevention Rule**: When onboarding custom domains to Google Search Console, always implement a dual-verification strategy: DNS TXT (broadest domain property coverage) combined with HTML `<meta>` tag (instant edge deployment fallback). Always run `dig @8.8.8.8` before triggering verification in the GSC UI to avoid verification cooldowns.
+- **Files Affected**: `portfolio/index.html`
+

@@ -57,9 +57,15 @@ Aplikasi SPA (Vite/React/Vue) hanya mengirim shell HTML kosong (`<div id="root">
 3. **Domain Property vs URL-Prefix**:
    - **Domain Property (`sc-domain:example.com`)**: Mengontrol seluruh protokol (`http`, `https`, `www`, non-`www`, dan semua subdomain). Wajib submit sitemap dengan **Full URL Lengkap** (misal `https://www.lumiina.art/sitemap.xml`).
    - **URL-Prefix Property**: Hanya mengontrol satu awalan spesifik. Submit sitemap menggunakan path relatif (misal `sitemap.xml`).
-4. **Siklus Antrean GSC ("Couldn't fetch" Myth)**:
-   - Status *"Couldn't fetch"* dengan *Type: Unknown* dan *Last Read: strip (-)* tepat setelah submit sitemap adalah status antrean default (belum diproses worker Google).
-   - Validasi menggunakan fitur **URL Inspection** -> **Test Live URL**. Jika mengembalikan `HTTP 200 (URL is available to Google)`, maka sitemap 100% sehat dan akan berubah menjadi *Success* otomatis.
+4. **Dual-Verification Pattern (Anti-TTL Delay)**:
+   - Terapkan verifikasi ganda: Record **DNS TXT** (level domain menyeluruh) + tag HTML `<meta name="google-site-verification" content="..." />` di `<head>` (level edge deployment instan).
+   - Validasi propagasi DNS resolver publik via `dig +short TXT <domain> @8.8.8.8` sebelum menekan tombol verifikasi di UI GSC.
+5. **Siklus Antrean GSC & Favicon/Logo Indexing**:
+   - Status *"Couldn't fetch"* dengan *Type: Unknown* tepat setelah submit sitemap adalah status antrean default (belum diproses worker Google).
+   - **Favicon & Logo Pipeline**: Bot pencari icon (`Google Favicon / Googlebot-Image`) beroperasi asinkron terpisah dari bot teks.
+     - Spesifikasi Google: Icon wajib persegi dengan dimensi kelipatan 48px (`48x48`, `96x96`, `192x192`), format `.png` / `.ico` / `.svg`, dan tidak diblokir `robots.txt`.
+     - Timeline: Logo di GSC dan snippet hasil pencarian Google membutuhkan waktu **24–72 jam** sejak domain terverifikasi pertama kali (*"Processing data, please check again in a day or so"*).
+     - **Akselerasi Pengindeksan**: Gunakan fitur **URL Inspection** -> masukkan URL root (`https://domain.com/`) -> klik **"Request Indexing"** untuk memicu crawl prioritas.
 
 ---
 
