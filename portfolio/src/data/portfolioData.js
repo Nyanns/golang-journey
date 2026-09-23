@@ -7,7 +7,7 @@ export const portfolioData = {
       "Backend Engineer & QA Automation Engineer (SDET) with a solid Cybersecurity foundation. I specialize in architecting high-concurrency Go microservices, engineering rigorous automated testing pipelines (IEEE 829, Newman, Playwright), and integrating defense-in-depth security at every architectural layer.",
     status:
       "Currently shipping Lumiina (anime illustration platform) live in production at lumiina.art, and continuously deepening Go concurrency & distributed systems patterns.",
-    email: "satrianindhita6@gmail.com",
+    email: "sandi.nindhita@gmail.com",
     links: {
       github: "https://github.com/Nyanns",
       linkedin: "https://www.linkedin.com/in/satrianindhita/",
@@ -15,6 +15,7 @@ export const portfolioData = {
       leetcode: "https://leetcode.com/u/Nyanns/",
       hackthebox: "https://app.hackthebox.com/users/3743544",
       resume: "/Satria_Nindhita_Resume.pdf",
+      email: "mailto:sandi.nindhita@gmail.com",
     },
   },
 
