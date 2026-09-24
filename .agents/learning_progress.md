@@ -7,11 +7,11 @@
 - **Web Portofolio Personal Sandi (`https://nindhita.xyz`) — LIVE PRODUCTION & GSC VERIFIED (2026-09-24)**: **SELESAI 100% 🚀**
   - **Live Production URLs**: `https://nindhita.xyz` & `https://www.nindhita.xyz` (Vercel Edge Anycast + Hostinger DNS A-Record & CNAME, SSL/TLS Let's Encrypt aktif).
   - **ATS CV & Instant Download Pipeline (2026-09-24)**: **LIVE PRODUCTION ✅**
-    - Dokumen ATS CV resmi (`Satria_Nindhita_CV.pdf`) dan fallback (`Satria_Nindhita_Resume.pdf`) tersinkronisasi di `portfolio/public/`.
-    - Hero Section dilengkapi tombol aksi langsung `CV / Resume` dengan icon dokumen terintegrasi.
-    - Navbar (desktop & mobile drawer) dilengkapi icon unduh taktil responsif.
+    - Dokumen ATS CV resmi eksklusif (`Satria_Nindhita_CV.pdf`) tersimpan di `portfolio/public/`.
+    - File legacy `Satria_Nindhita_Resume.pdf` dihapus dan dialihkan permanen (308 redirect di `vercel.json`) ke `/Satria_Nindhita_CV.pdf`.
+    - Seluruh label UI (Navbar desktop/mobile dan Hero Section) distandardisasi eksklusif menjadi **CV**.
     - Sinkronisasi data pengalaman BKN (React, Go, PostgreSQL, OBS Studio) dan sertifikasi Google Cybersecurity di `portfolioData.js`.
-    - Sitemap XML diperbarui dengan URL kanonikal `/Satria_Nindhita_CV.pdf`. Build & deploy live ke Vercel Anycast Edge (`HTTP/2 200 OK`).
+    - Sitemap XML diperbarui hanya dengan URL kanonikal `/Satria_Nindhita_CV.pdf`. Build & deploy live ke Vercel Anycast Edge (`HTTP/2 200 OK`).
   - **Ultra-Fast Performance & CWV Optimization**:
     - Vite 8 (Rolldown engine) + TailwindCSS v4: Initial JS bundle **86.7 KB gzipped**, CSS **6.8 KB gzipped** (total < 95 KB).
     - Hero Project Banner WebP preloaded di `<head>` dengan `fetchPriority="high"`, `decoding="async"`, ukuran terkompresi ~100 KB (pangkas 85% dari master PNG).
