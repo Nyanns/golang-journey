@@ -10,7 +10,7 @@ export const UI_TRANSLATIONS = {
     'nav.stack': 'Stack',
     'nav.activity': 'Activity',
     'nav.experience': 'Experience',
-    'nav.resume': 'Resume',
+    'nav.resume': 'CV',
     'nav.home': 'Home',
     'nav.toggleTheme': 'Toggle light or dark theme',
     'nav.switchLang': 'Switch to Indonesian',
@@ -20,7 +20,7 @@ export const UI_TRANSLATIONS = {
     'hero.copied': 'Copied!',
     'hero.copyEmail': 'Copy email address',
     'hero.email': 'Email',
-    'hero.cv': 'CV / Resume',
+    'hero.cv': 'CV',
 
     // Work Section
     'work.featured': 'Featured Projects',
@@ -76,7 +76,7 @@ export const UI_TRANSLATIONS = {
     'nav.stack': 'Keahlian',
     'nav.activity': 'Aktivitas',
     'nav.experience': 'Pengalaman',
-    'nav.resume': 'Resume',
+    'nav.resume': 'CV',
     'nav.home': 'Beranda',
     'nav.toggleTheme': 'Ganti mode terang atau gelap',
     'nav.switchLang': 'Ganti ke Bahasa Inggris',
@@ -86,7 +86,7 @@ export const UI_TRANSLATIONS = {
     'hero.copied': 'Tersalin!',
     'hero.copyEmail': 'Salin alamat email',
     'hero.email': 'Email',
-    'hero.cv': 'Unduh CV',
+    'hero.cv': 'CV',
 
     // Work Section
     'work.featured': 'Proyek Unggulan',

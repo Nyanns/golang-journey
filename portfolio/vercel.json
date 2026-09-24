@@ -43,6 +43,13 @@
       ]
     }
   ],
+  "redirects": [
+    {
+      "source": "/Satria_Nindhita_Resume.pdf",
+      "destination": "/Satria_Nindhita_CV.pdf",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
