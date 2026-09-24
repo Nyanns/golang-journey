@@ -4,7 +4,7 @@ const commonLinks = {
   medium: "https://level13.medium.com/",
   leetcode: "https://leetcode.com/u/Nyanns/",
   hackthebox: "https://app.hackthebox.com/users/3743544",
-  resume: "/Satria_Nindhita_Resume.pdf",
+  resume: "/Satria_Nindhita_CV.pdf",
   email: "mailto:sandi.nindhita@gmail.com",
 };
 
@@ -246,11 +246,11 @@ export const portfolioDataEN = {
 
   experience: [
     {
-      role: "IT Staff (Internship)",
+      role: "IT Support & Fullstack Dev (Internship)",
       company: "Badan Kepegawaian Negara RI (BKN)",
       period: "Nov 2025 – May 2026",
       description:
-        "Managed real-time technical broadcasting for official state events via OBS Studio, designed cybersecurity educational resources for staff threat mitigation, and rapidly prototyped and deployed an internal logbook web application streamlining daily reporting.",
+        "Spearheaded internal digital transformation by developing and deploying an Employee Logbook application using React, Go (Golang), and PostgreSQL. Managed technical broadcasting for official state events via OBS Studio and authored digital cybersecurity awareness media.",
     },
     {
       role: "Machine Learning Engineer (Cohort)",
@@ -461,11 +461,11 @@ export const portfolioDataID = {
 
   experience: [
     {
-      role: "Staf IT (Magang)",
+      role: "IT Support & Fullstack Dev (Magang)",
       company: "Badan Kepegawaian Negara RI (BKN)",
       period: "Nov 2025 – Mei 2026",
       description:
-        "Mengelola siaran teknis real-time untuk agenda resmi kenegaraan via OBS Studio, menyusun materi edukasi keamanan siber untuk mitigasi ancaman staf, serta merancang dan meluncurkan aplikasi web logbook internal untuk efisiensi pelaporan harian.",
+        "Mendorong transformasi digital internal dengan merancang dan mendeploy aplikasi Logbook Presensi Pegawai berbasis React, Go (Golang), dan PostgreSQL. Mengelola siaran teknis resmi via OBS Studio serta menyusun media edukasi keamanan siber bagi staf.",
     },
     {
       role: "Machine Learning Engineer (Cohort)",

@@ -20,6 +20,7 @@ export const UI_TRANSLATIONS = {
     'hero.copied': 'Copied!',
     'hero.copyEmail': 'Copy email address',
     'hero.email': 'Email',
+    'hero.cv': 'CV / Resume',
 
     // Work Section
     'work.featured': 'Featured Projects',
@@ -85,6 +86,7 @@ export const UI_TRANSLATIONS = {
     'hero.copied': 'Tersalin!',
     'hero.copyEmail': 'Salin alamat email',
     'hero.email': 'Email',
+    'hero.cv': 'Unduh CV',
 
     // Work Section
     'work.featured': 'Proyek Unggulan',

@@ -121,6 +121,23 @@ export const HeroSection = () => {
           </svg>
           <span>Email</span>
         </a>
+        <Separator />
+        <a
+          href={personal.links.resume}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-1.5 text-sm font-medium transition-colors duration-200 hover:text-accent"
+          style={{ color: 'var(--ctp-subtext1)' }}
+          title="View & Download CV (PDF)"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 3v4a1 1 0 0 0 1 1h4" />
+            <path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" />
+            <path d="M12 17v-6" />
+            <path d="M9.5 14.5l2.5 2.5l2.5 -2.5" />
+          </svg>
+          <span>{t('hero.cv')}</span>
+        </a>
       </div>
     </section>
   );
